@@ -2,7 +2,7 @@
 
 \### A force-decomposition framework for Ramachandran statistics
 
-
+![Mechanical Model](figures/1%203-layer.png)
 
 \[!\[License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
