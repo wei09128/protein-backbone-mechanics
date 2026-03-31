@@ -148,26 +148,16 @@ greater conformational freedom.
 
 ```
 
-├── collect\_backbone\_features\_v5.py   # Feature extraction from PDB structures
-
-├── combined\_analysis.py              # Main analysis pipeline (Parts 1–6)
-
-├── results/
-
-│   ├── figures/                      # All manuscript figures (Fig 1–9)
-
-│   ├── tables/                       # Numerical results, R² tables
-
-│   └── report.txt                    # Full text summary of all analyses
-
-├── data/
-
-│   └── features\_v3.csv               # Pre-extracted feature matrix (600K residues)
-
+├── src/
+│   ├── collect_backbone_features.py  # Feature extraction
+│   └── subgroup_k_analysis.py        # Main analysis pipeline
+├── figures/                          # All manuscript figures (Fig 1–3G)
+├── data/                             # (Folder exists, but CSV is hosted externally)
+├── environment.yml                   # Conda environment setup
 └── README.md
 
 ```
-
+Note on Data: The feature matrix (features_11k.csv, ~170MB) is too large for GitHub.
 
 
 \---
