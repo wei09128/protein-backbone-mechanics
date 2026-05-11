@@ -23,6 +23,16 @@ This repository contains the data, code, and geometry library for a four-paper s
 | **3** | [The Coupling Structure of Protein Backbone Geometry](#paper-3) | φ×ψ coupling adds 2–3% variance; QM corrections are geometrically redundant |
 | **4** | [A Conformation-Dependent Geometry Library](#paper-4) | Drop-in replacement for fixed constants; reduces phantom strain by 31.5% |
 
+### Key Insights
+![Paper 1 Results](figures/paper1_F1_3-layer.png)
+*Figure 1: The 3-layer mechanical model of backbone geometry.*
+![Paper 2 Results](figures/paper2_F0.png)
+*Figure 2: The three-channel mechanical hierarchy showing how N–Cα–C (τ) bond angles vary systematically with (φ,ψ)*
+![Paper 3 Results](figures/paper3_F0.png)
+*Figure 3: Analysis of φ × ψ coupling and the geometric redundancy of quantum mechanical corrections.*
+![Paper 4 Results](figures/paper4_F0.png)
+*Figure 4: Performance of the CDL as a drop-in replacement, demonstrating the reduction in phantom strain.*
+
 **The central deliverable is the geometry library** — a lookup table that replaces the fixed bond lengths and bond angles used in AMBER, CHARMM, OPLS, and NeRF reconstruction with conformation-dependent values derived from 1.77 million residues.
 
 ---
@@ -93,44 +103,70 @@ protein-backbone-geometry/
 │   ├── constants_library.json         # Main library: 745 cells × 21 classes × 12 observables
 │   ├── constants_chi1.json            # χ₁-dependent Cβ angle corrections (2,425 entries)
 │   ├── backbone_geometry_library.py   # Python module with full API
-│   └── README_LIBRARY.md             # Detailed library documentation
+│   └── README_LIBRARY.md              # Detailed library documentation
 │
-├── paper1/                            # Ramachandran as mechanical force field
-│   ├── scripts/                       # Analysis scripts
-│   ├── figures/                       # Generated figures
-│   └── manuscript/                    # Paper 1 manuscript
+├── scripts/ # Analysis scripts
 │
-├── paper2/                            # Bond angles deform with (φ,ψ)
-│   ├── scripts/
-│   ├── figures/
-│   └── manuscript/
+│   # paper1  Ramachandran as mechanical force field
+│   ├── paper1_1_collect_backbone_features.py      # Extract φ,ψ + local geometry from PDB
+│   ├── paper1_2_backbone_analysis.py              # Ramachandran density + stiffness maps
+│   ├── paper1_3_subgroup_projection_analysis.py   # PCA/projection of conformation subgroups
+│   ├── paper1_4_subgroup_k_analysis.py            # Per-subgroup spring constant estimation
+│   ├── paper1_5_ff_correction.py                  # Force-field equilibrium correction terms
+│   ├── paper1_5_ff_curvature_comparison.py        # Curvature comparison across FF families
+│   ├── paper1_6_spring_consistency_analysis.py    # Cross-residue spring constant consistency
+│   ├── paper1_99_test_torque_logic.py             # Unit tests for torque derivation
+│   ├── paper1_99_use_lj_torques.py                # Lennard-Jones torque sensitivity analysis
 │
-├── paper3/                            # Coupling structure
-│   ├── paper3_01_npi_star_geometry.py         # n→π* orbital overlap extraction
-│   ├── paper3_02_hyperconjugation.py          # σ→σ* hyperconjugation geometry
-│   ├── paper3_03_coupling_decomposition.py    # Two-way ANOVA decomposition
-│   ├── paper3_04_wall_sign_change.py          # Sign-change test at steric walls
-│   ├── paper3_05_comprehensive.py             # Resolution, per-residue, SS, energy analyses
-│   ├── paper3_06_gam_coupling.py              # GAM-based corrected decomposition
-│   ├── figures/
-│   └── manuscript/
+│   # paper2  Bond angles deform with (φ,ψ)
+│   ├── paper2_pdb_loader.py                       # PDB fetch, parse, and residue filtering
+│   ├── paper2_molcore.py                          # Core geometry calculations (bonds, angles)
+│   ├── paper2_geom_utils.py                       # Shared dihedral/angle utility functions
+│   ├── paper2_features_collector.py               # Batch feature extraction across PDB set
+│   ├── paper2_hbond_finder.py                     # Hydrogen bond detection for SS assignment
+│   ├── paper2_nerf_builder.py                     # NeRF coordinate reconstruction pipeline
+│   ├── paper2_generate_fixtures.py                # Generate test fixtures / reference data
+│   ├── paper2_01a_tau_map.py                      # τ (∠N-Cα-C) Ramachandran heat map
+│   ├── paper2_01b_tau_by_residue.py               # Per-residue τ variation across φ,ψ
+│   ├── paper2_02_angle_universality.py            # Universality test: all 6 backbone angles
+│   ├── paper2_03_sidechain_scatter.py             # Cβ angle scatter vs φ,ψ
+│   ├── paper2_04_sidechain_channel.py             # Sidechain channel effect on backbone angles
+│   ├── paper2_05_rotamer_per_residue.py           # χ₁ rotamer stratification per residue
+│   ├── paper2_06_val_anomaly.py                   # Val/Ile β-branching anomaly analysis
+│   ├── paper2_07_residual_regression.py           # Residual regression after φ,ψ correction
+│   ├── paper2_08_bond_length_scoping.py           # Bond length variation across φ,ψ
+│   ├── paper2_08_resolution_stratified.py         # Resolution-stratified geometry validation
+│   ├── paper2_supp_stiffness_hierarchy.py         # Supplementary: angle stiffness hierarchy
+│   ├── paper2_f1_assembly.py                      # Figure 1 panel assembly
+│   ├── paper2_f2_assembly.py                      # Figure 2 panel assembly
+│   ├── paper2_f3_assembly.py                      # Figure 3 panel assembly
 │
-├── paper4/                            # Geometry library
-│   ├── paper4_01_constant_library.py          # Library extraction
-│   ├── paper4_02_nerf_integration.py          # NeRF benchmark
-│   ├── paper4_03_local_benchmark.py           # Local geometry benchmark
-│   ├── paper4_04_patch_library.py             # ω fix + reliability flags
-│   ├── paper4_05_fair_benchmarks.py           # Strain energy + temporal split
-│   ├── paper4_06_strain_plot.py               # Figure generation
-│   ├── paper4_07_ff_integration.py            # AMBER/CHARMM/OPLS comparison
+│   # paper3  Coupling structure
+│   ├── paper3_01_npi_star_geometry.py             # n→π* orbital overlap extraction
+│   ├── paper3_02_hyperconjugation.py              # σ→σ* hyperconjugation geometry
+│   ├── paper3_03_coupling_decomposition.py        # Two-way ANOVA decomposition
+│   ├── paper3_04_wall_sign_change.py              # Sign-change test at steric walls
+│   ├── paper3_05_comprehensive.py                 # Resolution, per-residue, SS, energy analyses
+│   ├── paper3_06_gam_coupling.py                  # GAM-based corrected decomposition
+│
+│   # paper4  Geometry library
+│   ├── paper4_01_constant_library.py              # Library extraction
+│   ├── paper4_02_nerf_integration.py              # NeRF benchmark
+│   ├── paper4_03_local_benchmark.py               # Local geometry benchmark
+│   ├── paper4_04_patch_library.py                 # ω fix + reliability flags
+│   ├── paper4_05_fair_benchmarks.py               # Strain energy + temporal split
+│   ├── paper4_06_strain_plot.py                   # Figure generation
+│   ├── paper4_07_ff_integration.py                # AMBER/CHARMM/OPLS comparison
 │   ├── integration/
-│   │   ├── apply_library_corrections.py       # OpenMM integration script
-│   │   └── library_correction.frcmod          # AMBER parameter file
-│   ├── figures/
-│   └── manuscript/
+│   │   ├── paper4_99_apply_library_corrections.py # OpenMM integration script
+│   │   └── library_correction.frcmod             # AMBER parameter file
+│
+├── figures/
+│
+├── manuscript/
 │
 └── data/
-    └── README_DATA.md                 # Instructions for obtaining the feature CSV
+
 ```
 
 ---
