@@ -27,9 +27,9 @@ This repository contains the data, code, and geometry library for a four-paper s
 ![Paper 1 Results](figures/paper1_F1_3-layer.png)
 *Figure 1: The 3-layer mechanical model of backbone geometry.*
 ![Paper 2 Results](figures/paper2_F0.png)
-*Figure 2: The three-channel mechanical hierarchy showing how $N-C\alpha-C$ ($\tau$) bond angles vary systematically with $(\phi, \psi)$*
+*Figure 2: The three-channel mechanical hierarchy showing how N–Cα–C (τ) bond angles vary systematically with (φ,ψ)*
 ![Paper 3 Results](figures/paper3_F0.png)
-*Figure 3: Analysis of $\phi \times \psi$ coupling and the geometric redundancy of quantum mechanical corrections.*
+*Figure 3: Analysis of φ × ψ coupling and the geometric redundancy of quantum mechanical corrections.*
 ![Paper 4 Results](figures/paper4_F0.png)
 *Figure 4: Performance of the CDL as a drop-in replacement, demonstrating the reduction in phantom strain.*
 
