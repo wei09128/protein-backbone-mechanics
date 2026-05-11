@@ -1,4 +1,3 @@
-HEAD
 # Protein Backbone Geometry: A Four-Paper Series
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
