@@ -1,0 +1,49 @@
+What's still missing for a complete, usable library:
+
+Equilibrium geometry tables. You have the deformations but need to package the actual equilibrium values: τ₀(φ,ψ,residue_class), bond_length₀(φ,ψ), ω₀(φ,ψ) as lookup tables. These are just the cell means from your data — you have them, they just need to be formatted.
+Spring constants per (φ,ψ) bin per observable. You have k_eff for the dihedrals. But for the bond angles (τ, Cβ angles), you'd need the within-cell variance converted to an effective k. Paper 2's scripts already compute this — it's σ²(τ|φ,ψ,residue) → k = kT/σ².
+The NeRF integration. Your NeRF builder from the quantum-classical pipeline uses fixed bond lengths and angles. The library would replace those fixed values with (φ,ψ)-dependent lookup tables. This is engineering, not science — but it's the deliverable that makes the library useful.
+Validation benchmark. You need to show that NeRF + library reproduces PDB geometry better than NeRF + AMBER constants. This is the proof that the library works. Metrics: per-residue RMSD, bond angle RMSD, Ramachandran χ² against the PDB distribution.
+
+python /mnt/f/Protein_Folding/v9_cl/paper4_01_constant_library.py \
+    --csv /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --out ./paper4_library/ --bin_size 10
+
+python /mnt/f/Protein_Folding/v9_cl/paper4_01_constant_library_patch.py \
+    --csv /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --library_dir ./paper4_library/ \
+    --bootstrap ./paper4_library/validation_bootstrap.csv \
+    --out ./paper4_library_v2/ \
+    --bin_size 10
+
+python /mnt/f/Protein_Folding/v9_cl/paper4_01_c_l_validation.py \
+    --csv  /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --lib  ./paper4_library/constants_library.csv \
+    --lib_dir ./paper4_library/ \
+    --out  ./paper4_library/
+
+python /mnt/f/Protein_Folding/v9_cl/paper4_02_nerf_integration.py \
+    --library ./paper4_library/constants_library.json \
+    --pdb_dir /mnt/f/Protein_Folding/pdb_cache \
+    --test_pdbs 1ubq 1ak1 1dfn 1jer 1tfe 3w47 1pga 1mct 1arb 2vb1 1ig5 1xen 1oai 1c9o 1ucs 4u9v 1v06 1x6z 1r6j 5i21 1n7s 1un7 2zcp 1w2i 1aho 1i27 1cex 1f94 1jz8 1mvo 1n7s 1p9i 1qto 1r2j 1v74 1w0p 1xjo 1y64 1z3x 2a3d 2b97 2c71 2d3i 2e3f 2f1k 2g7u 2h3m 2i4v 2j5l 2k6p \
+    --out ./paper4_benchmark/
+
+python /mnt/f/Protein_Folding/v9_cl/paper4_03_local_benchmark.py \
+    --library ./paper4_library_v2/constants_library.json \
+    --csv /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --out ./paper4_local_benchmark/
+
+python /mnt/f/Protein_Folding/v9_cl/paper4_04_fair_benchmarks.py \
+    --csv /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --out ./paper4_fair/ --bin_size 10
+
+python /mnt/f/Protein_Folding/v9_cl/paper4_04_strain_plot.py \
+    --csv /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --out ./paper4_fair/
+
+python /mnt/f/Protein_Folding/v9_cl/paper4_05_ff_integration.py \
+    --csv /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --out ./paper4_ff_integration/ \
+    --library /mnt/f/Protein_Folding/v9_cl/paper4_library_v2/constants_library.json
+
+cd /mnt/c/users/wei/downloads/

@@ -1,0 +1,60 @@
+Combined Ramachandran + Force-Basin Analysis Report
+=================================================================
+
+Total residues: 1,662,840
+
+─── PART 1: RAMACHANDRAN COVERAGE ───
+  6-state grid:           79.6%
+  + 8 new states:       92.2%  (+12.5%)
+
+  New states:
+    bridge        φ=  -77.5°  ψ=  -12.5°  σ=(15°,15°)
+    loop2         φ= -142.5°  ψ=  162.5°  σ=(25°,10°)
+    loop3         φ=  -97.5°  ψ=    2.5°  σ=(15°,15°)
+    turnII        φ=  -82.5°  ψ=  112.5°  σ=(15°,15°)
+    loop5         φ= -157.5°  ψ=  147.5°  σ=(10°,15°)
+    turnII        φ=  -47.5°  ψ=  127.5°  σ=(10°,10°)
+    αL_ext        φ=   77.5°  ψ=    7.5°  σ=(15°,15°)
+    loop8         φ=  -97.5°  ψ=  -27.5°  σ=(20°,25°)
+
+─── PART 2: TORQUE → ANGLE PREDICTION ───
+  Net torque only (τ_φ, τ_ψ → Δφ, Δψ):
+    φ R²=0.199  CV=0.199
+    ψ R²=0.011  CV=0.011
+
+  Full model (55 features → Δφ, Δψ):
+    φ R²=0.487  CV=0.486
+    ψ R²=0.210  CV=0.208
+
+  This shows that decomposed per-source torques + geometry
+  explain more variance than net torque alone.
+
+─── PART 3: NON-LINEAR MODEL COMPARISON ───
+  Model                    R²_φ      CV_φ     R²_ψ      CV_ψ
+  --------------------  -------  --------  -------  --------
+  Linear Ridge            0.487   0.486±0.00    0.207   0.206±0.01
+  Random Forest           0.835   0.808±0.01    0.613   0.578±0.01
+  Gradient Boost          0.778   0.772±0.01    0.564   0.558±0.01
+  MLP (2-layer)           0.912   0.884±0.01    0.682   0.655±0.01
+
+─── PART 4: FORCE-PREDICTED BASIN COVERAGE ───
+  6-state grid baseline: 79.6%
+  Best model: MLP (2-layer)
+  Basin accuracy: 76.1%
+
+  Per-basin:
+    αR    : 97.0%
+    β     : 57.8%
+    PPII  : 38.3%
+    3₁₀   : 0.0%
+    loop  : 70.9%
+    αL    : 92.0%
+
+─── FIGURE INDEX ───
+  Fig 1: rama_coverage.png              — 6-state vs +N new states
+  Fig 2: torque_vectors.png             — 3-panel: raw / restoring / decomposition
+  Fig 3: r2_comparison.png              — R² bar chart all models
+  Fig 4: basin_accuracy.png             — Per-basin accuracy
+  Fig 5: feature_importance.png         — RF feature importance
+  Fig 6: residuals.png                  — Prediction error by basin
+  Fig 7: corrected_rama_coverage.png    — Actual vs predicted Ramachandran
