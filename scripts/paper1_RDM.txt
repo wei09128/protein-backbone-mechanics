@@ -1,0 +1,253 @@
+Deutsch's Algorithm
+Step 1: Initial State, set input and auxiliary qubit: 
+|ψ_0⟩ = ∣0⟩⊗∣1⟩=∣0⟩∣1⟩=∣01⟩
+Step 2: Apply Hadamard Gates, H⊗H
+|ψ_1⟩ = H∣0⟩⊗H∣1⟩ = ∣+⟩∣-⟩
+Step 3: Oracle Quantum Black Box, U_f​|x,y⟩ = ∣x,y⊗f(x)⟩
+|ψ_2⟩ = U_f∣+⟩∣-⟩=1/√2((-1)^(f(0))|0⟩+(-1)^(f(1))|1⟩)⊗|-⟩
+Step 4: Interference via Hadamard, H⊗I
+|ψ_3⟩ = (H⊗I)|ψ_2⟩ = 0.5*​[((−1)^f(0)+(−1)^f(1))∣0⟩+((−1)^f(0)−(−1)^f(1))∣1⟩]⊗∣−⟩
+If f is constant f(0)=f(1), |ψ_3⟩ = ±|0⟩⊗∣−⟩
+If f is balanced f(0)≠f(1), |ψ_3⟩ = ±|1⟩⊗∣−⟩
+
+Mach–Zehnder Interferometer (MZI)
+Step 1: Initial State, photon definitely in the lower path
+|ψ_0⟩ = ∣0⟩
+Step 2: First beam splitter
+|ψ_1⟩ = H∣0⟩ = ∣+⟩
+Step 3: Phase shifter in one arm, P(ϕ)∣0⟩=∣0⟩, P(ϕ)∣1⟩=e^iϕ ∣1⟩
+|ψ_2⟩ = P(ϕ)∣ψ_1 ⟩ = P(ϕ)/√2(∣0⟩+∣1⟩) = 1/√2(∣0⟩+e^iϕ∣1⟩)
+Step 4: Second beam splitter, H∣0⟩= 1/√2(∣0⟩+∣1⟩),H∣1⟩= 1/√2(∣0⟩-∣1⟩)
+|ψ_3⟩ = H|ψ_2⟩ = 0.5*[(1+e^iϕ)∣0⟩+(1-e^iϕ)∣1⟩)
+Step 5: “Constant vs balanced” analog
+Probability at D0 (∣0⟩): P_0 = 1/4*(1+e^iϕ)^2
+Probability at D1 (∣1⟩): P_1 = 1/4*(1-e^iϕ)^2
+If ϕ=0: P_0=1, P_1=0
+If ϕ=π: P_0=0, P_1=1
+P_0=(1+cos(ϕ))/2, P_1=(1-cos(ϕ))/2
+
+Hadamard Test (Quantum Phase Estimation)
+Step 1: Initial State, Set up control qubit and target register:
+|ψ_0⟩ = |0⟩ ⊗ |0⟩
+Step 2:  Apply Hadamard to Control
+|ψ_1⟩ = (H ⊗ I)|ψ_0⟩ = |+⟩ ⊗ |0⟩ = 1/√2(|0⟩ + |1⟩) ⊗ |0⟩
+step 3:  Controlled-U Operation, Apply U to target register only when control is |1⟩:
+|ψ_2⟩ = 1/√2(|0⟩ ⊗ |0⟩ + |1⟩ ⊗ U|0⟩)
+Let's say U|0⟩ = cos(θ)|0⟩ + sin(θ)e^(iφ)|1⟩. Then:
+|ψ_2⟩ = 1/√2[|0⟩⊗|0⟩ + |1⟩⊗(cos(θ)|0⟩ + sin(θ)e^(iφ)|1⟩)]
+Step 4: Second Hadamard on Control
+|ψ_3⟩ = (H ⊗ I)|ψ_2⟩ = 1/2[(|0⟩+|1⟩)⊗|0⟩ + (|0⟩-|1⟩)⊗U|0⟩] = 1/2[|0⟩⊗(|0⟩+U|0⟩) + |1⟩⊗(|0⟩-U|0⟩)]
+Step 5: Measurement Probabilities
+P_0 = |⟨0|(|0⟩ + U|0⟩)/2|² = 1/4|⟨0|0⟩ + ⟨0|U|0⟩|²
+    = 1/4(1 + ⟨0|U|0⟩ + ⟨0|U†|0⟩ + 1)
+    = 1/2(1 + Re⟨0|U|0⟩)
+P_1 = 1/2(1 - Re⟨0|U|0⟩)
+
+Bell state preparation
+Step 1: Initial State
+|ψ_0⟩ = |0⟩ ⊗ |0⟩
+Step 2:  Superposition (Hadamard on Qubit 1)
+|ψ_1⟩ = (H ⊗ I)|ψ_0⟩ = |+⟩ ⊗ |0⟩ = 1/√2(|0⟩ + |1⟩) ⊗ |0⟩
+step 3:  Entanglement (CNOT Gate) |c, t⟩ → |c, c ⊗ t⟩
+|ψ_2⟩ = CNOT(|ψ_1⟩) = CNOT[1/√2(|00⟩ + |10⟩)] = 1/√2(|00⟩ + |11⟩)
+
+Superdense coding 
+Step 1: Initial State, Alice and Bob start by sharing a Bell State (1st qubit and 2nd qubit) |Φ^+⟩.
+ρ_A = 1/2 ∣0⟩⟨0∣+ 1/2 ∣1⟩⟨1∣
+|ψ_0⟩ = 1/√2(|00⟩ + |11⟩)
+Step 2: Alice’s Encoding
+|ψ_1⟩:
+Bits Operation  Results            
+00   I          1/√2(|00⟩ + |11⟩) = |Φ^+⟩
+01   X          1/√2(|10⟩ + |01⟩) = |ψ^+⟩
+10   Z          1/√2(|00⟩ - |11⟩) = |Φ^-⟩
+11   ZX (pr iY) 1/√2(|10⟩ - |01⟩) = |ψ^-⟩
+Step 3: Bob’s Decoding
+Part A: apply CNOT
+CNOT|Φ^+⟩=1/√2(|00⟩ + |10⟩)=|+0⟩
+CNOT|ψ^+⟩=1/√2(|11⟩ + |01⟩)=|+1⟩
+CNOT|Φ^-⟩=1/√2(|00⟩ - |10⟩)=|-0⟩
+CNOT|ψ^-⟩=1/√2(|01⟩ - |11⟩)=|-1⟩
+Part B: apply H ⊗ I 
+H|+0⟩ = |00⟩
+H|+1⟩ = |01⟩
+H|-0⟩ = |10⟩
+H|-1⟩ = |11⟩
+note:
+p'_A=U_A*pA*U†_A=U_A*I/2*U†_A=I/2
+ρ_AB​ ≠ ρ_A​⊗ρ_B
+
+skip:
+Quantum teleportation
+Entanglement swapping
+Deutsch–Jozsa algorithm
+
+Bernstein–Vazirani algorithm
+Step 0: Initial State, set n qubits to |0⟩
+|ψ_0⟩ = |0⟩^⊗n ⊗ |1⟩
+Step 1:  Apply Hadamard to every qubit
+|ψ_1⟩ = 1/√2^n Σ_x∈{0,1}^n|x⟩ ⊗ |-⟩
+step 2:  The oracle, U_f​|x,y⟩ = ∣x,y⊗f(x)⟩, XOR on last qubit, 
+|ψ_2⟩ = 1/√2^n*U_f(Σ_x∈{0,1}^n|x⟩,|-⟩) = 1/√2^n*|x⟩|-⟩⊗(s*x) = 1/√2^n*Σ_x(-1)^f(x)|x⟩ ⊗ |-⟩
+Step 3:  Hadamard on Control
+|ψ_3⟩ = (H^⊗n⊗I)1/√2^n*Σ_x(-1)^sx|x⟩⊗|-⟩ = 1/2^nΣ_xΣ_z(-1)^(sx+sz)|z⟩⊗|-⟩
+notes:
+we choose f(x)=s*x (mod 2) (Superposition of all those classical questions) while x = 1000..., the sx basically like ignore all bits except the 1st comparing to the classical world
+
+
+HP Model (Hydrophobic-Polar)
+Step 0:
+|ψ_0⟩ = |00⟩|00⟩
+Step 1:
+|ψ_1⟩ = H^⊗4|0000⟩=1/√16Σ_(x=0,15)|x⟩
+Step 2: Apply Unitary Evolution, U_H = e^-iE_xt
+|ψ_2⟩ = 1/√16Σ_(x=0,15)e^-iE_xt|x⟩=1/√16[Σ_(x∈stable)e^-i(-1)t|x⟩ + Σ_(x∈neutral)e^-i(0)t|x⟩ + Σ_(x∈illegal)e^-i(+10)t|x⟩]
+
+
+Protein Lattice Model tetrahedral 
+VQE
+Trotterization Tetrahedral lattice model
+Φ ψ Peptide Plane τ ω "Bending Skewer" Problem χ
+Levinthal’s paradox 
+
+First Principle Off Lattice Model
+Quantum Springs
+Potential Energy Surface
+chaperones and co-translational folding
+Macromolecular Crowding & Post-Translational Modifications
+Dielectric Constant ($\epsilon$):
+
+
+i) Why net torque fails but keff = −τ_env/Δθ works
+This is the core conceptual hook of your paper, so it's worth being precise.
+At mechanical equilibrium, the backbone is stationary. That means the sum of all torques is zero:
+τ_env + τ_resistance = 0
+The environmental torque (from H-bonds, electrostatics, steric forces) is exactly balanced by the intrinsic torsional resistance of the backbone. So if you measure net torque (τ_env + τ_resistance), you get ≈ 0 for every residue regardless of conformation. That's why net torque predicts nothing (R² = 0.004/0.012 in your Table 1) — it's zero by construction at equilibrium.
+But keff = −τ_env/Δθ works because it measures something fundamentally different: the ratio of how much environmental force is pushing versus how far the residue has been displaced from its basin center. This is the effective spring constant — how tightly the environment constrains this residue at this position. Two residues can both have zero net torque (both at equilibrium) but completely different keff values:
+αR residue: large τ_env balanced by large τ_resistance, small Δθ → high keff (strongly captured)
+β residue: small τ_env balanced by small τ_resistance, any Δθ → low keff (mechanically neutral)
+The analogy: imagine two balls sitting motionless. One is at the bottom of a deep bowl, the other on a flat table. Both have zero net force. But the restoring force per unit displacement (the spring constant) is completely different. keff measures the shape of the bowl, not the current force on the ball.
+For fold-switching prediction specifically: a residue with low |keff| sits on a "flat table" — a small perturbation (binding partner arrives, domain dissociates) can push it into a completely different basin. A residue with high |keff| sits in a "deep bowl" — it resists conformational change. That's the prediction.
+
+
+cd /mnt/c/Users/Wei/OneDrive/Courses/"6 Cvek Lab"/DKA
+cd /mnt/c/Users/Wei/OneDrive/Courses/"6 Cvek Lab"/"Protein Folding"/backbone_coverage
+cd /mnt/c/Users/Wei/OneDrive/Courses/"6 MATH609"
+
+sudo dd if=/dev/zero of=~/swapfile_240G bs=1G count=240
+sudo chmod 600 ~/swapfile_240G
+sudo mkswap ~/swapfile_240G
+free -h
+python ensemble_search.py 1CHD -cr 5 -o ./results
+python ensemble_search.py 1UAD -cr 5 -o ./results
+python ensemble_search.py 1QYO -cr 5 -o ./results
+rm -rf __pycache__
+python visualize_structure.py 1L2Y -o ./results -cr 5
+python ensemble_search.py 1L2Y -cr 5 -o ./results
+python ensemble_search.py 2RLJ -cr 5 -o ./results
+python ensemble_search.py 2EVQ -cr 5 -o ./results
+
+
+python collect_backbone_features.py --pdb_dir ./pdb_cache --out features_11k_tsoj.csv
+
+
+python spring_consistency_analysis.py --csv v5.csv --out_dir ./spring_consistency
+python Rama_bin_correction.py --csv v5.csv --out_dir ./rama_correction
+python3 MD_validation.py --csv v5.csv --pdb 102L --pdb_dir ./pdb_cache --max_pdbs 5000000 --out_dir md_validation_102L
+python collect_foldswitch_segments.py
+python merge_and_analyze_foldswitch.py
+
+python ./v5_rmm/use_lj_torques.py --csv ./v6_GeometryDeformation/features.csv --pdb_dir ./pdb_cache --output ./v6_GeometryDeformation/p2.csv
+
+
+scp wchen@sun.cs.lsus.edu:~/p1.csv ./
+python backbone_analysis.py --csv p1.csv --out_dir ./steric_analysis
+python subgroup_projection_analysis.py --csv p1.csv --out_dir ./subgroup_projection
+python subgroup_k_analysis.py --csv p1.csv --out_dir ./subgroup_k
+python ff_correction.py
+python ff_curvature_comparison.py --csv ./subgroup_k/ff_correction_table.csv --out_dir ./ff_panels
+python torque_vectors.py --csv p1.csv --out_dir ./steric_analysis
+scp -r wchen@sun.cs.lsus.edu:~/steric_analysis ./steric_analysis
+
+python subgroup_k_analysis.py --csv v5.csv --out_dir ./subgroup_k
+python ff_correction.py
+python ff_curvature_comparison.py --csv ./subgroup_k/ff_correction_table.csv --out_dir ./ff_panels
+
+
+cd /mnt/f/Protein_Folding
+# The PDB files are already cached from fold_switch_validation_v2.py
+# They live in ./pdb_cache_foldswitch/
+ls pdb_cache_foldswitch/
+# Run your collector on each one — adjust the script name/flags to match yours
+python collect_backbone_features.py --pdb pdb_cache_foldswitch/2qke.pdb --out features_kaib_fold1.csv
+python collect_backbone_features.py --pdb pdb_cache_foldswitch/5jyt.pdb --out features_kaib_fold2.csv
+python collect_backbone_features.py --pdb pdb_cache_foldswitch/1j9o.pdb --out features_xcl1_fold1.csv
+python collect_backbone_features.py --pdb pdb_cache_foldswitch/2n54.pdb --out features_xcl1_fold2.csv
+python collect_backbone_features.py --pdb pdb_cache_foldswitch/2oug.pdb --out features_rfah_fold1.csv
+python collect_backbone_features.py --pdb pdb_cache_foldswitch/6c6s.pdb --out features_rfah_fold2.csv
+
+
+wchen@sun:wchen$ python3 MD_validation.py --csv v5_clean.csv --pdb 102L.pdb --pdb_dir ./pdb_cache --max_pdbs 5000000 --out_dir md_validation_102L
+ls
+rm -r md_validation_1ucr
+scp -r wchen@sun.cs.lsus.edu:~/md_validation_102L ./md_102L
+scp p1.csv wchen@sun.cs.lsus.edu:~
+scp ./v5_rmm/use_lj_torques.py wchen@sun.cs.lsus.edu:~
+scp update_net_torques.py  wchen@sun.cs.lsus.edu:~
+python3 backbone_analysis.py --csv v5.csv --out_dir ./steric_analysis
+
+python3 use_lj_torques.py --csv v5.csv --pdb_dir ~/pdb_cache --output ./p1_1.csv && \
+python3 update_net_torques.py --csv p1_1.csv --output p1.csv && \
+python3 backbone_analysis.py --csv p1.csv --out_dir ./steric_analysis
+
+python fold_switch_validation.py
+python fold_switch_analysis.py --data features_11k.csv --out_dir ./fold_switch_results
+
+cd /mnt/c/Users/Wei/Downloads
+python /mnt/f/Protein_Folding/md_to_docx_converter.py /mnt/c/Users/Wei/Downloads/paper1_draft_v5.md
+python filter_quality.py --input v5_all.csv --output v5.csv \
+    --bfactor 30 --window 3
+
+python 
+python spring_analysis.py --csv v5.csv --out_dir ./spring_consistency
+python force_basin_nonlinear_analysis.py --csv v5.csv --out_dir ./spring_consistency
+
+
+
+python update_net_torques.py --csv ./v6_GeometryDeformation/p2_all.csv --output ./v6_GeometryDeformation/p2.csv
+
+
+python ff_curvature_comparison.py --csv v5.csv --out_dir ./steric_analysis
+
+
+python pandocx.py manuscript_draft.md manuscript.docx
+Basin(φ,ψ) = f(residue_type, χ₁, neighbor_types, H-bond_topology, local_contacts)
+
+collect_backbone_features.py
+force_basin_analysis.py 
+
+Set up parameter encoding (φ, ψ, χ → qubits)?
+Implement VQE/QAOA optimization loop?
+Polish validation first?
+
+molcore.py
+nerf_builder.py
+energy.py
+quantum_hamiltonian.py
+vqe_optimizer.py
+visualize_structure.py
+ensemble_search.py
+
+
+collect_backbone_features.py
+
+
+
+cd /mnt/f/Protein_Folding/"v7 Deformation of Geometry"
+geom_utils.py
+generate_fixtures.py
+
+
+python generate_fixtures.py --pdb_cache F:/Protein_Folding/pdb_cache --fixtures F:/Protein_Folding/"v7 Deformation of Geometry"/tests/fixtures
+
+

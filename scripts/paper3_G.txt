@@ -1,0 +1,99 @@
+WHAT WE WON'T DO (too expensive, diminishing returns):
+Full QM energy surfaces for every residue in your 2.5M-row dataset — obviously impossible. But more specifically:
+
+Ab initio MD on full proteins. Even a single 100-residue protein at DFT level is ~10⁵ CPU-hours per nanosecond. You'd need thousands of structures. Dead on arrival.
+CCSD(T) benchmarks for every (φ,ψ) bin. The gold-standard QM method, but a single alanine dipeptide scan at CCSD(T)/CBS is a week of compute. Doing this for 20 amino acids × multiple χ₁ states × environment contexts is years of work. Groups like Head-Gordon and Sherrill have spent careers on this.
+QM-derived partial charges per residue per conformation. RESP charges depend on the electronic environment, so in principle every (φ,ψ,χ₁) state has different charges. Computing this for your full dataset would require millions of QM calculations. Not tractable, and the payoff is marginal — AMBER's fixed charges work reasonably well for the electrostatic torques you already compute.
+Dispersion-corrected DFT for all LJ pairs. Your current LJ uses classical Lennard-Jones with AMBER parameters. QM dispersion (DFT-D3/D4) would give more accurate van der Waals interactions, but the improvement over well-parameterized LJ is typically ~0.1–0.3 kcal/mol per pair. Not worth recomputing for 2.5M residues.
+
+
+WHAT OVERLAPS WITH PAPERS 1 & 2 (QM validates or reinterprets your findings):
+
+The n→π interaction.* This is the big one you already flagged but deferred. The carbonyl lone pair (C=O of residue i) delocalizes into the π* orbital of the next carbonyl (C=O of residue i+1). This is purely quantum mechanical — no classical force field captures it. It stabilizes αR and PPII conformations by ~0.5–1.0 kcal/mol per residue, and it's strongly φ/ψ-dependent. Your Paper 1 steric discontinuity at φ ≈ −60° and the αR basin being a "geometric intersection" — the n→π* interaction is part of why αR is special. It's the electronic glue that makes the steric intersection stable.
+Peptide bond partial double character. Your Paper 2 finding that ω deformation couples to local packing — the classical explanation is "steric strain rotates the peptide plane." The QM explanation is that ω ≈ 180° is maintained by π-electron delocalization across N–C(=O), and deviations from planarity cost delocalization energy. The two explanations make different predictions about which perturbations are most effective at distorting ω.
+Hyperconjugation in β-branched residues. Your Paper 2 finding that VAL/ILE/THR drive the largest Cβ angle variations — classically you attribute this to steric bulk. But β-branched residues also have σ(Cβ–Cγ) → σ*(Cα–N) hyperconjugative interactions that are conformationally dependent. This is why β-branching affects backbone geometry more than expected from sterics alone.
+Charge redistribution with conformation. Your electrostatic torques use fixed AMBER charges. In reality, the partial charge on the backbone N changes by ~0.05e between αR and β conformations (due to different orbital overlap). This is small but systematic, and it means your electrostatic torque channel has a hidden conformation-dependent bias that classical mechanics can't capture.
+
+
+WHAT WE CAN ACTUALLY DO (tractable, publishable, adds to Paper 3):
+
+Alanine dipeptide QM benchmark (~1 week of compute). Run a 2D (φ,ψ) scan at MP2/cc-pVTZ or ωB97X-D/6-311+G(2d,2p) on Ace-Ala-NMe. Compare the QM potential energy surface to your empirical k_eff map from Paper 1. Where do they agree? Where do they disagree? The disagreements tell you exactly what your classical decomposition is missing (likely n→π* in αR and charge transfer in β). This is a single molecule — completely tractable.
+NBO/EDA decomposition on small peptides (~2–4 weeks). Take Ace-X-NMe for X = Ala, Val, Gly at 5–10 (φ,ψ) points per basin. Run Natural Bond Orbital analysis to decompose the energy into steric (Pauli repulsion), electrostatic, hyperconjugation, and charge transfer. Map these QM-defined categories onto your classical three-layer decomposition. This would tell you: does your "steric" channel (Layer 1) actually correspond to QM Pauli repulsion, or does it also absorb hyperconjugation?
+n→π geometry scan* (~days). The n→π* interaction has a known geometric signature: the O···C=O distance < 3.2 Å and the Bürgi-Dunitz angle ≈ 107°. You can measure this from your existing PDB coordinates without any QM at all. Then overlay it on your k_eff map to see whether regions of strong n→π* overlap correspond to the steric discontinuities you found in Paper 1. This is essentially free — just a new feature extraction from your existing dataset.
+SAPT decomposition for key H-bond geometries (~1–2 weeks). Symmetry-Adapted Perturbation Theory cleanly separates electrostatics, exchange-repulsion, induction, and dispersion for intermolecular interactions. Run SAPT on 10–20 representative backbone H-bond geometries from your dataset. Compare to your H-bond torque magnitudes. This tells you whether your H-bond energy function (which uses a simple distance/angle model) captures the right physics or misses induction/charge-transfer contributions.
+
+Q1: Is n→π geometry (φ,ψ)-dependent? → YES, clearly.*
+The strongest correlations are with ψ (r ≈ ±0.33–0.35), which makes perfect sense — ψ rotation directly changes the O_i···C_{i+1} distance by swinging the carbonyl oxygen relative to the next peptide plane.
+Q2: Basin ordering? → Exactly as predicted.
+αR: ⟨d⟩ = 3.09 Å, 68% strong. β: ⟨d⟩ = 3.45 Å, 33% strong. PPII intermediate at 3.39 Å. The extraction is working correctly.
+Q3: Does n→π explain residual variance beyond basin+residue? → NO.*
+ΔR² = −0.10 (it actually hurts prediction). The Pearson r with τ residuals is essentially zero (−0.005 for distance, +0.057 for energy). This is the decisive result.
+Q4: Pro/Gly outliers? → Partially reversed from expectation.
+Gly is second-weakest (3.358 Å, 42% strong) — expected, flexible backbone doesn't lock into close O···C contact. But Pro is not strongest — it's middle-low (3.290 Å, 42%). This actually makes sense on reflection: Pro's restricted φ ≈ −63° favors αR geometry, but its pyrrolidine ring sterically pushes the preceding carbonyl away, partially canceling the geometric advantage.
+The real ranking leaders are TRP, ASN, THR, ASP — residues with H-bond-capable sidechains that can form secondary interactions stabilizing the close O···C geometry. That's interesting but not what we're looking for.
+Bottom line: n→π is real, (φ,ψ)-dependent, and basin-specific — but it's already fully captured by your (φ,ψ) binning.* It doesn't add independent information beyond what Papers 1–2 already extract. This makes physical sense: n→π* is a consequence of backbone geometry, not an independent force acting on it. When you bin by (φ,ψ), you've implicitly binned by n→π* strength.
+What this means for Paper 3:
+The n→π* path is a publishable negative/confirmatory result ("classical (φ,ψ) binning implicitly captures the dominant QM orbital overlap") but not a standalone paper. So we pivot to the next candidate: hyperconjugation in β-branched residues.
+This is actually the more promising direction for Paper 3 anyway, because your Paper 2 already found the unexplained VAL/ILE/THR anomaly — β-branching drives Cβ angle variation more than steric bulk predicts. Hyperconjugation (σ(Cβ–Cγ) → σ*(Cα–N)) is the QM explanation for that excess.
+
+Clear result — Scenario B. All correlations with residuals are near zero (max |r| ≈ 0.15 for prod_cos2_N vs ∠C-Cα-Cβ, barely significant), and every GBR ΔR² is negative. Hyperconjugation geometry, like n→π*, is already captured by (φ,ψ) + residue type binning.
+Let me be honest about what this means for the "classical → quantum" Paper 3 concept:
+Two QM candidates tested, both dead. Both n→π* orbital overlap and σ→σ* hyperconjugation are real physical effects, but neither adds independent predictive power beyond what your classical (φ,ψ, basin, residue, χ₁) framework already captures. The reason is actually elegant: both effects are geometrically determined by backbone and sidechain dihedrals, so when you bin by those dihedrals, you've implicitly binned by the QM interactions too.
+This is actually a strong finding for a different kind of paper. Instead of "QM adds to classical mechanics," the story is: "Classical backbone geometry is a sufficient statistic for the dominant QM interactions in protein local structure." Your mechanical framework from Papers 1–2 isn't missing QM — it's implicitly encoding it through the geometry.
+So let me reframe what Paper 3 could be. There are two viable paths:
+Path A: The "sufficiency" paper (negative result, high impact if framed correctly)
+"We tested whether quantum-mechanical interactions (n→π*, hyperconjugation) explain residual variance in backbone geometry beyond classical mechanical descriptors. They don't. This establishes that the Ramachandran mechanical force field (Paper 1) and bond-angle decomposition (Paper 2) are sufficient statistics for local backbone physics — QM effects are geometrically redundant with classical torsional observables."
+This is publishable but niche. It's basically a methods/validation paper.
+Path B: Pivot back to the original "glue/cloud" concept
+Forget the QM overlay. Paper 3 becomes what you originally envisioned — the unified constant library and NeRF-based force-field replacement. You already have k_eff maps from Paper 1, bond-angle deformation tables from Paper 2, and now confirmation that no QM corrections are needed. The deliverable is a complete geometry prediction system benchmarked against AMBER.
+Path C: The alanine dipeptide QM benchmark as a standalone validation
+Run the tractable QM scan (~1 week compute) to compare your empirical k_eff surface to an ab initio potential surface. This doesn't need to explain residuals — it needs to show agreement. If your PDB-derived mechanical constants match QM to within the refinement noise floor, that's the validation that your classical framework is physically correct, not just statistically predictive.
+
+
+python merge_lj_into_p3.py \
+    --p1_lj /mnt/f/Protein_Folding/v5_rmm/p1_tj.csv \
+    --p2 /mnt/f/Protein_Folding/v6_gd/p2.csv \
+    --output /mnt/f/Protein_Folding/v8_g/p3.csv
+
+python ./v8_g/paper3_01_npi_star_geometry.py \
+    --csv /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --pdb_dir /mnt/f/Protein_Folding/pdb_cache \
+    --out ./paper3_npi/
+
+python ./v8_g/paper3_02_hyperconjugation.py \
+    --csv /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --pdb_dir /mnt/f/Protein_Folding/pdb_cache \
+    --out ./paper3_hyperconj/
+
+python ./v8_g/paper3_03_coupling_decomposition.py \
+    --csv /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --out ./paper3_coupling/ --bin_size 10
+
+python ./v8_g/paper3_04_wall_sign_change.py \
+    --csv /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --out ./paper3_walls/ --bin_size 10
+
+python /mnt/f/Protein_Folding/v8_g/paper3_05_comprehensive.py \
+    --csv /mnt/f/Protein_Folding/v8_g/p3_filtered.csv \
+    --out ./paper3_comprehensive/ --bin_size 10
+
+python /mnt/f/Protein_Folding/v8_g/paper3_06_corrected_decomposition.py \
+    --csv /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --out ./paper3_corrected/ --bin_size 10
+
+python /mnt/f/Protein_Folding/v8_g/paper3_06_gam_coupling.py \
+    --csv /mnt/f/Protein_Folding/v8_g/p3.csv \
+    --out ./paper3_gam/ --n_sub 50000 --n_boot 20
+
+molcore.py
+nerf_builder.py
+hbond_finder.py
+pdb_loader.py
+geom_utils.py
+generate_fixtures.py
+features_collector.py
+
+python features_collector.py --pdb_dir /mnt/f/Protein_Folding/pdb_cache --out features.csv --verbose 2>&1 | tee regen.log
+
+
+Paper 1 (Mechanical Equilibrium) asks: why is a residue where it is? It reframes the Ramachandran plot from a population map into a force field. Each (φ,ψ) position is the deterministic outcome of a local mechanical balance — steric torques dominate, they transmit across the Cα junction, and the three secondary structure types emerge as three distinct mechanical regimes. The αR basin isn't held by restoring forces; it's trapped by two orthogonal steric walls whose intersection happens to be (−60°, −40°). This is the causal foundation.Paper 2 (Multi-Scale) asks: given that a residue is at (φ,ψ), what happens to the bond angles? It shows that the mechanical structure established in Paper 1 propagates further — from dihedrals into three-dimensional geometry through the Cα center. Sidechain class sets the amplitude of distortion, χ₁ sets the direction, and the environment adds a third, weaker non-local correction. Bond angles are not fixed parameters; they are outputs of a mechanical hierarchy.Paper 3 (Coupling) asks: can backbone energetics be treated as separable one-dimensional terms? The answer is formally no. Using ANOVA it quantifies exactly how much variance the φ×ψ interaction term contributes to each observable — 15% to 51% depending on angle. It also shows that electronic corrections (n→π*) are geometrically redundant, and maps the energetic magnitude of coupling to ~1.6 kcal/mol, comparable to a hydrogen bond.

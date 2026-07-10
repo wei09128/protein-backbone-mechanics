@@ -1,0 +1,475 @@
+#------0, the main idea------
+Let me restate it to make sure we're aligned, because what you just said is actually bigger than "τ–φ,ψ correlation" and I want to make sure we build the cache for the full version.
+What you're actually proposing
+Not just τ (∠N–Cα–C) responding to φ,ψ. You're saying the entire local geometry at residue i deforms in response to the mechanical environment:
+
+τ = ∠N–Cα–C (the classic tau)
+ω (peptide bond planarity)
+∠N–Cα–Cβ (where the sidechain points out, N-side)
+∠C–Cα–Cβ (where the sidechain points out, C-side)
+implicitly: ∠C_{i−1}–N–Cα, ∠Cα–C–N_{i+1}, ∠Cα–C–O, bond lengths...
+
+All of these are "the structure breathing under load." Under the classical Ramachandran view, these are fixed or noise. Under your mechanical view, they're all observables of the same force field — and they should all correlate with the net torque and with φ,ψ in specific, predictable ways.
+This is actually a stronger claim than paper 1. Paper 1 says: φ,ψ live where the forces balance. Paper 2 says: everything else bends too, and it bends in the direction the forces push it.
+If this is right, you have:
+
+A multi-observable test: τ, ω, ∠N–Cα–Cβ, ∠C–Cα–Cβ should each correlate with φ,ψ in specific patterns. Each correlation is an independent test of the force field. Getting one right could be luck; getting four right is not.
+A connection to existing literature: Karplus 1996 and Berkholz 2009/2012 already showed τ depends on φ,ψ empirically. You would be the first to explain it mechanically. Same for the Cβ angles (which correlate with χ₁ rotamers, another link).
+A prediction: these correlations should be derivable from your torque decomposition. Not just "X correlates with Y" but "the slope is this because the force is this."
+
+The Cβ angles are especially interesting
+∠N–Cα–Cβ and ∠C–Cα–Cβ are where the sidechain "leans." They're almost never studied systematically. But think about what they mean mechanically:
+
+In your v5 steric field, CB contributes a force −unit(CB − CA) × sc_mass/100 centered at Cβ
+The direction Cβ points is controlled by exactly these two angles
+If Cβ is being pushed by packing forces, these angles should deform
+And they couple to χ₁ — so the sidechain orientation (rotamer) and the backbone geometry are not independent
+
+go in this strict order, validating each file before moving to the next:
+geom_utils.py — pure functions: _unit, _torque, _local_frame, _rodrigues, _cg_position, _ss_bin, plus new: bond_length, bond_angle, dihedral, improper. Layer 1 tests (synthetic inputs, known answers).
+generate_fixtures.py — runs mkdssp on 1UBQ, downloads 1CRN + fold-switchers, saves reference outputs.
+structure_cache.py — PDB → full .pkl with schema above. Validates: coords round-trip, bond angles match molcore, H-bonds match mkdssp on 1UBQ (≥95% strong bond agreement, Pearson r > 0.99 on energies).
+features_steric.py — Group A, loose mode, tested on synthetic α-helix + 1UBQ.
+features_forces.py — Group B, strict mode (must reproduce v5 numbers exactly on a sample of residues).
+features_context.py — Group C, strict mode.
+features_geometry.py — NEW, paper 2 features: τ, ω, Cβ angles, bond lengths, impropers. With tests against known ideal helix values.
+features_targets.py — sin/cos outputs.
+build_dataset.py — orchestrator.
+
+--------------------------------------------------
+------1, HBond finder 5 layers of validation------
+python generate_fixtures.py --self_test
+rm tests/fixtures/*_dssp.pkl tests/fixtures/*_dssp.txt tests/fixtures/*_chainA.pdb
+python generate_fixtures.py --pdb_cache /mnt/f/Protein_Folding/pdb_cache --fixtures "/mnt/f/Protein_Folding/v6_GeometryDeformation/tests/fixtures"
+python nerf_builder.py
+python hbond_finder.py --self_test
+
+Four layers:
+Layer 1 — Physics sanity (no external deps, ~1 sec)
+8 tests verified here: dssp_energy value at ideal geometry, sign, distance scaling, angle_NHO at 90°/180°, place_H_dssp bond length + direction, _unit zero safety
+All 8 tests PASS in my sandbox ✓
+Layer 2 — Synthetic peptides (needs nerf_builder.py, ~5 sec)
+Builds ideal α-helix, 3₁₀-helix, and poly-proline II via NeRFBuilder
+Asserts α-helix has ≥8 strong i→i+4 bonds, no short-range strong bonds, energies in [−5, −0.5]
+Asserts 3₁₀-helix has ≥5 strong i→i+3/+4 bonds
+Asserts poly-Pro has zero H-bonds (no amide H)
+Couldn't run here (no nerf_builder.py in sandbox) — tested on your machine
+Layer 3 — mkdssp fixture diff, STRICT (needs fixtures)
+Loads 1ubq_dssp.pkl and 1crn_dssp.pkl
+For each: loads the chain-extracted PDB, runs NeRFBuilder + find_hbonds, diffs against DSSP
+Computes: recall of strong bonds, Pearson r on matched energies, missed/extra bond samples
+Hard-fails if recall < 0.90 or Pearson r < 0.90
+Prints per-bond diagnostics for missed bonds so you can see what's wrong
+Layer 4 — Fold-switcher sanity, SOFT (needs fixtures)
+Runs the same diff on 2QKE, 5JYT, 2OUG, 6C6S, 1J8I, 2JP1
+Only hard-fails on exception or zero bonds
+Prints recall / corr numbers for diagnosis
+Layer 5 Feature Extraction & Force Sanity
+
+# check the fixture for one specific bond
+cd "/mnt/f/Protein_Folding/v6_GeometryDeformation"
+python << 'EOF'
+import pickle
+with open('tests/fixtures/1ubq_dssp.pkl', 'rb') as f:
+    d = pickle.load(f)
+print(f"pdb_id: {d['pdb_id']}  chain: {d['chain']}  n_bonds: {d['n_bonds']}")
+print(f"Top 15 strongest bonds:")
+for b in sorted(d['bonds'], key=lambda x: x['energy'])[:15]:
+    print(f"  donor={b['donor']:4d}  acceptor={b['acceptor']:4d}  "
+          f"E={b['energy']:+.2f}  source={b['source']}")
+# Also count how many bonds have out-of-range indices
+bad = [b for b in d['bonds'] if b['donor'] > 76 or b['acceptor'] > 76 or b['donor'] < 1 or b['acceptor'] < 1]
+print(f"\nBonds with indices outside [1, 76]: {len(bad)}")
+if bad:
+    print("First 5 bad ones:")
+    for b in bad[:5]:
+        print(f"  donor={b['donor']:4d}  acceptor={b['acceptor']:4d}  "
+              f"E={b['energy']:+.2f}  source={b['source']}")
+EOF
+# missing residue, alt conformation, or chain-break handling diagnose
+python << 'EOF'
+from nerf_builder import NeRFBuilder
+for pdb in ['5jyt', '1j8i', '2jp1']:
+    path = f'tests/fixtures/{pdb}_chainA.pdb'
+    try:
+        b = NeRFBuilder(pdb_file=path)
+        print(f"{pdb}: n_res={b.n_res}  "
+              f"N={len(b.data['N'])} CA={len(b.data['CA'])} "
+              f"C={len(b.data['C'])} O={len(b.data['O'])}")
+    except Exception as e:
+        print(f"{pdb}: FAIL {e}")
+EOF
+# check DSSP
+cd "/mnt/f/Protein_Folding/v6_GeometryDeformation"
+# Show lines 29-35 of the 1UBQ DSSP text (the first few residue records)
+sed -n '29,35p' tests/fixtures/1ubq_dssp.txt
+# Show the total number of residue records
+grep -c "^  *[0-9]" tests/fixtures/1ubq_dssp.txt
+# Find what residue index 64 looks like
+grep "^   64" tests/fixtures/1ubq_dssp.txt
+grep "^  *63 " tests/fixtures/1ubq_dssp.txt | head -2
+# raw form of residue 64
+awk 'NR>=29 && /^  *64 / {print; exit}' tests/fixtures/1ubq_dssp.txt | cat -A
+# NMR issue
+grep -c "^MODEL" /mnt/f/Protein_Folding/pdb_cache/5jyt.pdb
+grep -c "^MODEL" /mnt/f/Protein_Folding/pdb_cache/1j8i.pdb
+grep -c "^MODEL" /mnt/f/Protein_Folding/pdb_cache/2jp1.pdb
+# parser extracting
+cd "/mnt/f/Protein_Folding/v6_GeometryDeformation"
+python << 'EOF'
+from generate_fixtures import parse_dssp_hbonds
+from pathlib import Path
+
+bonds = parse_dssp_hbonds(Path('tests/fixtures/1ubq_dssp.txt'))
+# Find the bonds involving residue 64
+res64_bonds = [b for b in bonds if b['donor'] == 64 or b['acceptor'] == 64]
+print(f"All bonds involving residue 64: {len(res64_bonds)}")
+for b in sorted(res64_bonds, key=lambda x: x['energy']):
+    print(f"  donor={b['donor']:4d}  acceptor={b['acceptor']:4d}  "
+          f"E={b['energy']:+.2f}  source={b['source']}")
+
+# Show the raw line 64 with column markers
+print("\nRaw DSSP line for residue 64:")
+lines = open('tests/fixtures/1ubq_dssp.txt').read().splitlines()
+# Find the header and line 64
+for i, l in enumerate(lines):
+    if '#  RESIDUE' in l:
+        print(f"HDR: {l}")
+        print(f"     0         1         2         3         4         5         6         7         8         9")
+        print(f"     0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789")
+        # Scan for residue 64 starting from the header
+        for j in range(i+1, min(i+80, len(lines))):
+            if lines[j][:5].strip() == '64':
+                print(f"R64: {lines[j]}")
+                break
+        break
+EOF
+
+# actual H coordinates and bond energies for residues 5-8 (middle of the helix where the i→i+4 pattern should be strongest)
+cd "/mnt/f/Protein_Folding/v6_GeometryDeformation"
+python << 'EOF'
+import numpy as np
+from nerf_builder import NeRFBuilder
+from hbond_finder import find_hbonds, dssp_energy
+# Build the same synthetic α-helix Layer 2 builds
+seq = ['ALA'] * 15
+b = NeRFBuilder(sequence=seq)
+phi = np.full(15, np.radians(-60.0))
+psi = np.full(15, np.radians(-45.0))
+coords = b.build(phi, psi)
+# Print key atom positions for residues 0..7
+print("Synthetic α-helix coordinates (first 8 residues):")
+print(f"{'i':>3} {'res':>4} {'N':>30} {'CA':>30} {'C':>30} {'O':>30} {'H':>30}")
+for i in range(min(8, 15)):
+    n = coords['N'][i]
+    ca = coords['CA'][i]
+    c = coords['C'][i]
+    o = coords['O'][i]
+    h = coords['H'][i]
+    print(f"{i:>3} {seq[i]:>4} "
+          f"({n[0]:6.2f},{n[1]:6.2f},{n[2]:6.2f}) "
+          f"({ca[0]:6.2f},{ca[1]:6.2f},{ca[2]:6.2f}) "
+          f"({c[0]:6.2f},{c[1]:6.2f},{c[2]:6.2f}) "
+          f"({o[0]:6.2f},{o[1]:6.2f},{o[2]:6.2f}) "
+          f"({h[0]:6.2f},{h[1]:6.2f},{h[2]:6.2f})")
+# Compute H-bond candidate distances and energies for i→i+4 pattern
+print("\nExpected α-helix bonds (donor=i+4, acceptor=i):")
+print(f"{'donor':>5} {'accept':>6} {'r_OH':>6} {'r_NO':>6} {'energy':>8}")
+for acc in range(11):
+    don = acc + 4
+    if don >= 15: break
+    H_don = coords['H'][don]
+    N_don = coords['N'][don]
+    C_acc = coords['C'][acc]
+    O_acc = coords['O'][acc]
+    if np.any(np.isnan(H_don)):
+        print(f"{don:>5} {acc:>6}   H is NaN")
+        continue
+    r_OH = np.linalg.norm(O_acc - H_don)
+    r_NO = np.linalg.norm(O_acc - N_don)
+    e = dssp_energy(N_don, H_don, C_acc, O_acc)
+    print(f"{don:>5} {acc:>6} {r_OH:>6.3f} {r_NO:>6.3f} {e:>+8.3f}")
+# Run find_hbonds
+bonds = find_hbonds(coords, list(seq))
+print(f"\nfind_hbonds returned {len(bonds)} bonds")
+strong = [b for b in bonds if b['category']=='strong']
+print(f"Strong: {len(strong)}")
+for b in bonds[:8]:
+    print(f"  donor={b['donor']:2d} acceptor={b['acceptor']:2d} "
+          f"r_oh={b['r_oh']:.2f} angle={b['angle_NHO']:.0f} "
+          f"E={b['energy']:+.3f} {b['category']}")
+EOF
+
+cd "/mnt/f/Protein_Folding/v6_GeometryDeformation"
+python << 'EOF'
+"""Check: does the v5 pipeline use real or synthetic O?"""
+import numpy as np
+from nerf_builder import NeRFBuilder
+b = NeRFBuilder(pdb_file='tests/fixtures/1ubq_chainA.pdb')
+phi, psi, omega, chi_list, angles, _ = b.extract_angles()
+# Real O from PDB
+real_O = b.data['O'].copy()
+real_N = b.data['N'].copy()
+# Reconstructed O from .build()
+coords = b.build(phi, psi, chi_list, angles)
+rebuilt_O = coords['O']
+rebuilt_N = coords['N']
+# Compare first 5 residues
+print("Residue  |  real O                    |  rebuilt O                 |  ΔO (Å)")
+for i in range(5):
+    dO = np.linalg.norm(real_O[i] - rebuilt_O[i])
+    print(f"  {i}      | ({real_O[i][0]:6.2f},{real_O[i][1]:6.2f},{real_O[i][2]:6.2f}) "
+          f"| ({rebuilt_O[i][0]:6.2f},{rebuilt_O[i][1]:6.2f},{rebuilt_O[i][2]:6.2f}) "
+          f"| {dO:.3f}")
+# Stats across all residues
+dO_all = np.linalg.norm(real_O - rebuilt_O, axis=1)
+dN_all = np.linalg.norm(real_N - rebuilt_N, axis=1)
+print(f"\nO position difference: mean={dO_all.mean():.3f} Å, max={dO_all.max():.3f} Å")
+print(f"N position difference: mean={dN_all.mean():.3f} Å, max={dN_all.max():.3f} Å")
+# Also check: was omega stripped?
+print(f"\nomega from extract: mean={np.degrees(omega).mean():.1f}° std={np.degrees(omega).std():.1f}°")
+print("(omega is not passed to build() — it always uses 180° — this may be the cause)")
+EOF
+--------------------------------------------------
+
+----------------------------------------------------
+------2, feature collection and its validation------
+    [2a] Geometry + targets + Group C context features
+    [2b] Group B (torques + H-bond summary) 
+    [2c] Group A (steric field) + orchestrator
+----------------------------------------------------
+
+------------------------------------------------------------
+------3, partial double bond peptide plane deformation------
+The peptide plane is a partial double bond. It resists deformation. So when we see τ deforming at residue i, something must be pushing on it. What's pushing?
+Local backbone coupling — φ(i) and ψ(i) themselves rotate the peptide plane, so τ(i) flexes because the two neighbouring peptide planes are tugging it through the Cα
+2. Sidechain lever — the Cβ sits off the peptide plane. χ1 rotation + sidechain mass creates a torque that pushes through the Cα and twists τ
+3. Non-local / through-space — a neighbouring residue's atoms (H-bond partner, steric clash 5 Å away) apply a force that pulls Cα sideways, deforming τ
+
+τ = ∠N-Cα-C. The Cα has four substituents in a tetrahedron: N, C, Cβ, Hα. The angle τ between N-Cα and Cα-C is the one we measure. If Cα were a perfect sp³ atom with no strain, τ would be 109.47° always. It's not. In real proteins τ ranges from ~103° to ~120°.
+
+What τ actually is, geometrically
+τ = ∠N-Cα-C. The Cα has four substituents in a tetrahedron: N, C, Cβ, Hα. The angle τ between N-Cα and Cα-C is the one we measure. If Cα were a perfect sp³ atom with no strain, τ would be 109.47° always. It's not. In real proteins τ ranges from ~103° to ~120°.
+The classical view says τ flexes because the sp³ hybridisation is soft — the force constant is ~80 kcal/mol/rad², stiff but not infinite. Your paper 1 view says τ flexes because the mechanical force field pushes it. Both views are true, but the mechanical view tells you what's doing the pushing.
+The subtlety you're pointing at — "through what?"
+You asked three things and they're all distinct:
+
+Through Cβ (sidechain): The Cβ is rigidly attached to Cα by a single bond with its own stiffness. Any force on the sidechain (sidechain packing, solvent, H-bond to a sidechain atom) propagates to Cα through that bond, which then deforms τ through the sp³ geometry constraint. This is the "sidechain lever" channel.
+Through backbone atoms (N, C, O, H): Forces on N (incoming H-bond as acceptor), O (outgoing H-bond as donor acceptor), H (amide H donor), or the neighbouring N/C through peptide bonds — all propagate into Cα through the N-Cα and Cα-C bonds. This is the "backbone strain" channel. It's direct and should dominate.
+Through-space non-bonded interactions: Steric clashes with atoms 3-5 Å away, electrostatic pulls from charged sidechains of distant residues. These don't go through any bond — they act directly on Cα's position. This is the "through-space" channel.
+
+The beautiful thing: each channel leaves a different fingerprint on the τ deformation, and you can separate them statistically. That's paper 2's real contribution.
+
+Panel A: Local backbone coupling — τ(φ, ψ)
+This is the classical Ramachandran-τ map. The heatmap I described before. But reinterpret it: the signal in this map is the backbone-strain channel only if we control for sidechain and non-local effects. The correlation of τ with (φ, ψ) IS the backbone-strain signature.
+Measurement: Δτ_backbone ≈ correlation(τ, φ) + correlation(τ, ψ) — essentially a 2D regression of τ on (φ, ψ), per residue type.
+tau_map.py
+
+Panel A: Local backbone coupling — τ(φ, ψ)
+This is the classical Ramachandran-τ map. The heatmap I described before. But reinterpret it: the signal in this map is the backbone-strain channel only if we control for sidechain and non-local effects. The correlation of τ with (φ, ψ) IS the backbone-strain signature.
+Measurement: Δτ_backbone ≈ correlation(τ, φ) + correlation(τ, ψ) — essentially a 2D regression of τ on (φ, ψ), per residue type.
+------------------------------------------------------------
+
+
+
+molcore.py
+nerf_builder.py
+hbond_finder.py
+pdb_loader.py
+geom_utils.py
+generate_fixtures.py
+features_collector.py
+
+
+cd /mnt/f/Protein_Folding/v6_GeometryDeformation
+# 1, test hbond finder
+python hbond_finder.py --self_test
+
+# 2, collect residues
+python features_collector.py --pdb_dir /mnt/f/Protein_Folding/pdb_cache --out features.csv --verbose 2>&1 | tee regen.log
+
+# 3, The Mechanical "Tug-of-War"
+python paper2_01a_tau_map.py --csv features.csv
+python paper2_01b_tau_by_residue.py --csv features.csv
+Question 1: is τ (and ω, and the Cβ angles) universally deformed across residues?
+The answer was yes with a caveat: ∠N-Cα-Cβ's α-region shows residue-dependent sign. The sign-flippers are exactly the β-branched residues (VAL, ILE, THR), as we confirmed in paper2_03_sidechain_scatter.py.
+# Test 1: ω — the peptide bond
+python paper2_02_angle_universality.py --csv features.csv \
+    --angle omega_measured_deg --circular
+# Test 2: N-Cα-Cβ angle
+python paper2_02_angle_universality.py --csv features.csv \
+    --angle angle_N_CA_CB
+# Test 3: C-Cα-Cβ angle
+python paper2_02_angle_universality.py --csv features.csv \
+    --angle angle_C_CA_CB
+python paper2_03_sidechain_scatter.py --csv features.csv
+python helper/weakest_link_p_value_finder.py
+python paper2_F1_assembly.py --csv features.csv --out F1.png --dpi 300
+F1A: Do the four panels share visual structure? The α/β/PPII regions should show different colors on different panels but similar spatial organization. If yes, that tells readers "these aren't four independent effects, they're four signatures of the same underlying backbone mechanics."
+F1B: Is Panel B (ω) visually compelling? Many readers assume ω ≈ 180° always. If your panel shows clearly-colored β and PPII regions, that's a visual jolt — "the peptide plane isn't rigid."
+F1C: Do Panels C and D look like mirror images? ∠N-Cα-Cβ (φ-side) and ∠C-Cα-Cβ (ψ-side) should show different dependences — Panel C should vary more along the φ axis, Panel D more along ψ. If that geometric symmetry is visible, it's a beautiful mechanistic cue for the reader.
+F1D: Is Panel C's α region mixed in color? Given the 82% agreement we saw (bimodal α-split), the all-residue-pooled α region in Panel C should look less vivid than the other panels' α regions. That's a foreshadow of the sidechain channel, which Move A will unpack.
+The spatial structure across the four panels reads at a glance — the reader sees that τ's β compression, ω's β/PPII dip, and the Cβ angle asymmetry all sit in the same region, telling you they share a mechanistic origin. And you can clearly see in Panel C the soft/noisy α region that sets up the sidechain story.
+
+question 2: What does the sidechain mechanically DO to the backbone angle response?
+The specific sub-questions:
+Is the effect controlled by Cβ substitution pattern (branched/unbranched/aromatic), or by finer features (χ1 rotamer state, sidechain H-bonding)?
+Does χ1 rotamer state modulate the response? For a fixed residue in a fixed (φ,ψ) basin, does τ depend on which χ1 well the sidechain sits in? If yes, the sidechain is directly transmitting force to Cα.
+Does the branching effect persist across all four angles, or only for ∠N-Cα-Cβ? Move B already hinted it hits τ magnitude too. We should quantify this for all four.
+The physical thesis tests:
+The sidechain is a mechanical lever attached to Cα. The Cβ substitution pattern dictates how much force the lever transmits. β-branched residues are stiffer levers and produce larger backbone angle deformations.
+
+
+
+python hbond_finder.py --self_test
+python features_collector.py --pdb_dir /mnt/f/Protein_Folding/pdb_cache --out features.csv --verbose 2>&1 | tee regen.log
+python filter_quality.py --input /mnt/f/Protein_Folding/v6_GeometryDeformation/p2_all.csv --output  /mnt/f/Protein_Folding/v6_GeometryDeformation/p2.csv \
+    --bfactor 30 --window 3
+
+
+python paper2_01a_tau_map.py --csv p2.csv
+python paper2_01b_tau_by_residue.py --csv p2.csv
+python paper2_02_angle_universality.py --csv p2.csv --angle omega_measured_deg --circular
+python paper2_02_angle_universality.py --csv p2.csv --angle angle_N_CA_CB
+python paper2_02_angle_universality.py --csv p2.csv --angle angle_C_CA_CB
+python paper2_03_sidechain_scatter.py --csv p2.csv
+python helper/weakest_link_p_value_finder.py
+python paper2_04_sidechain_channel.py --csv p2.csv
+python paper2_05_rotamer_per_residue.py --csv p2.csv
+python paper2_06_val_anomaly.py --pdb_dir /mnt/f/Protein_Folding/pdb_cache/
+python paper2_07_residual_regression.py --csv p2.csv
+
+python paper2_f1_assembly.py --csv p2.csv --out F1.png --dpi 300
+python paper2_f2_assembly.py --csv p2.csv --out F2.png --dpi 300
+python paper2_f3_assembly.py --csv p2.csv --out F3.png --dpi 300
+
+python /mnt/f/Protein_Folding/v7_BackbondStiffness/paper3_bond_length_scoping.py \
+    --csv /mnt/f/Protein_Folding/v6_GeometryDeformation/p2_old.csv \
+    --pdb_dir /mnt/f/Protein_Folding/pdb_cache \
+    --out /mnt/f/Protein_Folding/v7_BackbondStiffness/scoping \
+    --verbose
+python paper2_supp_stiffness_hierarchy.py \
+    --csv p2_old.csv \
+    --bonds /mnt/f/Protein_Folding/v7_BackbondStiffness/scoping/bond_lengths.csv \
+    --out ./
+
+
+python mnt/f/Protein_Folding/v7_BackbondStiffness/paper3_resolution_stratified.py     --bonds mnt/f/Protein_Folding/v7_BackbondStiffness/scoping/bond_lengths.csv     --pdb_dir  mnt/f/Protein_Folding/pdb_cache     --out mnt/f/Protein_Folding/v7_BackbondStiffness/scoping_resolution/     --verbose
+
+
+(base) ei@labi-232425:/mnt/f/Protein_Folding/v6_GeometryDeformation$ python paper2_01a_tau_map.py --csv features.csv
+Loading features.csv ...
+  total rows: 2,516,297
+  after NaN drop:      2,461,699  (54,598 dropped)
+  main (non-GLY/PRO):  2,171,550
+  GLY separately:      177,568
+  PRO separately:      112,581
+
+Residue-type τ medians (deg):
+  ALA: 111.104   (n = 203,078)
+  ARG: 111.063   (n = 127,171)
+  ASN: 111.534   (n = 105,009)
+  ASP: 111.171   (n = 147,156)
+  CYS: 110.826   (n = 32,793)
+  GLN: 111.139   (n = 93,060)
+  GLU: 111.227   (n = 165,670)
+  HIS: 111.062   (n = 58,868)
+  ILE: 109.865   (n = 137,644)
+  LEU: 110.990   (n = 231,873)
+  LYS: 111.130   (n = 139,004)
+  MET: 110.990   (n = 41,538)
+  PHE: 110.801   (n = 100,021)
+  SER: 111.230   (n = 151,813)
+  THR: 110.700   (n = 136,007)
+  TRP: 110.995   (n = 37,838)
+  TYR: 110.924   (n = 91,267)
+  VAL: 109.766   (n = 171,740)
+
+Figure saved: paper2_01_tau_map.png
+
+======================================================================
+SUMMARY STATISTICS
+======================================================================
+  Bins with ≥30 residues: 484 / 1296
+  Total residues in valid bins:   2,167,816
+  Median residues per valid bin:  495
+
+  Global Δτ statistics (valid bins):
+    mean:   +0.0253°
+    median: -0.3795°
+    std:    1.9974°
+    min:    -3.4553°  (most compressed vs residue median)
+    max:    +4.9773°  (most expanded vs residue median)
+    peak-to-peak range: 8.4326°
+
+  Δτ in canonical regions (residue-median corrected):
+    α-helix (φ∈[-80,-40], ψ∈[-60,-20]): Δτ = +0.4693° ± 0.0017° (n=834,818)
+    β-sheet (φ∈[-150,-90], ψ∈[100,160]): Δτ = -1.5825° ± 0.0033° (n=480,069)
+    PPII    (φ∈[-90,-60],  ψ∈[120,160]): Δτ = -0.8852° ± 0.0050° (n=177,645)
+    αL      (φ∈[40,80],    ψ∈[20,80]): Δτ = +1.0865° ± 0.0099° (n=39,031)
+
+  Effect size:
+    signal (peak-to-peak bin means): 8.433°
+    noise  (within-bin residual std): 2.371°
+    signal/noise: 3.56
+
+======================================================================
+INTERPRETATION
+======================================================================
+  • If the α-helix region is BLUE (negative Δτ): τ is compressed
+    there — consistent with the helix H-bond pulling N-Cα and
+    Cα-C closer together.
+  • If the β-sheet region is RED (positive Δτ): τ is expanded
+    there — consistent with extended-chain geometry relaxing
+    the sp³ constraint.
+  • Signal/noise > 1 means the effect is real, not shot noise.
+  • If the map is flat: either there's no mechanical effect,
+    OR it's swamped by residue-composition drift — stratify
+    by residue type (Option 1) as a sanity check.
+
+(base) ei@labi-232425:/mnt/f/Protein_Folding/v6_GeometryDeformation$ python paper2_01b_tau_by_residue.py --csv features.csv
+Loading features.csv ...
+  2,171,550 residues (18 standard types, GLY/PRO excluded)
+
+==============================================================================
+Δτ in canonical regions, per residue (vs that residue's median τ)
+==============================================================================
+  res    median          α Δτ         β Δτ      PPII Δτ        αL Δτ
+  ----------------------------------------------------------------------------
+  ALA   111.104  +0.313±0.005 -1.766±0.014 -0.769±0.015 +1.110±0.049
+  ARG   111.063  +0.389±0.007 -1.753±0.014 -0.993±0.021 +1.077±0.038
+  ASN   111.534  +0.320±0.010 -2.333±0.021 -1.509±0.028 +0.938±0.019
+  ASP   111.171  +0.385±0.007 -2.505±0.020 -1.314±0.020 +1.018±0.025
+  CYS   110.826  +0.685±0.016 -1.430±0.025 -0.503±0.038 +1.494±0.087
+  GLN   111.139  +0.301±0.007 -1.761±0.017 -1.012±0.025 +0.954±0.040
+  GLU   111.227  +0.305±0.005 -1.880±0.015 -1.194±0.018 +0.997±0.037
+  HIS   111.062  +0.493±0.013 -1.679±0.021 -1.047±0.032 +1.334±0.042
+  ILE   109.865  +0.854±0.007 -1.476±0.010 -0.669±0.021 +1.576±0.259
+  LEU   110.990  +0.432±0.005 -1.844±0.010 -0.845±0.014 +1.216±0.053
+  LYS   111.130  +0.377±0.006 -1.778±0.014 -1.154±0.020 +1.033±0.033
+  MET   110.990  +0.406±0.011 -1.639±0.023 -0.829±0.038 +1.149±0.097
+  PHE   110.801  +0.515±0.009 -1.330±0.014 -0.662±0.024 +1.677±0.061
+  SER   111.230  +0.538±0.008 -1.557±0.015 -0.680±0.017 +1.249±0.040
+  THR   110.700  +0.600±0.009 -1.389±0.012 -0.827±0.021 +1.659±0.144
+  TRP   110.995  +0.570±0.015 -1.275±0.024 -0.798±0.035 +1.523±0.100
+  TYR   110.924  +0.506±0.009 -1.270±0.014 -0.711±0.027 +1.475±0.061
+  VAL   109.766  +0.969±0.007 -1.163±0.008 -0.480±0.018 +1.423±0.194
+
+==============================================================================
+SIGN AGREEMENT SUMMARY
+==============================================================================
+  α    expected expanded (+)     agree: 18/18, disagree:  0, n_too_small: 0
+  β    expected compressed (−)   agree: 18/18, disagree:  0, n_too_small: 0
+  PPII expected compressed (−)   agree: 18/18, disagree:  0, n_too_small: 0
+  αL   expected expanded (+)     agree: 18/18, disagree:  0, n_too_small: 0
+
+==============================================================================
+VERDICT
+==============================================================================
+  Overall agreement: 72/72 tests (100.0%)
+  → STRONG: the τ deformation is a universal mechanical response, not a composition artifact.
+    Paper 2's central claim is supported.
+
+Generating paper2_01b_tau_per_residue.png ...
+Figure saved: paper2_01b_tau_per_residue.png
+(base) ei@labi-232425:/mnt/f/Protein_Folding/v6_GeometryDeformation$
