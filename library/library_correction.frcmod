@@ -1,0 +1,26 @@
+Remark: Conformation-dependent geometry corrections
+Remark: Generated from PDB-derived geometry library (Paper 4)
+Remark: Replace standard equilibrium values with these
+
+ANGLE
+# ALA:  N -CX-C    63.00   110.98
+# ARG:  N -CX-C    63.00   110.91
+# ASN:  N -CX-C    63.00   111.34
+# ASP:  N -CX-C    63.00   110.91
+# CYS:  N -CX-C    63.00   110.68
+# GLN:  N -CX-C    63.00   110.99
+# GLU:  N -CX-C    63.00   111.13
+# GLY:  N -CX-C    63.00   113.11
+# HIS:  N -CX-C    63.00   110.95
+# ILE:  N -CX-C    63.00   109.63
+# LEU:  N -CX-C    63.00   110.76
+# LYS:  N -CX-C    63.00   111.00
+# MET:  N -CX-C    63.00   110.81
+# PHE:  N -CX-C    63.00   110.68
+# PRO:  N -CX-C    63.00   112.69
+# SER:  N -CX-C    63.00   111.12
+# THR:  N -CX-C    63.00   110.63
+# TRP:  N -CX-C    63.00   110.91
+# TYR:  N -CX-C    63.00   110.83
+# VAL:  N -CX-C    63.00   109.63
+

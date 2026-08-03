@@ -1,0 +1,17 @@
+angle,basin,n_loose,delta_loose,n_tight,delta_tight,pct_change,verdict,same_sign
+τ (N-Cα-C),α,600136,0.452,17602,0.651,44.2,Strengthened,True
+τ (N-Cα-C),β,343496,-1.624,13007,-1.579,-2.8,Robust,True
+τ (N-Cα-C),PPII,123310,-0.836,5161,-0.651,-22.1,Robust,True
+τ (N-Cα-C),αL,33406,1.01,1426,0.888,-12.1,Robust,True
+ω (peptide),α,600130,0.343,17600,0.861,151.4,Strengthened,True
+ω (peptide),β,343492,-1.41,13005,-1.676,18.9,Robust,True
+ω (peptide),PPII,123297,-1.491,5160,-1.967,31.9,Robust,True
+ω (peptide),αL,33404,-0.671,1426,-0.611,-9.0,Robust,True
+∠N-Cα-Cβ,α,579315,-0.062,16933,-0.255,308.5,Strengthened,True
+∠N-Cα-Cβ,β,338411,0.164,12837,0.298,82.0,Strengthened,True
+∠N-Cα-Cβ,PPII,119551,-0.181,4961,-0.426,135.5,Strengthened,True
+∠N-Cα-Cβ,αL,25943,0.463,1141,1.213,161.7,Strengthened,True
+∠C-Cα-Cβ,α,579315,0.258,16933,0.391,51.2,Strengthened,True
+∠C-Cα-Cβ,β,338411,-0.444,12837,-0.57,28.5,Robust,True
+∠C-Cα-Cβ,PPII,119551,-0.387,4961,-0.6,54.9,Strengthened,True
+∠C-Cα-Cβ,αL,25943,0.823,1141,1.106,34.4,Robust,True

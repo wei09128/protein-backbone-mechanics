@@ -330,6 +330,14 @@ def _print_disp_row(basin_name, grp_name, recs, store, stats, indent=False):
 # Plots — ALL BASINS including αR
 # ══════════════════════════════════════════════════════════════════════════════
 
+def _fmt_n(n):
+    """Compact sample-size formatting (191,219 -> 191k) to reclaim label
+    space for larger fonts, while still conveying reliability at a glance."""
+    if n >= 1000:
+        return f"{n/1000:.0f}k"
+    return str(n)
+
+
 def plot_all(records, aa_results, sign_results, disp_results, out_dir):
     import matplotlib
     matplotlib.use('Agg')
@@ -341,13 +349,13 @@ def plot_all(records, aa_results, sign_results, disp_results, out_dir):
 
     # ── Figure 1: Per-AA-group projection — all 6 basins ─────────────────────
     all_basins = sorted(BASIN_NAMES.keys())   # 0–5 inclusive
-    fig, axes = plt.subplots(2, 3, figsize=(21, 11))
+    fig, axes = plt.subplots(2, 3, figsize=(15, 9))
     axes_flat = axes.flat
     fig.suptitle(
         'Restoring projection per AA group × basin\n'
         'αR: positive = forces oppose displacement from centre (within-well restoring)\n'
         'Others: positive = forces point toward αR reference',
-        fontsize=13, fontweight='bold'
+        fontsize=15, fontweight='bold'
     )
 
     for ax, basin in zip(axes_flat, all_basins):
@@ -373,12 +381,13 @@ def plot_all(records, aa_results, sign_results, disp_results, out_dir):
                   ('*' if p < 0.05 else ''))
             if sig:
                 offset = (ses[yi] + 0.005) * (1 if m >= 0 else -1)
-                ax.text(m + offset, yi, sig, va='center', fontsize=9)
+                ax.text(m + offset, yi, sig, va='center', fontsize=12)
 
         ax.set_yticks(y)
-        ax.set_yticklabels([f"{g} (n={ns[i]:,})" for i, g in enumerate(groups)],
-                           fontsize=8)
-        ax.set_xlabel('Mean restoring projection', fontsize=9)
+        ax.set_yticklabels([f"{g} (n={_fmt_n(ns[i])})" for i, g in enumerate(groups)],
+                           fontsize=12)
+        ax.set_xlabel('Mean restoring projection', fontsize=13)
+        ax.tick_params(axis='x', labelsize=11)
 
         # Label for αR clarifies the different convention
         if basin == 0:
@@ -386,7 +395,7 @@ def plot_all(records, aa_results, sign_results, disp_results, out_dir):
         else:
             subtitle = '(toward αR: + = restoring)'
         ax.set_title(f'{BASIN_NAMES[basin]}\n{subtitle}',
-                     color=BASIN_COLORS[basin], fontweight='bold', fontsize=11)
+                     color=BASIN_COLORS[basin], fontweight='bold', fontsize=14)
         ax.invert_yaxis()
 
     plt.tight_layout()
@@ -400,13 +409,13 @@ def plot_all(records, aa_results, sign_results, disp_results, out_dir):
                       if b in sign_results and 'ALL' in sign_results[b]]
     n_basins = len(basins_to_plot)
 
-    fig, axes = plt.subplots(2, 3, figsize=(21, 11))
+    fig, axes = plt.subplots(2, 3, figsize=(15, 9))
     axes_flat  = axes.flat
     fig.suptitle(
         'Sign consistency of restoring projection\n'
         'Green = restoring (>0) | Red = driving (<0)\n'
         'αR: restoring = forces oppose displacement within the well',
-        fontsize=12, fontweight='bold'
+        fontsize=14, fontweight='bold'
     )
 
     for ax, basin in zip(axes_flat, basins_to_plot):
@@ -423,22 +432,41 @@ def plot_all(records, aa_results, sign_results, disp_results, out_dir):
         ax.axvline(50,  color='#1D9E75', lw=0.8, ls=':')
         ax.axvline(-50, color='#E24B4A', lw=0.8, ls=':')
 
+        # Overlay: mean projected torque (black), per Fig 4D caption --
+        # "Directional coherence and mean projected torque (black)".
+        # Uses a twinned axis so the magnitude scale (kcal/mol/rad, from
+        # aa_results) doesn't need arbitrary rescaling onto the 0-100%
+        # consistency axis.
+        aa_bd = aa_results.get(basin, {})
+        mean_groups = [g for g in groups if g in aa_bd]
+        if mean_groups:
+            ax2 = ax.twiny()
+            mean_y = [groups.index(g) for g in mean_groups]
+            mean_vals = [aa_bd[g]['mean'] for g in mean_groups]
+            ax2.scatter(mean_vals, mean_y, color='black', marker='D', s=32,
+                        zorder=6, edgecolor='white', linewidth=0.5)
+            ax2.axvline(0, color='black', lw=0.5, ls='-', alpha=0.3)
+            ax2.set_xlabel('Mean projected torque (kcal/mol/rad)', fontsize=10,
+                           color='#333333')
+            ax2.tick_params(axis='x', labelsize=10, colors='#333333')
+
         for yi, g in enumerate(groups):
             bp  = bd[g]['binom_p']
             sig = '***' if bp < 0.001 else ('**' if bp < 0.01 else
                   ('*' if bp < 0.05 else ''))
             if sig:
-                ax.text(52, yi, sig, va='center', fontsize=8)
+                ax.text(52, yi, sig, va='center', fontsize=11)
 
         ax.set_yticks(y)
-        ax.set_yticklabels([f"{g} (n={bd[g]['n']:,})" for g in groups], fontsize=8)
-        ax.set_xlabel('% residues', fontsize=9)
+        ax.set_yticklabels([f"{g} (n={_fmt_n(bd[g]['n'])})" for g in groups], fontsize=12)
+        ax.set_xlabel('% residues', fontsize=13)
+        ax.tick_params(axis='x', labelsize=11)
         if basin == 0:
             subtitle = '(+ = opposes displacement)'
         else:
             subtitle = '(+ = toward αR)'
         ax.set_title(f'{BASIN_NAMES[basin]}\n{subtitle}',
-                     color=BASIN_COLORS[basin], fontweight='bold', fontsize=11)
+                     color=BASIN_COLORS[basin], fontweight='bold', fontsize=14)
         ax.set_xlim(-80, 80)
         ax.invert_yaxis()
 
@@ -462,14 +490,14 @@ def plot_all(records, aa_results, sign_results, disp_results, out_dir):
     basins_to_plot = all_basins
     n_cols = 3
     n_rows = 2
-    fig, axes = plt.subplots(n_rows, n_cols, figsize=(22, 12))
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(16, 9))
     axes_flat = axes.flat
 
     fig.suptitle(
         'Torque vs displacement from basin centre\n'
         'αR: negative OLS slope = forces oppose displacement = Hooke-like restoring\n'
         'Others: positive slope = forces point toward αR with increasing distance',
-        fontsize=12, fontweight='bold'
+        fontsize=14, fontweight='bold'
     )
 
     for i, basin in enumerate(basins_to_plot):
@@ -477,7 +505,7 @@ def plot_all(records, aa_results, sign_results, disp_results, out_dir):
         bd = disp_results.get(basin, {}).get('ALL')
         if bd is None:
             ax.set_facecolor('#ffeeee')
-            ax.set_title(f"{BASIN_NAMES[basin]}\n(no data)", color='red')
+            ax.set_title(f"{BASIN_NAMES[basin]}\n(no data)", color='red', fontsize=12)
             continue
 
         disp = bd['disp']
@@ -511,19 +539,20 @@ def plot_all(records, aa_results, sign_results, disp_results, out_dir):
                 label=f'OLS k={slope:+.4f}  p={p_sl:.1e}')
 
         ax.axhline(0, color='gray', lw=0.8, ls=':')
-        ax.set_xlabel('Displacement from basin centre (°)', fontsize=9)
+        ax.set_xlabel('Displacement from basin centre (°)', fontsize=12)
+        ax.tick_params(axis='both', labelsize=10)
         if basin == 0:
             ylabel = 'Restoring projection\n(−τ·d̂, + = opposes displacement)'
         else:
             ylabel = 'Restoring projection\n(+ = toward αR)'
-        ax.set_ylabel(ylabel, fontsize=8)
+        ax.set_ylabel(ylabel, fontsize=11)
         ax.set_title(
             f'{BASIN_NAMES[basin]}\n'
             f'r(|τ|,d)={bd["r_mag"]:+.3f}  '
             f'r(proj,d)={bd["r_proj"]:+.3f}',
-            color=BASIN_COLORS[basin], fontweight='bold', fontsize=10
+            color=BASIN_COLORS[basin], fontweight='bold', fontsize=13
         )
-        ax.legend(fontsize=7, loc='best')
+        ax.legend(fontsize=10, loc='best')
 
     # Hide unused axes
     for ax in list(axes_flat)[len(basins_to_plot):]:

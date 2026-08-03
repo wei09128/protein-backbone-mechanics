@@ -335,10 +335,10 @@ def main():
     plot_rotamer_heatmap_panel(axes_B, rot_data)
 
     # ── Super-title ──────────────────────────────────────────────────────────
-    fig.suptitle(
-        'Figure 2.  The sidechain mechanical lever: '
-        'class-stratified and χ1-rotamer effects on backbone angles',
-        fontsize=13, fontweight='bold', y=0.975)
+    # fig.suptitle(
+    #     'Figure 2.  The sidechain mechanical lever: '
+    #     'class-stratified and χ1-rotamer effects on backbone angles',
+    #     fontsize=13, fontweight='bold', y=0.975)
 
     plt.savefig(args.out, dpi=args.dpi, bbox_inches='tight', facecolor='white')
     print(f"\nFigure saved: {args.out}  ({args.dpi} dpi)")

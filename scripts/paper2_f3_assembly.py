@@ -2,11 +2,28 @@
 paper2_F3_assembly.py — Figure 3: the non-local channel hierarchy
 ===================================================================
 
+CHANGES from original:
+  1. effect_size() now also returns a bootstrap standard error, so
+     Panel B bars can show error bars (previously no uncertainty was
+     computed at all for these quartile-effect-size values).
+  2. Panel B bars now plotted with xerr = bootstrap SE.
+  3. fig.suptitle(...) removed.
+  4. Row gap (hspace) narrowed between row 0 (A,B) and row 1 (C,D),
+     and `top` raised slightly to reclaim the space freed by dropping
+     the suptitle.
+  5. Local feature importances (model.feature_importances_) are now
+     extracted and printed per angle, so claims like "psi dominant
+     (importance 0.79)" in the manuscript text are backed by a real,
+     reproducible number from this script rather than an unverified
+     figure. Not currently plotted as a panel -- console/CSV output
+     only, since Fig. 3/4 as designed has no local-importance panel.
+
 Four panels showing that backbone bond angles couple to the non-local
 environment to different degrees:
 
   Panel A: Local R² bar chart — which angles are local-dominated?
-  Panel B: Top non-local feature effect sizes (2x2 mini-grid)
+  Panel B: Top non-local feature effect sizes (2x2 mini-grid), now with
+           bootstrap SE error bars
   Panel C: τ residual vs hb_n_strong (residual-tracker) — the non-local
            channel visualized
   Panel D: ω_dev residual vs steric_CA_5A (residual-tracker) — the
@@ -17,7 +34,7 @@ trans-only + omega_dev transform for ω (same as paper2_07 patched).
 
 Usage
 -----
-    python paper2_F3_assembly.py --csv features.csv
+    python paper2_F3_assembly_v2.py --csv features.csv
 """
 
 import argparse
@@ -48,6 +65,8 @@ _NONLOCAL_FEATURES = [
     'bfactor_ca',
 ]
 
+_N_BOOTSTRAP = 200  # resamples for effect-size SE
+
 
 def fit_and_residuals(df, target, features, random_state=42):
     """Fit GBR, return model, R², and residuals Series indexed to df."""
@@ -73,18 +92,45 @@ def fit_and_residuals(df, target, features, random_state=42):
     return model, r2, residuals, d
 
 
-def effect_size(x, y, residual_std):
-    """Quartile spread of mean y across quartiles of x, in units of residual_std."""
+def _quartile_effect(x, y, residual_std):
+    """Point estimate: quartile-mean spread of y, in units of residual_std."""
+    q = pd.qcut(x, 4, labels=False, duplicates='drop')
+    grp_means = pd.Series(y).groupby(q).mean()
+    return float(grp_means.max() - grp_means.min()) / residual_std
+
+
+def effect_size(x, y, residual_std, n_boot=_N_BOOTSTRAP, seed=42):
+    """
+    Quartile spread of mean y across quartiles of x, in units of residual_std,
+    plus a bootstrap standard error obtained by resampling (x, y) pairs with
+    replacement and recomputing the quartile-mean spread each time.
+
+    Returns (effect, se). se is np.nan if the point estimate itself fails.
+    """
     try:
-        q = pd.qcut(x, 4, labels=False, duplicates='drop')
-        grp_means = pd.Series(y).groupby(q).mean()
-        return float(grp_means.max() - grp_means.min()) / residual_std
+        point = _quartile_effect(x, y, residual_std)
     except Exception:
-        return float('nan')
+        return float('nan'), float('nan')
+
+    rng = np.random.default_rng(seed)
+    n = len(x)
+    boot_vals = np.empty(n_boot)
+    ok = 0
+    for i in range(n_boot):
+        idx = rng.integers(0, n, size=n)
+        try:
+            boot_vals[ok] = _quartile_effect(x[idx], y[idx], residual_std)
+            ok += 1
+        except Exception:
+            continue
+    if ok < max(20, n_boot // 4):
+        return point, float('nan')
+    se = float(np.std(boot_vals[:ok], ddof=1))
+    return point, se
 
 
 def compute_nonlocal_effects(d, residuals, feats):
-    """Return a DataFrame with r and effect_size for each non-local feature."""
+    """Return a DataFrame with r, effect, and effect_se for each non-local feature."""
     res_std = float(residuals.std())
     rows = []
     for feat in feats:
@@ -97,8 +143,9 @@ def compute_nonlocal_effects(d, residuals, feats):
         x = sub.loc[common].values
         y = residuals.loc[common].values
         r, p = pearsonr(x, y)
-        eff = effect_size(x, y, res_std)
-        rows.append(dict(feature=feat, r=r, effect=eff, n=len(common)))
+        eff, eff_se = effect_size(x, y, res_std)
+        rows.append(dict(feature=feat, r=r, p=p, effect=eff, effect_se=eff_se,
+                          n=len(common)))
     return pd.DataFrame(rows)
 
 
@@ -109,10 +156,9 @@ def tracker_plot(ax, x_values, residuals, feat_name, n_bins=10,
     x = np.asarray(x_values)[mask]
     y = np.asarray(residuals)[mask]
 
-    # Use quantile bins for stable sample sizes per bin
     try:
         q_edges = np.quantile(x, np.linspace(0, 1, n_bins + 1))
-        q_edges = np.unique(q_edges)  # drop duplicates for integer features
+        q_edges = np.unique(q_edges)
     except Exception:
         q_edges = np.linspace(x.min(), x.max(), n_bins + 1)
 
@@ -143,7 +189,6 @@ def tracker_plot(ax, x_values, residuals, feat_name, n_bins=10,
     ax.set_title(title, fontsize=11)
     ax.grid(True, alpha=0.25)
 
-    # Inset: n per bin on the right axis
     ax2 = ax.twinx()
     ax2.bar(centers, counts,
              width=(centers[-1] - centers[0]) / len(centers) * 0.6
@@ -161,7 +206,7 @@ def main():
     ap.add_argument('--csv', required=True)
     ap.add_argument('--n_sample', type=int, default=100_000)
     ap.add_argument('--seed', type=int, default=42)
-    ap.add_argument('--out', default='paper2_F3_nonlocal_channel.png')
+    ap.add_argument('--out', default='paper2_F3_nonlocal_channel_v2.png')
     ap.add_argument('--dpi', type=int, default=220)
     args = ap.parse_args()
 
@@ -177,9 +222,7 @@ def main():
 
     available = [f for f in _LOCAL_FEATURES if f in df.columns]
 
-    # ── Fit all four angles ──────────────────────────────────────────────────
     angles_spec = [
-        # (key, label, target_col, transform_fn)
         ('tau',  'τ',        'tau_deg',            None),
         ('omega','ω',        'omega_measured_deg', 'trans_dev'),
         ('n_cb', '∠N-Cα-Cβ', 'angle_N_CA_CB',      None),
@@ -198,20 +241,31 @@ def main():
         else:
             eff_target = target
         model, r2, resid, d = fit_and_residuals(df_a, eff_target, available)
+        print(f"  computing non-local effects + bootstrap SE "
+              f"({_N_BOOTSTRAP} resamples per feature)...")
         nl = compute_nonlocal_effects(d, resid, _NONLOCAL_FEATURES)
+
+        # Local feature importances -- verifies/replaces claims like
+        # "psi dominant (importance 0.79)" with a real number from this fit.
+        local_imp = pd.Series(model.feature_importances_, index=available)
+        local_imp = local_imp.sort_values(ascending=False)
+
         results[key] = dict(label=label, r2=r2, resid=resid, d=d,
-                             nl=nl, eff_target=eff_target)
+                             nl=nl, eff_target=eff_target,
+                             local_importance=local_imp)
         print(f"  R² = {r2:.4f},   max |effect| = "
               f"{nl['effect'].abs().max():.3f} SD")
+        print(f"  top local features: "
+              + ", ".join(f"{feat}={imp:.3f}"
+                           for feat, imp in local_imp.head(3).items()))
 
-    # ── Figure: clean 2x2 layout, no in-figure prose ─────────────────────────
     print(f"\nAssembling figure ...")
 
     fig = plt.figure(figsize=(15, 11))
     gs = fig.add_gridspec(
         2, 2,
-        hspace=0.42, wspace=0.28,
-        left=0.07, right=0.96, top=0.92, bottom=0.07,
+        hspace=0.20, wspace=0.28,   # narrowed from 0.42
+        left=0.07, right=0.96, top=0.97, bottom=0.07,  # top raised from 0.92 (no suptitle)
     )
 
     # ── Panel A: Local R² bar chart (top-left) ───────────────────────────────
@@ -227,7 +281,6 @@ def main():
               color='#888', fontsize=9, va='bottom', ha='right')
     axA.set_ylim(0, max(0.85, max(r2s) * 1.2))
     axA.set_ylabel('Local-model R²', fontsize=11)
-    #axA.set_title('A', fontsize=15, fontweight='bold', loc='left', pad=10)
     for bar, r in zip(bars, r2s):
         axA.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.018,
                   f'{r:.3f}', ha='center', fontsize=10.5, fontweight='bold')
@@ -236,12 +289,10 @@ def main():
 
     # ── Panel B: 2x2 top-non-local features block (top-right) ────────────────
     gs_B = gs[0, 1].subgridspec(2, 2, hspace=0.75, wspace=0.55)
-    # Invisible parent for panel label only
     axB_parent = fig.add_subplot(gs[0, 1])
     axB_parent.set_xticks([]); axB_parent.set_yticks([])
     for spine in axB_parent.spines.values():
         spine.set_visible(False)
-    #axB_parent.set_title('B', fontsize=15, fontweight='bold', loc='left', pad=10)
     axB_parent.patch.set_alpha(0)
 
     for idx, key in enumerate(keys):
@@ -252,8 +303,9 @@ def main():
         y = np.arange(len(top))
         colors_b = ['#c0392b' if abs(e) > 0.08 else '#aaa'
                      for e in top['effect']]
-        ax.barh(y, top['effect'], color=colors_b, edgecolor='white',
-                 linewidth=0.8)
+        ax.barh(y, top['effect'], xerr=top['effect_se'],
+                 color=colors_b, edgecolor='white', linewidth=0.8,
+                 error_kw=dict(ecolor='#333', elinewidth=0.9, capsize=2.5))
         ax.set_yticks(y)
         ax.set_yticklabels(top['feature'], fontsize=8)
         ax.axvline(0, color='k', lw=0.5)
@@ -278,7 +330,6 @@ def main():
                   n_bins=8,
                   title='',
                   color='#2a5d9f')
-    #axC.set_title('C', fontsize=15, fontweight='bold', loc='left', pad=10)
 
     # ── Panel D: ω_dev residual vs steric_CA_5A (bottom-right) ───────────────
     axD = fig.add_subplot(gs[1, 1])
@@ -292,17 +343,12 @@ def main():
                   n_bins=10,
                   title='',
                   color='#c0392b')
-    #axD.set_title('D', fontsize=15, fontweight='bold', loc='left', pad=10)
 
-    fig.suptitle(
-        'Figure 3.  Non-local channel: backbone angles differ in their '
-        'sensitivity to the protein environment',
-        fontsize=13, fontweight='bold', y=0.975)
+    # NOTE: fig.suptitle(...) intentionally removed per request.
 
     plt.savefig(args.out, dpi=args.dpi, bbox_inches='tight', facecolor='white')
     print(f"\nFigure saved: {args.out}  ({args.dpi} dpi)")
 
-    # ── Console summary ──────────────────────────────────────────────────────
     print("\n" + "=" * 78)
     print("FIGURE 3 SUMMARY")
     print("=" * 78)
@@ -311,9 +357,41 @@ def main():
         top_nl = r['nl'].copy()
         top_nl['abs_eff'] = top_nl['effect'].abs()
         top_row = top_nl.sort_values('abs_eff', ascending=False).iloc[0]
+        se_str = f"± {top_row['effect_se']:.3f}" if np.isfinite(top_row['effect_se']) else "(SE n/a)"
+        top_local_feat = r['local_importance'].index[0]
+        top_local_imp = r['local_importance'].iloc[0]
         print(f"  {r['label']:<10s}  R² = {r['r2']:.3f}  "
+              f"top local: {top_local_feat}={top_local_imp:.3f}  "
               f"top non-local: {top_row['feature']:<22s} "
-              f"effect = {top_row['effect']:+.3f} SD")
+              f"effect = {top_row['effect']:+.3f} SD {se_str}")
+
+    print("\n" + "-" * 78)
+    print("Full non-local effects table per angle (for manuscript verification)")
+    print("Bonferroni threshold = 0.01 / n_features_tested per angle")
+    print("-" * 78)
+    for key in keys:
+        r = results[key]
+        nl = r['nl'].copy()
+        nl['abs_eff'] = nl['effect'].abs()
+        nl = nl.sort_values('abs_eff', ascending=False)
+        n_tested = len(nl)
+        bonf_thresh = 0.01 / n_tested if n_tested > 0 else float('nan')
+        print(f"\n  {r['label']}  (n_features_tested={n_tested}, "
+              f"Bonferroni p-threshold={bonf_thresh:.2e}):")
+        for _, row in nl.iterrows():
+            se_str = f"{row['effect_se']:.3f}" if np.isfinite(row['effect_se']) else "n/a"
+            sig = "sig." if row['p'] < bonf_thresh else "n.s."
+            print(f"    {row['feature']:<22s} effect={row['effect']:+.3f} SD "
+                  f"(SE={se_str})  r={row['r']:+.3f}  p={row['p']:.3g}  [{sig}]")
+
+    print("\n" + "-" * 78)
+    print("Full local feature importances per angle (for manuscript verification)")
+    print("-" * 78)
+    for key in keys:
+        r = results[key]
+        print(f"\n  {r['label']}:")
+        for feat, imp in r['local_importance'].items():
+            print(f"    {feat:<18s} {imp:.4f}")
 
 
 if __name__ == '__main__':

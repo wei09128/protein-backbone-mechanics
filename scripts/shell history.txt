@@ -1,0 +1,261 @@
+cd /mnt/c/Wei/PBG
+conda activate amber
+
+# ============================================================
+# SHARED ACQUISITION + QC PIPELINE (feeds Papers 1, 3, and 4)
+# ============================================================
+
+# 1. Chain list from PISCES (<=25% seq id, resolution <=2.0A, R-factor <=0.25, length>=40)
+#    -> produces all_protein_ids.txt (9,162 chains)
+# 2. Batch download from RCSB PDB
+python ddownload_pdbs.py --id_list all_protein_ids.txt --out_dir ./pdb_cache/
+
+# 3. Per-residue backbone geometry + torque feature extraction
+python features_collector.py --pdb_dir ./pdb_cache --out features_v3.csv
+
+# 4. Quality filter (B-factor <=30, no chain gaps within +/-3 residues, standard AA only)
+#    -> 8,292 structures / 1,698,562 residues survive
+python filter_quality.py --input features_v3.csv --output features_v3_fixed.csv --bfactor 30 --window 3
+
+# 5. Add Lennard-Jones torques (shared across the whole series)
+nohup python -u add_lj_torques.py \
+    --csv features_v3_fixed.csv \
+    --pdb_dir ./pdb_cache \
+    --output features_lj_v3.csv \
+    --cutoff 8.0 --verbose > lj_torques_fixed.log 2>&1 &
+wait
+
+# 6. Scan for crystallographic defects (disulfides, altloc/partial-occupancy, hetero leakage)
+#    -- produces RAW_SCAN_230.csv, shared by both the Paper 1 and Paper 4 exclusion steps below
+python scan_all_close_contacts.py --pdb_dir ./pdb_cache --out RAW_SCAN_230.csv
+
+# 7. Confirm genuine defects by actual |tau| magnitude -> CONFIRMED_EXCLUSIONS_v3.csv
+python build_exclusion_list.py \
+    --clashes RAW_SCAN_230.csv \
+    --features features_lj_v3.csv \
+    --threshold 10000 \
+    --out CONFIRMED_EXCLUSIONS_v3.csv
+
+# 8a. Apply exclusions -> Paper 1/3 dataset (adds tier-2: 3 additional specific residues)
+python3 -c "
+import pandas as pd
+tier1 = pd.read_csv('CONFIRMED_EXCLUSIONS_v3.csv')[['pdb_id','res_idx']]
+tier2 = pd.DataFrame({'pdb_id': ['4QRE', '1R0M', '7OXD'], 'res_idx': [337, 316, 47]})
+final = pd.concat([tier1, tier2], ignore_index=True).drop_duplicates()
+excl_keys = set(zip(final['pdb_id'], final['res_idx']))
+df = pd.read_csv('features_lj_v3.csv', low_memory=False)
+key_series = pd.Series(list(zip(df['pdb_id'], df['res_idx'])), index=df.index)
+mask = key_series.isin(excl_keys)
+df.loc[mask, ['tau_phi_lj','tau_psi_lj']] = float('nan')
+df.to_csv('features_lj_v3_FINAL_CLEAN.csv', index=False)
+print(f'{mask.sum()} rows excluded, wrote features_lj_v3_FINAL_CLEAN.csv')"
+
+# 8b. Apply exclusions -> Paper 4 dataset (tier-1 only; confirmed functionally
+#     identical to 8a except for 2 extra columns -- see compare_paper1_paper4_csvs.py)
+python3 -c "
+import pandas as pd
+tier1 = pd.read_csv('CONFIRMED_EXCLUSIONS_v3.csv')[['pdb_id','res_idx']]
+df = pd.read_csv('features_lj_v3.csv', low_memory=False)
+key_series = pd.Series(list(zip(df['pdb_id'], df['res_idx'])), index=df.index)
+mask = key_series.isin(set(zip(tier1['pdb_id'], tier1['res_idx'])))
+df.loc[mask, ['tau_phi_lj','tau_psi_lj']] = float('nan')
+df.to_csv('features_lj_FINAL_CLEAN.csv', index=False)
+print(f'{mask.sum()} rows excluded, wrote features_lj_FINAL_CLEAN.csv')"
+
+# 9. Release dates (RCSB GraphQL) for blind temporal validation (Paper 4)
+python fetch_release_dates.py --id_list all_protein_ids.txt --out release_dates.csv
+
+# 10. PDB resolution per structure (Paper 3 stratification, Paper 4 Fig 9)
+#     -- MISSING FROM ORIGINAL SHELL HISTORY, added here
+python fetch_resolution.py --id_list all_protein_ids.txt --out resolutions.csv
+
+# 11. Verified CHARMM36 CMAP grids (Paper 4 Fig 3)
+python charmm_cmap_parser.py --prm par_all36m_prot.prm --out cmap_grid.npz
+
+
+# ============================================================
+# PAPER 1
+# ============================================================
+python paper1_phi_psi_ablation_gpu.py --csv features_lj_v3_FINAL_CLEAN.csv
+python paper1_condition_f_standalone.py --csv features_lj_v3_FINAL_CLEAN.csv
+python paper1_circularity_test_gpu.py --csv features_lj_v3_FINAL_CLEAN.csv
+
+python paper1_3_subgroup_projection_analysis.py --csv features_lj_v3_FINAL_CLEAN.csv --out_dir ./figures/paper1
+python paper1_fig6_plot.py --csv features_lj_v3_FINAL_CLEAN.csv --out_dir ./figures/paper1
+python paper1_figure7_rebuild.py --csv features_lj_v3_FINAL_CLEAN.csv --out_prefix ./figures/paper1/
+
+python paper1_table1_preprocess.py --csv features_lj_v3_FINAL_CLEAN.csv --out table1_cache.npz
+python paper1_table1_gpu_rf.py --cache table1_cache.npz
+python paper1_table1_gpu_gb.py --cache table1_cache.npz
+python paper1_table1_gpu_mlp.py --cache table1_cache.npz
+python paper1_table1_ridge.py --cache table1_cache.npz
+python paper1_table1_rf_importance.py --cache table1_cache.npz
+python paper1_fig3_plot.py --out_dir ./figures/paper1
+
+python paper1_table2_correct.py --csv features_lj_v3_FINAL_CLEAN.csv
+python paper1_fig4abc_fast.py --csv features_lj_v3_FINAL_CLEAN.csv --out_dir ./figures/paper1
+python paper1_fig4_full_combined.py --csv features_lj_v3_FINAL_CLEAN.csv --out_dir ./figures/paper1
+# (paper1_fig6_plot.py deliberately not repeated -- was a duplicate run in the
+#  original history; the ./figures/paper1 run above is the one that's used)
+
+
+# ============================================================
+# PAPER 2
+# ============================================================
+# FIXED: duplicate call to fetch_resolution.py removed (was called again here
+# with a different, likely-invalid flag name --pdb_ids_file; step 10 above
+# already produces resolutions.csv for the whole series -- reuse that file
+# rather than re-fetching under a possibly wrong flag).
+python scan_pdb_cache.py /mnt/c/Wei/PBG/pdb_cache --out candidates.csv --bfactor_zmax 2.0 --per_cell 20 --seed 0
+python mm_local_relax.py candidates.csv pdb_cache/ --mechlib ./protein-backbone-mechanics/library/constants_library.json --out relax_results.csv
+mkdir -p ./figures/paper2
+python paper2_01a_tau_map.py --csv features_lj_v3_FINAL_CLEAN.csv \
+    --out ./figures/paper2/01a_tau_map.png
+python paper2_01b_tau_by_residue.py --csv features_lj_v3_FINAL_CLEAN.csv \
+    --out ./figures/paper2/01b_tau_by_residue.png
+python paper2_02_angle_universality.py --csv features_lj_v3_FINAL_CLEAN.csv \
+    --angle tau_deg --out ./figures/paper2/02_tau_deg.png
+python paper2_02_angle_universality.py --csv features_lj_v3_FINAL_CLEAN.csv \
+    --angle omega_measured_deg --circular --out ./figures/paper2/02_omega.png
+python paper2_02_angle_universality.py --csv features_lj_v3_FINAL_CLEAN.csv \
+    --angle angle_N_CA_CB --out ./figures/paper2/02_ncacb.png
+python paper2_02_angle_universality.py --csv features_lj_v3_FINAL_CLEAN.csv \
+    --angle angle_C_CA_CB --out ./figures/paper2/02_ccacb.png
+python paper2_03_sidechain_scatter.py --csv features_lj_v3_FINAL_CLEAN.csv \
+    --out ./figures/paper2/03_sidechain_scatter.png
+python paper2_04_sidechain_channel.py --csv features_lj_v3_FINAL_CLEAN.csv \
+    --out_class ./figures/paper2/04_class_bars.png \
+    --out_rot ./figures/paper2/04_rotamer_bars.png
+python paper2_05_rotamer_per_residue.py --csv features_lj_v3_FINAL_CLEAN.csv \
+    --out ./figures/paper2/05_rotamer_per_residue.png
+python paper2_06_val_anomaly.py --pdb_dir ./pdb_cache \
+    --out ./figures/paper2/06_val_anomaly.png
+# NOTE: unlike its sibling paper2_0X scripts, this one takes only --pdb_dir
+# (no --csv). Confirm this is intentional (e.g. re-derives chi1 directly from
+# raw PDB coordinates for the Val CG1/CG2 labelling check) and not a missing
+# argument, before treating its output as reconciled against features_lj_v3_FINAL_CLEAN.csv.
+python paper2_07_residual_regression.py --csv features_lj_v3_FINAL_CLEAN.csv \
+    --out ./figures/paper2/07_residual_regression.png
+python paper2_08_bond_length_scoping.py --csv features_lj_v3_FINAL_CLEAN.csv --pdb_dir ./pdb_cache --out ./bond_lengths.csv
+python paper2_09_angle_resolution_stratified.py \
+    --features features_lj_v3_FINAL_CLEAN.csv \
+    --pdb_dir ./pdb_cache \
+    --out ./resolution_stratified/
+# FIXED: --pdb_dir was previously the literal placeholder text
+# /path/to/pdb_cache (from the script's own usage docstring), which produced
+# 0 PDBs found and crashed with a KeyError on 'pdb_id'. Corrected to
+# ./pdb_cache, matching every other call in this history.
+
+python paper2_count_class_extremes.py --csv features_lj_v3_FINAL_CLEAN.csv
+
+python paper2_f1_assembly.py --csv features_lj_v3_FINAL_CLEAN.csv --out ./figures/paper2/paper2_figure2.png --dpi 300
+python paper2_f2_assembly.py --csv features_lj_v3_FINAL_CLEAN.csv --out ./figures/paper2/paper2_figure3.png --dpi 300
+python paper2_f3_assembly.py --csv features_lj_v3_FINAL_CLEAN.csv --out ./figures/paper2/paper2_figure4.png --dpi 300
+python paper2_supp_stiffness_hierarchy.py --csv features_lj_v3_FINAL_CLEAN.csv --bonds bond_lengths.csv --out ./figures/paper2/paper2_figure5.png
+# FIXED: --bonds was previously bond_lengths.csv/bond_lengths.csv (a
+# nested-under-itself path, almost certainly a copy-paste artifact). Corrected
+# to the actual output of paper2_08_bond_length_scoping.py above
+# (--out ./bond_lengths.csv). Confirm this is genuinely correct if
+# bond_lengths.csv was ever actually a directory in your working tree.
+python mm_local_relax.py candidates.csv pdb_cache/ --k_dih 800 --out relax_results_final.csv
+# NOTE: two separate mm_local_relax.py runs exist -- relax_results.csv (no
+# --k_dih, used earlier for MechLib figure work) and relax_results_final.csv
+# (--k_dih 800). All verified Comment 3/4 MM-validation numbers (20/36, 31/36,
+# n=778, r=0.53) trace to relax_results_final.csv specifically -- double-check
+# nothing in the manuscript or response letter accidentally cites the earlier,
+# differently-parameterized relax_results.csv instead.
+python residual_analysis.py relax_results_final.csv --tau0 111.1
+# ============================================================
+# PAPER 3
+# ============================================================
+mkdir -p figures/paper3
+
+# n->pi* (CORRECTED version only -- see exclusion note above) and hyperconjugation
+python paper3_01_npi_star_geometry_corrected.py \
+    --csv features_lj_v3_FINAL_CLEAN.csv --pdb_dir ./pdb_cache --out ./figures/paper3/
+python paper3_02_hyperconjugation.py \
+    --csv features_lj_v3_FINAL_CLEAN.csv --pdb_dir ./pdb_cache --out ./figures/paper3/
+
+# Core coupling decomposition (naive eta^2 + corrected sequential R^2, for comparison)
+python paper3_03_coupling_decomposition.py \
+    --csv features_lj_v3_FINAL_CLEAN.csv --out ./figures/paper3/ --bin_size 10
+python paper3_06_corrected_decomposition.py \
+    --csv features_lj_v3_FINAL_CLEAN.csv --out ./figures/paper3/ --bin_size 10
+
+# GAM-based coupling -- PRIMARY metric, Abstract + Table 1 numbers
+python paper3_06_gam_coupling.py \
+    --csv features_lj_v3_FINAL_CLEAN.csv --out ./figures/paper3/ --n_sub 50000 --n_boot 200
+#   NOTE: n_boot bumped from 20 -> 200 relative to the original run; 20 iterations
+#   gives a coarse, high-variance CI for a number reported in the Abstract.
+
+# Nodal-line / sign-change analysis (CORRECTED version with local +/-20deg test)
+python paper3_04_wall_sign_change_fixed.py \
+    --csv features_lj_v3_FINAL_CLEAN.csv --out ./figures/paper3/ --bin_size 10
+
+# Supplementary comprehensive analysis (resolution/B-factor stratification, energy units, etc.)
+python paper3_05_comprehensive.py \
+    --csv features_lj_v3_FINAL_CLEAN.csv --bin_size 10 --out_dir ./figures/paper3/
+
+# Refinement-restraint confound + resolution stratification (Table S1)
+python paper3_stratified_robustness.py \
+    --csv features_lj_v3_FINAL_CLEAN.csv --resolutions resolutions.csv \
+    --pdb_dir ./pdb_cache --bin_size 10
+
+# Paper 1 vs Paper 3 correlation test (k_eff vs coupling; Table S3/Figure S2)
+python paper3_vs_paper1_correlation.py \
+    --csv features_lj_v3_FINAL_CLEAN.csv --bin_size 10 --out_dir ./figures/paper3/
+
+
+# ============================================================
+# PAPER 4
+# ============================================================
+
+# DNA acquisition (parallel to protein pipeline above)
+python fetch_dna_structures.py --resolution_max 3.0 --out_dir ./dna_pdb_cache/ --id_list all_dna_ids.txt
+python check_dna_redundancy.py --pdb_dir ./dna_pdb_cache/ --out dna_nonredundant_ids.txt
+
+# Per-nucleotide geometry extraction, PRE chain-break fix (kept for the before/after comparison)
+python dna_features_collector.py \
+    --pdb_dir ./dna_pdb_cache/ --id_list dna_nonredundant_ids.txt \
+    --out dna_features_v2_nonredundant.csv
+
+# Fixed extractor: geometric chain-break detector, excludes 8PW0 + 10 outlier residues
+python dna_features_collector.py \
+    --pdb_dir ./dna_pdb_cache/ --id_list dna_nonredundant_ids.txt \
+    --exclude_structures 8PW0 --out dna_features_v3_clean.csv
+
+# Figures + statistics
+python dna_mechlib_strain_plot.py --csv dna_features_v3_clean.csv --out ./dna_mechlib_final/
+python dna_coupling_test.py --csv dna_features_v3_clean.csv --out ./dna_coupling_final/
+#   NOTE: confirm dna_coupling_test.py vs paper4_dna_coupling_test.py are not
+#   duplicates before including both in the repo.
+
+python bootstrap_ci.py --csv features_lj_FINAL_CLEAN.csv --mode protein --out ./bootstrap/ --n_boot 2000
+python bootstrap_ci.py --csv dna_features_v3_clean.csv --mode dna --out ./bootstrap/ --n_boot 2000
+python blind_validation.py --csv features_lj_FINAL_CLEAN.csv --dates release_dates.csv --cutoff 2020-01-01 --out ./blind_validation/
+
+python paper4_figure1_protein_amber_mechlib.py --csv features_lj_FINAL_CLEAN.csv --out ./figures/paper4/
+python paper4_figure2_cross_forcefield.py --csv features_lj_FINAL_CLEAN.csv --out ./figures/paper4/
+python paper4_figure3_cmap_comparison.py --csv features_lj_FINAL_CLEAN.csv --cmap cmap_grid.npz --out ./figures/paper4/
+python paper4_figure4_dna_strain.py --csv dna_features_v3_clean.csv --out ./figures/paper4/
+
+# FIXED: --before must be the PRE-fix file to actually show a before/after
+# comparison; the original history passed dna_features_v3_clean.csv for BOTH
+# arguments, which cannot show any difference at all.
+python paper4_figure6_bibii_before_after.py \
+    --before dna_features_v2_nonredundant.csv \
+    --after dna_features_v3_clean.csv \
+    --out ./figures/paper4/
+
+python paper4_figure7_violin_distributions.py --csv features_lj_FINAL_CLEAN.csv --out ./figures/paper4/
+python paper4_figure8_dna_ridge_plot.py --csv dna_features_v3_clean.csv --out ./figures/paper4/
+python paper4_figure9_resolution_check.py --csv features_lj_FINAL_CLEAN.csv --resolutions resolutions.csv --out ./figures/paper4/
+python paper4_check_refinement_software_confound.py --csv features_lj_FINAL_CLEAN.csv --pdb_dir ./pdb_cache --n_boot 2000
+python paper4_refmac_only_sensitivity.py --csv features_lj_FINAL_CLEAN.csv --pdb_dir ./pdb_cache --n_boot 2000
+
+# ============================================================
+# FINAL DELIVERABLE: the downloadable MechLib correction tables
+# ============================================================
+python add_chi1_rotamer.py
+python export_mechlib_tables.py --protein_csv features_lj_v3_FINAL_CLEAN.csv \
+    --chi1_csv features_lj_v3_chi1.csv --out ./mechlib_tables

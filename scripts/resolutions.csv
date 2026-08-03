@@ -1,0 +1,5 @@
+resolution_id,name,width,height,scale
+1,Low,800,600,1.0
+2,Medium,1280,720,1.5
+3,High,1920,1080,2.0
+4,Ultra,3840,2160,4.0
