@@ -23,13 +23,13 @@ This repository contains the data, code, and geometry library for a four-paper s
 | **4** | [A Conformation-Dependent Geometry Library](#paper-4) | Drop-in replacement for fixed constants; reduces phantom strain by 31.5% |
 
 ### Key Insights
-![Paper 1 Results](figures/paper1_F1_3-layer.png)
+![Paper 1 Results](figures_and_supplementary_material/paper1_figure1.png)
 *Figure 1: The 3-layer mechanical model of backbone geometry.*
-![Paper 2 Results](figures/paper2_F0.png)
+![Paper 2 Results](figures_and_supplementary_material/paper2_figure1.png)
 *Figure 2: The three-channel mechanical hierarchy showing how N–Cα–C (τ) bond angles vary systematically with (φ,ψ)*
-![Paper 3 Results](figures/paper3_F0.png)
+![Paper 3 Results](figures_and_supplementary_material/paper3_figure1.png)
 *Figure 3: Analysis of φ × ψ coupling and the geometric redundancy of quantum mechanical corrections.*
-![Paper 4 Results](figures/paper4_F0.png)
+![Paper 4 Results](figures_and_supplementary_material/paper4_figure1_protein_amber_mechlib.png)
 *Figure 4: Performance of the CDL as a drop-in replacement, demonstrating the reduction in phantom strain.*
 
 **The central deliverable is the geometry library** — a lookup table that replaces the fixed bond lengths and bond angles used in AMBER, CHARMM, OPLS, and NeRF reconstruction with conformation-dependent values derived from 1.77 million residues.
