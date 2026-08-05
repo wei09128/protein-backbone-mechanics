@@ -1,0 +1,38 @@
+name: Validate MechLib package
+
+# Runs validate_mechlib_package.py automatically so regressions like the
+# chi1 bin-size mismatch or the truthy-zero fallback bug can't silently
+# creep back in without CI catching them.
+#
+# Adjust `working-directory` below if this workflow file is copied into
+# a repo where library/ lives at a different path.
+
+on:
+  push:
+    paths:
+      - 'protein-backbone-mechanics/library/**'
+      - '.github/workflows/validate-mechlib.yml'
+  pull_request:
+    paths:
+      - 'protein-backbone-mechanics/library/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: protein-backbone-mechanics/library
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run validation suite
+        run: python validate_mechlib_package.py

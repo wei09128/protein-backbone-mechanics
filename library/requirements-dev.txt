@@ -1,0 +1,12 @@
+# Extra dependencies for running validate_mechlib_package.py.
+# NOT needed to use GeometryLibrary / DNAGeometryLibrary themselves --
+# see requirements.txt for that (numpy only).
+-r requirements.txt
+pandas>=1.3
+
+# openmm is needed only if you call apply_corrections() to integrate
+# MechLib into an actual OpenMM simulation. It is NOT required to run
+# validate_mechlib_package.py (Section 5's check parses source text,
+# it doesn't execute apply_corrections()), so it's intentionally left
+# out of CI to keep the pipeline fast. Install separately if needed:
+#   pip install openmm
