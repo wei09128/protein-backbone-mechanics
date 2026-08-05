@@ -4,24 +4,29 @@ name: Validate MechLib package
 # chi1 bin-size mismatch or the truthy-zero fallback bug can't silently
 # creep back in without CI catching them.
 #
-# Adjust `working-directory` below if this workflow file is copied into
-# a repo where library/ lives at a different path.
+# Paths below assume this file lives at the REPO ROOT under
+# .github/workflows/ -- i.e. protein-backbone-mechanics/ IS the repo
+# root (matches the GitHub URL cited in the paper's Data Availability
+# statement: github.com/wei09128/protein-backbone-mechanics), not a
+# subfolder of some larger repo. Do NOT prefix paths below with
+# 'protein-backbone-mechanics/' -- actions/checkout already lands you
+# inside the repo root, so that prefix double-counts the directory.
 
 on:
   push:
     paths:
-      - 'protein-backbone-mechanics/library/**'
+      - 'library/**'
       - '.github/workflows/validate-mechlib.yml'
   pull_request:
     paths:
-      - 'protein-backbone-mechanics/library/**'
+      - 'library/**'
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: protein-backbone-mechanics/library
+        working-directory: library
 
     steps:
       - uses: actions/checkout@v4
