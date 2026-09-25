@@ -1,0 +1,11 @@
+Loading /mnt/c/Wei/PBM/features_lj_FINAL_CLEAN.csv ...
+  1,698,562 rows
+Bootstrapping (2000 resamples, resampling by pdb_id)...
+
+============================================================
+  Protein vs AMBER ff14SB (mean)
+  Point estimate (bootstrap mean): 39.6%
+  95% CI: [39.0%, 40.1%]
+  Bootstrap std: 0.29
+============================================================
+Saved raw bootstrap distribution to /mnt/c/Wei/PBM/paper4_section22_rerun_k80_v1/bootstrap/bootstrap_protein.npy

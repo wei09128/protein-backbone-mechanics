@@ -1,0 +1,43 @@
+Loading data...
+  1,698,562 residues, 8292 structures
+Classifying refinement software from PDB headers (REMARK 3)...
+  [1000/8292]
+  [2000/8292]
+  [3000/8292]
+  [4000/8292]
+  [5000/8292]
+  [6000/8292]
+  [7000/8292]
+  [8000/8292]
+
+Refinement software distribution (by structure):
+REFMAC        3683
+PHENIX        3312
+CNS/X-PLOR     784
+OTHER          271
+BUSTER         217
+TNT             25
+
+======================================================================
+  STRAIN REDUCTION STRATIFIED BY REFINEMENT SOFTWARE
+  (2000 bootstrap resamples, resampled by structure)
+======================================================================
+  REFMAC      : n_structures= 3683  n_residues= 792,750  reduction= 34.4%  95% CI=[33.8%, 35.0%]
+  PHENIX      : n_structures= 3312  n_residues= 651,552  reduction= 54.6%  95% CI=[53.9%, 55.2%]
+  CNS/X-PLOR  : n_structures=  784  n_residues= 154,502  reduction= 38.8%  95% CI=[34.9%, 41.9%]
+  OTHER       : n_structures=  271  n_residues=  54,211  reduction= 27.0%  95% CI=[25.4%, 28.8%]
+  BUSTER      : n_structures=  217  n_residues=  39,765  reduction= 36.2%  95% CI=[34.0%, 37.7%]
+  TNT         : n_structures=   25  n_residues=   5,782  reduction= 16.9%  95% CI=[14.0%, 20.2%]
+
+======================================================================
+INTERPRETATION:
+  If PHENIX shows NOTABLY LOWER reduction than REFMAC/CNS/other,
+  that is consistent with the CDL-restraint confound (PHENIX
+  structures may already be closer to conformation-dependent
+  equilibria before MechLib runs). If reduction is SIMILAR across
+  all software categories, that argues against the restraint
+  library being the primary driver of the observed effect.
+  Remember: PHENIX usage does not guarantee CDL restraints were
+  actually active for any given structure -- this is a proxy,
+  not a definitive test. See script docstring for caveats.
+======================================================================

@@ -1,0 +1,27 @@
+{
+  "contract_id": "MechLib-QM-Q1-v1",
+  "status": "FAIL",
+  "primary_endpoint_evaluated": true,
+  "registered_cases": 80,
+  "qc_pass_cases": 80,
+  "primary_mean_delta": 0.009330986870752572,
+  "cluster_bootstrap_ci95": [
+    0.0026313447522646085,
+    0.016659634685415665
+  ],
+  "case_bootstrap_ci95_sensitivity": [
+    0.0020165139628252953,
+    0.016789336527573275
+  ],
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20260915,
+  "positive_residues": 14,
+  "total_residues": 20,
+  "criteria": {
+    "clustered_ci_lower_gt_zero": true,
+    "minimum_12_positive_residues": true,
+    "no_holm_significant_worse_term": false,
+    "minimum_68_qc_pass_cases": true
+  },
+  "interpretation_boundary": "Constrained local equilibrium geometry only; not dynamics, populations, folding thermodynamics, or NMR/RDC observables."
+}

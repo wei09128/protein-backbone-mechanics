@@ -1,0 +1,5 @@
+Cutoff date: 2020-01-01
+Train: 6170 structures, 1269812 residues
+Test: 2122 structures, 428750 residues
+In-sample (train) reduction: 38.7%
+Blind (test) reduction: 40.6%

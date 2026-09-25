@@ -1,0 +1,19 @@
+{
+  "status": "PILOT_CONCORDANT_POSITIVE",
+  "scope": "exploratory_1_ns_pilot_not_Gate_M",
+  "case_mean_delta_mse_hz2": {
+    "M2-GB3": 0.22344122108943032,
+    "M2-UBQ": 0.028491108907604534
+  },
+  "equal_protein_mean_delta_mse_hz2": 0.12596616499851743,
+  "positive_favors": "MechLib",
+  "n_proteins": 2,
+  "n_seeds_per_protein": 3,
+  "n_primary_rows_by_protein": {
+    "M2-GB3": 50,
+    "M2-UBQ": 63
+  },
+  "lock_sha256": "1f7f409cfea38e4c3c919667288755dd52b3e0cb0892958e7dee5e0261d54d10",
+  "mdtraj_version": "1.10.3",
+  "no_universal_validation_claim": true
+}

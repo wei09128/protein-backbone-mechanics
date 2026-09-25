@@ -1,0 +1,8 @@
+{
+  "freeze_status": "SEALED_BEFORE_SCORING",
+  "scope": "exploratory_1_ns_MD_NMR_pilot",
+  "input_manifest_sha256": "dea8327709f23b5a84037a033cb9ddef2aa56fea34f695c4d37765897d605561",
+  "contract_sha256": "d7801856495222e13dcd3b0469df5b9c8e82f75a84c5da2c8bde7eef18993c93",
+  "scorer_sha256": "4666b887d8a72887317aeeeee7e10655f68069e333084af421df22f1d4be8137",
+  "nmr_scores_seen_before_freeze": false
+}

@@ -1,0 +1,118 @@
+{
+  "status": "PASS",
+  "nmr_scored": false,
+  "results": [
+    {
+      "case": "M2-UBQ",
+      "arm": "AMBER_FIXED",
+      "seed": "2026092201",
+      "audit": "PASS",
+      "dcd_chunks": 10,
+      "readable_frames": 100,
+      "source": "copied_verified_original"
+    },
+    {
+      "case": "M2-UBQ",
+      "arm": "AMBER_FIXED",
+      "seed": "2026092202",
+      "audit": "PASS",
+      "dcd_chunks": 10,
+      "readable_frames": 100,
+      "source": "copied_verified_original"
+    },
+    {
+      "case": "M2-UBQ",
+      "arm": "AMBER_FIXED",
+      "seed": "2026092203",
+      "audit": "PASS",
+      "dcd_chunks": 10,
+      "readable_frames": 100,
+      "source": "copied_verified_original"
+    },
+    {
+      "case": "M2-UBQ",
+      "arm": "AMBER_MECHLIB_V1",
+      "seed": "2026092201",
+      "audit": "PASS",
+      "dcd_chunks": 10,
+      "readable_frames": 100,
+      "source": "copied_verified_original"
+    },
+    {
+      "case": "M2-UBQ",
+      "arm": "AMBER_MECHLIB_V1",
+      "seed": "2026092202",
+      "audit": "PASS",
+      "dcd_chunks": 10,
+      "readable_frames": 100,
+      "source": "copied_verified_original"
+    },
+    {
+      "case": "M2-UBQ",
+      "arm": "AMBER_MECHLIB_V1",
+      "seed": "2026092203",
+      "audit": "PASS",
+      "dcd_chunks": 10,
+      "readable_frames": 100,
+      "source": "copied_verified_original"
+    },
+    {
+      "case": "M2-GB3",
+      "arm": "AMBER_FIXED",
+      "seed": "2026092201",
+      "audit": "PASS",
+      "dcd_chunks": 10,
+      "readable_frames": 100,
+      "source": "fresh_corruption_rerun"
+    },
+    {
+      "case": "M2-GB3",
+      "arm": "AMBER_FIXED",
+      "seed": "2026092202",
+      "audit": "PASS",
+      "dcd_chunks": 10,
+      "readable_frames": 100,
+      "source": "fresh_corruption_rerun"
+    },
+    {
+      "case": "M2-GB3",
+      "arm": "AMBER_FIXED",
+      "seed": "2026092203",
+      "audit": "PASS",
+      "dcd_chunks": 10,
+      "readable_frames": 100,
+      "source": "fresh_corruption_rerun"
+    },
+    {
+      "case": "M2-GB3",
+      "arm": "AMBER_MECHLIB_V1",
+      "seed": "2026092201",
+      "audit": "PASS",
+      "dcd_chunks": 10,
+      "readable_frames": 100,
+      "source": "fresh_corruption_rerun"
+    },
+    {
+      "case": "M2-GB3",
+      "arm": "AMBER_MECHLIB_V1",
+      "seed": "2026092202",
+      "audit": "PASS",
+      "dcd_chunks": 10,
+      "readable_frames": 100,
+      "source": "fresh_corruption_rerun"
+    },
+    {
+      "case": "M2-GB3",
+      "arm": "AMBER_MECHLIB_V1",
+      "seed": "2026092203",
+      "audit": "PASS",
+      "dcd_chunks": 10,
+      "readable_frames": 100,
+      "source": "fresh_corruption_rerun"
+    }
+  ],
+  "readable_chunks": 120,
+  "readable_frames": 1200,
+  "endpoint_frozen": false,
+  "scoring_permitted": false
+}

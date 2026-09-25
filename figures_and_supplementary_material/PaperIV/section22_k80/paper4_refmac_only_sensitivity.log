@@ -1,0 +1,52 @@
+Loading data...
+  1,698,562 residues, 8292 structures
+Classifying refinement software from PDB headers...
+  [2000/8292]
+  [4000/8292]
+  [6000/8292]
+  [8000/8292]
+
+======================================================================
+  1. OVERALL: REFMAC-only vs full dataset (both computed identically)
+  (2000 bootstrap resamples, resampled by structure)
+======================================================================
+  Full dataset        : n_structures= 8292  n_residues=1,698,562  reduction= 39.6%  95% CI=[39.0%, 40.1%]
+  REFMAC only         : n_structures= 3683  n_residues= 792,750  reduction= 34.4%  95% CI=[33.8%, 35.0%]
+
+======================================================================
+  2. REFMAC-only, BY SECONDARY STRUCTURE (cf. Fig 1A)
+======================================================================
+  alphaR              : n_structures= 3673  n_residues= 357,285  reduction= 35.9%  95% CI=[35.2%, 36.6%]
+  beta                : n_structures= 3610  n_residues= 194,985  reduction= 27.4%  95% CI=[27.0%, 27.9%]
+  PPII                : n_structures= 3629  n_residues= 137,009  reduction= 34.4%  95% CI=[33.8%, 35.0%]
+  alphaL              : n_structures= 3508  n_residues=  31,604  reduction= 48.2%  95% CI=[47.1%, 49.2%]
+  coil                : n_structures= 3599  n_residues=  71,867  reduction= 38.6%  95% CI=[38.0%, 39.3%]
+
+======================================================================
+  3. REFMAC-only, BY RESIDUE TYPE (cf. Fig 1C)
+======================================================================
+  LEU                 : n_structures= 3665  n_residues=  73,260  reduction= 27.4%  95% CI=[26.9%, 28.0%]
+  ALA                 : n_structures= 3647  n_residues=  67,517  reduction= 24.6%  95% CI=[24.0%, 25.2%]
+  GLY                 : n_structures= 3619  n_residues=  58,235  reduction= 41.7%  95% CI=[41.0%, 42.5%]
+  VAL                 : n_structures= 3652  n_residues=  56,552  reduction= 38.5%  95% CI=[37.7%, 39.1%]
+  GLU                 : n_structures= 3630  n_residues=  49,530  reduction= 27.0%  95% CI=[26.4%, 27.6%]
+  ASP                 : n_structures= 3626  n_residues=  47,717  reduction= 30.7%  95% CI=[30.0%, 31.3%]
+  SER                 : n_structures= 3632  n_residues=  47,167  reduction= 25.7%  95% CI=[25.1%, 26.3%]
+  ILE                 : n_structures= 3641  n_residues=  46,029  reduction= 38.0%  95% CI=[37.3%, 38.7%]
+  THR                 : n_structures= 3619  n_residues=  44,368  reduction= 33.0%  95% CI=[32.3%, 33.6%]
+  LYS                 : n_structures= 3570  n_residues=  41,880  reduction= 27.1%  95% CI=[25.9%, 28.1%]
+  ARG                 : n_structures= 3601  n_residues=  39,500  reduction= 26.9%  95% CI=[26.3%, 27.5%]
+  PRO                 : n_structures= 3526  n_residues=  36,065  reduction= 71.0%  95% CI=[70.4%, 71.7%]
+  ASN                 : n_structures= 3559  n_residues=  35,048  reduction= 29.5%  95% CI=[28.8%, 30.2%]
+  PHE                 : n_structures= 3591  n_residues=  34,122  reduction= 28.5%  95% CI=[27.9%, 29.1%]
+  TYR                 : n_structures= 3565  n_residues=  31,259  reduction= 28.1%  95% CI=[27.5%, 28.7%]
+  GLN                 : n_structures= 3577  n_residues=  29,427  reduction= 26.9%  95% CI=[26.2%, 27.5%]
+  HIS                 : n_structures= 3377  n_residues=  19,062  reduction= 26.5%  95% CI=[25.9%, 27.2%]
+  MET                 : n_structures= 2542  n_residues=  13,591  reduction= 27.1%  95% CI=[26.3%, 27.9%]
+  TRP                 : n_structures= 3047  n_residues=  13,056  reduction= 27.9%  95% CI=[27.2%, 28.6%]
+  CYS                 : n_structures= 2654  n_residues=   9,365  reduction= 26.3%  95% CI=[25.5%, 27.1%]
+
+======================================================================
+Use the OVERALL REFMAC-only number as the confound-minimized
+sensitivity estimate to report alongside the full-dataset 38.7%.
+======================================================================
