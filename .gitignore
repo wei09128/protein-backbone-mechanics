@@ -1,0 +1,12 @@
+
+__pycache__/
+
+*.py[cod]
+
+/features_lj_v3_FINAL_CLEAN.csv
+
+/features_lj_v3_FINAL_CLEAN_8287.csv
+
+/chain_audit_features_pisces_consistent.csv
+
+/chain_audit_features_pisces_consistent.csv.gz

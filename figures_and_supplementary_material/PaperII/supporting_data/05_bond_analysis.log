@@ -1,0 +1,36 @@
+Loading features.csv...
+  1,636,322 rows, 92 cols
+Loading bond_lengths.csv...
+  1,674,473 rows
+  Final-feature residues: 1,636,322
+  Matched bond residues: 1,612,919
+  Feature residues without bond rows: 23,403
+  Final: 1,612,919 rows
+
+Computing stiffness hierarchy...
+  DOF              Category         r²        r            n
+  ──────────────── ────────── ──────── ──────── ────────────
+  φ                dihedral     0.1942  -0.4406    1,612,919
+  ∠N-Cα-C (τ)      angle        0.0587  -0.2423    1,612,919
+  d(Cα-C)          length       0.0240  +0.1550    1,612,919
+  ψ                dihedral     0.0188  +0.1371    1,612,919
+  d(N-Cα)          length       0.0116  +0.1079    1,612,919
+  ∠C-N-Cα          angle        0.0005  +0.0227    1,612,919
+  ∠Cα-C-N          angle        0.0002  +0.0135    1,612,919
+  d(C=O)           length       0.0000  +0.0025    1,612,919
+
+Generating figure...
+  Saved supp_stiffness_hierarchy.png / .pdf
+  Saved caption to paper2_pisces_rerun/figures/figure5/supp_stiffness_hierarchy_caption.txt
+
+── For manuscript text ──
+  Max angle r²:  0.0587
+  Max length r²: 0.0240
+  Ratio:         2.4×
+  → "Bond angles respond to sidechain loading 2× more
+     strongly than bond lengths"
+  Q4-Q1 shift in Cα–C: 2.8 milliångströms (0.0028 Å)
+  Q1 mean: 1.5225 Å
+  Q4 mean: 1.5253 Å
+
+Done.

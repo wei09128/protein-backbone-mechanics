@@ -1,0 +1,40 @@
+Final-feature VAL residues: 117,438
+Extracting VAL residues with both CG1 and CG2 ...
+  scanning 7,850 PDB files for VAL residues ...
+  extracted 117,414 retained VAL residues with required atoms
+
+Sanity check on χ1(B) − χ1(A) (should be ±120° for VAL):
+  median: +123.02°
+  mean:   +123.12°
+  std:    2.28°
+  fraction within ±15° of ±120°: 117324/117414 (99.9%)
+
+VAL medians: τ=109.661°  ∠N-Cα-Cβ=111.419°  ∠C-Cα-Cβ=110.724°
+
+==================================================================================
+VAL: Δ(g⁺) − Δ(g⁻) using χ1(A) vs χ1(B)
+==================================================================================
+  angle        basin          shift(A)         shift(B)   expected from pack
+  --------------------------------------------------------------------------------
+  τ            α          -0.281±0.049     +1.379±0.038      +     ← mismatch
+  τ            β          -0.653±0.037     +1.218±0.025      +     ← mismatch
+  τ            PPII       -0.082±0.106     +0.993±0.067      +     ← mismatch
+  ∠N-Cα-Cβ     α          -1.535±0.042     +1.985±0.032      +     ← mismatch
+  ∠N-Cα-Cβ     β          -0.978±0.027     +1.199±0.016      +     ← mismatch
+  ∠N-Cα-Cβ     PPII       -1.517±0.074     +1.663±0.047      +     ← mismatch
+  ∠C-Cα-Cβ     α          +1.084±0.048     -0.249±0.038      +     ← mismatch
+  ∠C-Cα-Cβ     β          +1.755±0.030     +0.012±0.020      +   
+  ∠C-Cα-Cβ     PPII       +1.017±0.084     +0.013±0.058      +   
+
+==================================================================================
+VERDICT
+==================================================================================
+  Using χ1(A) = N-Cα-Cβ-CG1:  6/9 mismatches vs pack expectation
+  Using χ1(B) = N-Cα-Cβ-CG2:  1/9 mismatches vs pack expectation
+
+  → CONFIRMED: VAL's anomaly is a CG1/CG2 labeling artifact.
+    Using CG2 as the χ1 reference atom makes VAL agree with
+    all other residues. The lever story is universal.
+
+Generating paper2_pisces_rerun/figures/06_val_anomaly.png ...
+Figure saved: paper2_pisces_rerun/figures/06_val_anomaly.png

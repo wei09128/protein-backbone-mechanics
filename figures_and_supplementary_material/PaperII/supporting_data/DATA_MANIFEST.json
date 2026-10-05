@@ -1,0 +1,9 @@
+{
+  "rows": 1636322,
+  "chains": 7938,
+  "csv_sha256": "8171d49b54b7efdcda303365a0d32fb439076925f0278f8d865785d4e9d6f2b8",
+  "relaxation_retained": 376,
+  "relaxation_excluded_not_in_features": 390,
+  "relaxation_excluded_diff_seq": 12,
+  "release_data_asset": "chain_audit_features_pisces_consistent.csv.gz"
+}

@@ -1,0 +1,68 @@
+Loading chain_audit_features_pisces_consistent.csv ...
+  total rows: 1,636,322
+  after NaN drop:      1,636,322  (0 dropped)
+  main (non-GLY/PRO):  1,443,900
+  GLY separately:      118,563
+  PRO separately:      73,859
+
+Residue-type τ medians (deg):
+  ALA: 111.078   (n = 139,036)
+  ARG: 111.010   (n = 82,857)
+  ASN: 111.422   (n = 71,335)
+  ASP: 111.079   (n = 96,560)
+  CYS: 110.816   (n = 20,486)
+  GLN: 111.093   (n = 60,539)
+  GLU: 111.167   (n = 101,971)
+  HIS: 111.011   (n = 39,309)
+  ILE: 109.741   (n = 95,432)
+  LEU: 110.923   (n = 153,824)
+  LYS: 111.072   (n = 86,562)
+  MET: 110.941   (n = 29,171)
+  PHE: 110.706   (n = 70,947)
+  SER: 111.187   (n = 97,865)
+  THR: 110.645   (n = 91,243)
+  TRP: 110.857   (n = 26,297)
+  TYR: 110.803   (n = 63,028)
+  VAL: 109.661   (n = 117,438)
+
+Figure saved: paper2_pisces_rerun/figures/01a_tau_map.png
+
+======================================================================
+SUMMARY STATISTICS
+======================================================================
+  Bins with ≥30 residues: 416 / 1296
+  Total residues in valid bins:   1,441,325
+  Median residues per valid bin:  526
+
+  Global Δτ statistics (valid bins):
+    mean:   -0.1565°
+    median: -0.6202°
+    std:    2.0658°
+    min:    -3.4933°  (most compressed vs residue median)
+    max:    +5.1630°  (most expanded vs residue median)
+    peak-to-peak range: 8.6564°
+
+  Δτ in canonical regions (residue-median corrected):
+    α-helix (φ∈[-80,-40], ψ∈[-60,-20]): Δτ = +0.4826° ± 0.0020° (n=558,284)
+    β-sheet (φ∈[-150,-90], ψ∈[100,160]): Δτ = -1.6088° ± 0.0037° (n=325,944)
+    PPII    (φ∈[-90,-60],  ψ∈[120,160]): Δτ = -0.8127° ± 0.0057° (n=115,306)
+    αL      (φ∈[40,80],    ψ∈[20,80]): Δτ = +1.0399° ± 0.0113° (n=25,045)
+
+  Effect size:
+    signal (peak-to-peak bin means): 8.656°
+    noise  (within-bin residual std): 2.259°
+    signal/noise: 3.83
+
+======================================================================
+INTERPRETATION
+======================================================================
+  • If the α-helix region is BLUE (negative Δτ): τ is compressed
+    there — consistent with the helix H-bond pulling N-Cα and
+    Cα-C closer together.
+  • If the β-sheet region is RED (positive Δτ): τ is expanded
+    there — consistent with extended-chain geometry relaxing
+    the sp³ constraint.
+  • Signal/noise > 1 means the effect is real, not shot noise.
+  • If the map is flat: either there's no mechanical effect,
+    OR it's swamped by residue-composition drift — stratify
+    by residue type (Option 1) as a sanity check.

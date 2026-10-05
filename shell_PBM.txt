@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Paper II reproduction guide. Shared Paper I/III/IV workflows remain in the external backup.
+# Nominal PISCES acquisition: X-ray <=2.0 A, identity <=25%, R-factor <=0.25.
+# Current final input: 1,636,322 residues / 7,938 chains.
+# This file does not trigger extraction, relaxation or a Git push on execution.
+set -euo pipefail
+REPO=/mnt/c/Wei/PBM/protein-backbone-mechanics
+CSV=/mnt/c/Wei/PBM/chain_audit_features_pisces_consistent.csv
+OUT=/mnt/c/Wei/PBM/paper2_pisces_rerun
+S="$REPO/scripts"
+# Analysis commands (run individually when needed):
+# python "$S/paper2_01a_tau_map.py" --csv "$CSV" --out "$OUT/figures/01a_tau_map.png"
+# python "$S/paper2_01b_tau_by_residue.py" --csv "$CSV" --out "$OUT/figures/01b_tau_by_residue.png"
+# python "$S/paper2_02_angle_universality.py" --csv "$CSV" --angle tau_deg --out "$OUT/figures/02_tau_deg.png"
+# python "$S/paper2_02_angle_universality.py" --csv "$CSV" --angle omega_measured_deg --circular --out "$OUT/figures/02_omega.png"
+# python "$S/paper2_02_angle_universality.py" --csv "$CSV" --angle angle_N_CA_CB --out "$OUT/figures/02_ncacb.png"
+# python "$S/paper2_02_angle_universality.py" --csv "$CSV" --angle angle_C_CA_CB --out "$OUT/figures/02_ccacb.png"
+# python "$S/paper2_03_sidechain_scatter.py" --csv "$CSV" --out "$OUT/figures/03_sidechain_scatter.png"
+# python "$S/paper2_04_sidechain_channel.py" --csv "$CSV" --out_class "$OUT/figures/04_class_bars.png" --out_rot "$OUT/figures/04_rotamer_bars.png"
+# python "$S/paper2_05_rotamer_per_residue.py" --csv "$CSV" --out "$OUT/figures/05_rotamer_per_residue.png"
+# python "$S/paper2_06_val_anomaly_pisces.py" --csv "$CSV" --pdb_dir /mnt/c/Wei/PBM/pdb_cache --out "$OUT/figures/06_val_anomaly.png"
+# python "$S/paper2_07_residual_regression.py" --csv "$CSV" --out "$OUT/figures/07_residual_regression.png"
+# python "$S/paper2_F3_assembly_v2.py" --csv "$CSV" --panel_d_feature bfactor_ca --out "$OUT/figures/paper2_figure4.png" --dpi 300
+# python "$S/paper2_supp_stiffness_hierarchy_pisces.py" --csv "$CSV" --bonds /mnt/c/Wei/PBM/bond_lengths/bond_lengths.csv --out "$OUT/figures/figure5"
+# Resolution diagnostic source is paper2_08_angle_resolution_stratified.py supplied in the evidence archive,
+# not an assumed interchangeability of the repository's 08/09 filenames.
+# Saved relaxation results are reused; no new MM run is needed.
+printf '%s\n' 'Paper II workflow guide: commands are documented but no analysis was rerun.'

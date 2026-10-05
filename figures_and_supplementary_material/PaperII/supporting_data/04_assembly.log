@@ -1,0 +1,164 @@
+Loading chain_audit_features_pisces_consistent.csv ...
+  sampled to 100,000 rows
+
+Fitting τ (tau_deg) ...
+  computing non-local effects + bootstrap SE (200 resamples per feature)...
+  R² = 0.4966,   max |effect| = 0.100 SD
+  top local features: psi_deg=0.786, phi_deg=0.089, sc_mass=0.054
+
+Fitting ω (omega_measured_deg) ...
+  trans-filtered: 99,742 residues
+  computing non-local effects + bootstrap SE (200 resamples per feature)...
+  R² = 0.1151,   max |effect| = 0.114 SD
+  top local features: phi_deg=0.577, psi_deg=0.305, chi1_rad=0.037
+
+Fitting ∠N-Cα-Cβ (angle_N_CA_CB) ...
+  computing non-local effects + bootstrap SE (200 resamples per feature)...
+  R² = 0.6689,   max |effect| = 0.100 SD
+  top local features: sc_mass=0.660, sc_n_heavy=0.219, chi1_rad=0.042
+
+Fitting ∠C-Cα-Cβ (angle_C_CA_CB) ...
+  computing non-local effects + bootstrap SE (200 resamples per feature)...
+  R² = 0.2210,   max |effect| = 0.085 SD
+  top local features: psi_deg=0.376, chi1_rad=0.225, phi_deg=0.118
+
+Assembling figure ...
+
+Figure saved: paper2_pisces_rerun/figures/paper2_figure4.png  (300 dpi)
+
+==============================================================================
+FIGURE 3 SUMMARY
+==============================================================================
+  τ           R² = 0.497  top local: psi_deg=0.786  top non-local: hb_n_strong            effect = +0.100 SD ± 0.012
+  ω           R² = 0.115  top local: phi_deg=0.577  top non-local: steric_CA_5A           effect = +0.114 SD ± 0.009
+  ∠N-Cα-Cβ    R² = 0.669  top local: sc_mass=0.660  top non-local: steric_C_5A            effect = +0.100 SD ± 0.010
+  ∠C-Cα-Cβ    R² = 0.221  top local: psi_deg=0.376  top non-local: steric_C_5A            effect = +0.085 SD ± 0.008
+
+------------------------------------------------------------------------------
+Full non-local effects table per angle (for manuscript verification)
+Bonferroni threshold = 0.01 / n_features_tested per angle
+------------------------------------------------------------------------------
+
+  τ  (n_features_tested=15, Bonferroni p-threshold=6.67e-04):
+    hb_n_strong            effect=+0.100 SD (SE=0.012)  r=-0.003  p=0.287  [n.s.]
+    steric_C_5A            effect=+0.093 SD (SE=0.009)  r=-0.035  p=6.83e-28  [sig.]
+    sc_contact_np1_to_bb   effect=+0.085 SD (SE=0.013)  r=+0.025  p=4.26e-15  [sig.]
+    steric_N_5A            effect=+0.063 SD (SE=0.009)  r=-0.022  p=5.31e-12  [sig.]
+    steric_O_5A            effect=+0.061 SD (SE=0.008)  r=-0.017  p=9.25e-08  [sig.]
+    hb_mean_d_HO           effect=+0.050 SD (SE=0.009)  r=-0.004  p=0.156  [n.s.]
+    hb_best_d_HO           effect=+0.040 SD (SE=0.009)  r=-0.000  p=0.992  [n.s.]
+    hb_n_bonds             effect=+0.039 SD (SE=0.007)  r=-0.016  p=4.9e-07  [sig.]
+    sc_contact_nm1_to_bb   effect=+0.036 SD (SE=0.007)  r=-0.005  p=0.0941  [n.s.]
+    steric_CA_5A           effect=+0.033 SD (SE=0.008)  r=+0.012  p=0.000183  [sig.]
+    hb_best_e              effect=+0.030 SD (SE=0.008)  r=+0.007  p=0.0242  [n.s.]
+    steric_asym_y          effect=+0.020 SD (SE=0.008)  r=+0.005  p=0.145  [n.s.]
+    steric_asym_z          effect=+0.017 SD (SE=0.008)  r=-0.001  p=0.647  [n.s.]
+    steric_asym_x          effect=+0.015 SD (SE=0.007)  r=+0.002  p=0.506  [n.s.]
+    bfactor_ca             effect=+0.010 SD (SE=0.007)  r=+0.004  p=0.175  [n.s.]
+
+  ω  (n_features_tested=15, Bonferroni p-threshold=6.67e-04):
+    steric_CA_5A           effect=+0.114 SD (SE=0.009)  r=+0.041  p=1.05e-37  [sig.]
+    bfactor_ca             effect=+0.110 SD (SE=0.009)  r=-0.040  p=9.08e-36  [sig.]
+    sc_contact_np1_to_bb   effect=+0.109 SD (SE=0.016)  r=+0.031  p=1.86e-22  [sig.]
+    hb_n_strong            effect=+0.087 SD (SE=0.011)  r=+0.008  p=0.0103  [n.s.]
+    steric_asym_y          effect=+0.073 SD (SE=0.009)  r=-0.004  p=0.26  [n.s.]
+    steric_N_5A            effect=+0.063 SD (SE=0.009)  r=+0.020  p=2e-10  [sig.]
+    steric_C_5A            effect=+0.052 SD (SE=0.008)  r=+0.021  p=1.84e-11  [sig.]
+    steric_asym_x          effect=+0.051 SD (SE=0.008)  r=-0.002  p=0.555  [n.s.]
+    steric_asym_z          effect=+0.050 SD (SE=0.008)  r=-0.002  p=0.605  [n.s.]
+    hb_best_d_HO           effect=+0.049 SD (SE=0.009)  r=+0.013  p=4.48e-05  [sig.]
+    steric_O_5A            effect=+0.043 SD (SE=0.010)  r=+0.015  p=1.19e-06  [sig.]
+    hb_n_bonds             effect=+0.040 SD (SE=0.009)  r=+0.009  p=0.00497  [n.s.]
+    hb_mean_d_HO           effect=+0.038 SD (SE=0.008)  r=+0.015  p=2.02e-06  [sig.]
+    sc_contact_nm1_to_bb   effect=+0.026 SD (SE=0.007)  r=-0.007  p=0.0213  [n.s.]
+    hb_best_e              effect=+0.025 SD (SE=0.008)  r=-0.001  p=0.811  [n.s.]
+
+  ∠N-Cα-Cβ  (n_features_tested=15, Bonferroni p-threshold=6.67e-04):
+    steric_C_5A            effect=+0.100 SD (SE=0.010)  r=+0.038  p=2.48e-31  [sig.]
+    steric_O_5A            effect=+0.089 SD (SE=0.010)  r=+0.034  p=1.65e-25  [sig.]
+    steric_N_5A            effect=+0.085 SD (SE=0.010)  r=+0.031  p=7.61e-21  [sig.]
+    hb_best_d_HO           effect=+0.066 SD (SE=0.009)  r=+0.009  p=0.00543  [n.s.]
+    hb_best_e              effect=+0.065 SD (SE=0.008)  r=-0.025  p=2.57e-14  [sig.]
+    steric_CA_5A           effect=+0.062 SD (SE=0.009)  r=+0.027  p=6.17e-16  [sig.]
+    hb_n_bonds             effect=+0.052 SD (SE=0.008)  r=+0.024  p=1.1e-13  [sig.]
+    hb_n_strong            effect=+0.049 SD (SE=0.007)  r=+0.017  p=2.81e-07  [sig.]
+    sc_contact_np1_to_bb   effect=+0.045 SD (SE=0.013)  r=-0.010  p=0.00276  [n.s.]
+    bfactor_ca             effect=+0.034 SD (SE=0.008)  r=+0.010  p=0.00143  [n.s.]
+    steric_asym_z          effect=+0.025 SD (SE=0.008)  r=-0.000  p=0.996  [n.s.]
+    steric_asym_y          effect=+0.024 SD (SE=0.007)  r=+0.005  p=0.146  [n.s.]
+    hb_mean_d_HO           effect=+0.021 SD (SE=0.008)  r=+0.015  p=3.81e-06  [sig.]
+    sc_contact_nm1_to_bb   effect=+0.019 SD (SE=0.007)  r=+0.006  p=0.0613  [n.s.]
+    steric_asym_x          effect=+0.013 SD (SE=0.007)  r=+0.001  p=0.78  [n.s.]
+
+  ∠C-Cα-Cβ  (n_features_tested=15, Bonferroni p-threshold=6.67e-04):
+    steric_C_5A            effect=+0.085 SD (SE=0.008)  r=+0.030  p=9.77e-20  [sig.]
+    steric_N_5A            effect=+0.079 SD (SE=0.009)  r=+0.019  p=1e-08  [sig.]
+    bfactor_ca             effect=+0.072 SD (SE=0.008)  r=-0.024  p=2.64e-13  [sig.]
+    sc_contact_np1_to_bb   effect=+0.066 SD (SE=0.015)  r=-0.015  p=5.41e-06  [sig.]
+    steric_O_5A            effect=+0.064 SD (SE=0.008)  r=+0.025  p=1.26e-14  [sig.]
+    hb_n_bonds             effect=+0.057 SD (SE=0.007)  r=+0.016  p=8.12e-07  [sig.]
+    hb_n_strong            effect=+0.057 SD (SE=0.008)  r=+0.015  p=9.4e-06  [sig.]
+    hb_best_d_HO           effect=+0.057 SD (SE=0.008)  r=+0.003  p=0.402  [n.s.]
+    hb_best_e              effect=+0.056 SD (SE=0.009)  r=-0.016  p=1.16e-06  [sig.]
+    hb_mean_d_HO           effect=+0.044 SD (SE=0.009)  r=+0.005  p=0.0977  [n.s.]
+    steric_CA_5A           effect=+0.030 SD (SE=0.007)  r=+0.011  p=0.000483  [sig.]
+    sc_contact_nm1_to_bb   effect=+0.018 SD (SE=0.007)  r=+0.004  p=0.225  [n.s.]
+    steric_asym_x          effect=+0.012 SD (SE=0.008)  r=+0.001  p=0.842  [n.s.]
+    steric_asym_z          effect=+0.008 SD (SE=0.006)  r=+0.001  p=0.686  [n.s.]
+    steric_asym_y          effect=+0.006 SD (SE=0.006)  r=-0.001  p=0.739  [n.s.]
+
+------------------------------------------------------------------------------
+Full local feature importances per angle (for manuscript verification)
+------------------------------------------------------------------------------
+
+  τ:
+    psi_deg            0.7856
+    phi_deg            0.0887
+    sc_mass            0.0544
+    chi1_rad           0.0199
+    sc_n_heavy         0.0182
+    sc_is_branched     0.0160
+    res_type           0.0125
+    chi2_rad           0.0031
+    has_chi1           0.0008
+    has_chi2           0.0008
+    sc_is_aromatic     0.0000
+
+  ω:
+    phi_deg            0.5772
+    psi_deg            0.3053
+    chi1_rad           0.0367
+    chi2_rad           0.0317
+    sc_mass            0.0226
+    res_type           0.0098
+    sc_n_heavy         0.0097
+    sc_is_aromatic     0.0043
+    has_chi1           0.0017
+    sc_is_branched     0.0010
+    has_chi2           0.0001
+
+  ∠N-Cα-Cβ:
+    sc_mass            0.6603
+    sc_n_heavy         0.2193
+    chi1_rad           0.0418
+    sc_is_branched     0.0333
+    phi_deg            0.0208
+    psi_deg            0.0153
+    chi2_rad           0.0060
+    res_type           0.0028
+    sc_is_aromatic     0.0003
+    has_chi2           0.0002
+    has_chi1           0.0000
+
+  ∠C-Cα-Cβ:
+    psi_deg            0.3762
+    chi1_rad           0.2252
+    phi_deg            0.1184
+    sc_is_branched     0.0873
+    res_type           0.0779
+    chi2_rad           0.0499
+    sc_mass            0.0489
+    has_chi2           0.0082
+    sc_n_heavy         0.0058
+    sc_is_aromatic     0.0016
+    has_chi1           0.0007
