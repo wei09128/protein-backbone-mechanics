@@ -1,0 +1,3 @@
+# Paper III scientific draft
+
+Current manuscript and supplement: manuscript/PaperIII. Figures 1–3 and S1–S2 are provided in PNG, PDF and SVG. Paper3_submission_package.zip contains plotting code, aggregate source data and execution returns. The full residue atlas is not included in this archive. This snapshot is not a record of journal submission. Author information, declarations, journal formatting and public deposition details require completion. The tested ff14SB vacuum model does not reproduce the matched alpha and PPII protein contrasts; this does not establish failure of all local peptide models.
