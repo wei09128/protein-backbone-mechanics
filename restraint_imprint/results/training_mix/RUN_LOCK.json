@@ -1,0 +1,52 @@
+{
+  "spec_sha256": "22447a12c8e0cc85a4183f09793a9c45e1b6e9986b2c741c5d1becf9cb47f66b",
+  "hashes": {
+    "train_geometry": "a2929836e8f23fc6d5109b1423baea24952ae9cb98e492bc64a8c25c3765300f",
+    "targets": "ef7b86b359c84492a0be791de52a1e64112a0153142b9f9f5a0417448d2731b1",
+    "junctions": "8b3ccb9ee7481288c336bae9aafff8411f207a87c6cb3ecba45bcad30f110cf6",
+    "metadata": "2e1a820d7e6165d4c838e77d5a999b7205bf71814115065a04e61df055cbfa92",
+    "strata": "34525a769eb6b273f3bb1a0efcf964b9ceaaba61fa372dee29d08fc6b1c6bd18",
+    "training_chains": "35f69bd270b9f6ca274af6c1dfedcc83adc97aa38f82e6104140d99ee535e494",
+    "headers": "25f466e255d6742ff9cfd83eecd92d5769f7bce0ce7e254c02025cb8f71f40d4"
+  },
+  "code_sha256": "8faac737c2be373170d3bd465bc1f6da2c48c04b9a31c1ed138d1d70a5e16c15",
+  "seed": 20261114,
+  "draws": 10000,
+  "label_coverage": {
+    "training_structures": 5926,
+    "labelled": 0.9637192035099561,
+    "PHENIX": 1701,
+    "REFMAC": 2904,
+    "other_or_unlabelled": 1321
+  },
+  "group_weighted_mae": {
+    "ACN|REFMAC": {
+      "F0_v2": 0.8802005175194316,
+      "F1_natural_PR": 0.8819899465294933,
+      "F2_balanced_PR": 0.8789678191968406,
+      "F3_REFMAC_only": 0.8979373021672363,
+      "F4_PHENIX_only": 0.8874120399370894
+    },
+    "ACN|PHENIX_post_default": {
+      "F0_v2": 0.6166523232618485,
+      "F1_natural_PR": 0.6117921246958812,
+      "F2_balanced_PR": 0.601978737942714,
+      "F3_REFMAC_only": 0.6445960119059829,
+      "F4_PHENIX_only": 0.5877237415108002
+    },
+    "OCN|REFMAC": {
+      "F0_v2": 0.8787923191319549,
+      "F1_natural_PR": 0.8802325243402204,
+      "F2_balanced_PR": 0.8849047517587046,
+      "F3_REFMAC_only": 0.8749363366870427,
+      "F4_PHENIX_only": 0.9167326009125948
+    },
+    "OCN|PHENIX_post_default": {
+      "F0_v2": 0.45462858282962215,
+      "F1_natural_PR": 0.4600353720991068,
+      "F2_balanced_PR": 0.44458320270143176,
+      "F3_REFMAC_only": 0.5076828249566068,
+      "F4_PHENIX_only": 0.40814297328630655
+    }
+  }
+}

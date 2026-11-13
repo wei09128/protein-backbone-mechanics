@@ -1,0 +1,344 @@
+[
+  {
+    "pdb_id": "1MG7",
+    "predicted_sites": 691,
+    "scored_sites": 691,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 2050,
+    "R_work_R_free": {
+      "stock": [
+        0.1986,
+        0.2107
+      ],
+      "swap": [
+        0.1987,
+        0.2109
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "1Y8A",
+    "predicted_sites": 283,
+    "scored_sites": 283,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 979,
+    "R_work_R_free": {
+      "stock": [
+        0.2013,
+        0.2422
+      ],
+      "swap": [
+        0.2015,
+        0.2422
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "2OPC",
+    "predicted_sites": 111,
+    "scored_sites": 111,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 327,
+    "R_work_R_free": {
+      "stock": [
+        0.2691,
+        0.308
+      ],
+      "swap": [
+        0.2685,
+        0.3067
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "2WFI",
+    "predicted_sites": 160,
+    "scored_sites": 160,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 507,
+    "R_work_R_free": {
+      "stock": [
+        0.126,
+        0.1396
+      ],
+      "swap": [
+        0.1259,
+        0.1396
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "2XRH",
+    "predicted_sites": 88,
+    "scored_sites": 88,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 319,
+    "R_work_R_free": {
+      "stock": [
+        0.1993,
+        0.2226
+      ],
+      "swap": [
+        0.1994,
+        0.2222
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "3B4Q",
+    "predicted_sites": 154,
+    "scored_sites": 154,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 519,
+    "R_work_R_free": {
+      "stock": [
+        0.1924,
+        0.2109
+      ],
+      "swap": [
+        0.1919,
+        0.2097
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "3BMZ",
+    "predicted_sites": 328,
+    "scored_sites": 328,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 1159,
+    "R_work_R_free": {
+      "stock": [
+        0.1753,
+        0.2009
+      ],
+      "swap": [
+        0.1753,
+        0.2008
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "3LWA",
+    "predicted_sites": 154,
+    "scored_sites": 154,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 466,
+    "R_work_R_free": {
+      "stock": [
+        0.202,
+        0.2268
+      ],
+      "swap": [
+        0.2016,
+        0.227
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "3UCE",
+    "predicted_sites": 864,
+    "scored_sites": 864,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 2568,
+    "R_work_R_free": {
+      "stock": [
+        0.1716,
+        0.2148
+      ],
+      "swap": [
+        0.1716,
+        0.2147
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "4JP6",
+    "predicted_sites": 119,
+    "scored_sites": 119,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 354,
+    "R_work_R_free": {
+      "stock": [
+        0.1629,
+        0.1843
+      ],
+      "swap": [
+        0.163,
+        0.1843
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "4YSL",
+    "predicted_sites": 525,
+    "scored_sites": 524,
+    "realised_edit_mismatch": 1,
+    "changed_ideals": 1860,
+    "R_work_R_free": {
+      "stock": [
+        0.1843,
+        0.2051
+      ],
+      "swap": [
+        0.1845,
+        0.2051
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "5AL6",
+    "predicted_sites": 30,
+    "scored_sites": 30,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 154,
+    "R_work_R_free": {
+      "stock": [
+        0.1101,
+        0.1176
+      ],
+      "swap": [
+        0.11,
+        0.1177
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "5FAF",
+    "predicted_sites": 92,
+    "scored_sites": 92,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 364,
+    "R_work_R_free": {
+      "stock": [
+        0.1597,
+        0.185
+      ],
+      "swap": [
+        0.1594,
+        0.1849
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "8CIH",
+    "predicted_sites": 337,
+    "scored_sites": 337,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 1059,
+    "R_work_R_free": {
+      "stock": [
+        0.2133,
+        0.2349
+      ],
+      "swap": [
+        0.213,
+        0.2347
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "8KIH",
+    "predicted_sites": 287,
+    "scored_sites": 287,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 859,
+    "R_work_R_free": {
+      "stock": [
+        0.1981,
+        0.2356
+      ],
+      "swap": [
+        0.1986,
+        0.2359
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "9AYN",
+    "predicted_sites": 141,
+    "scored_sites": 141,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 482,
+    "R_work_R_free": {
+      "stock": [
+        0.1147,
+        0.1351
+      ],
+      "swap": [
+        0.1154,
+        0.136
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "9KWV",
+    "predicted_sites": 200,
+    "scored_sites": 200,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 1071,
+    "R_work_R_free": {
+      "stock": [
+        0.1066,
+        0.1175
+      ],
+      "swap": [
+        0.1066,
+        0.1175
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "9LTB",
+    "predicted_sites": 934,
+    "scored_sites": 934,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 2795,
+    "R_work_R_free": {
+      "stock": [
+        0.2179,
+        0.2399
+      ],
+      "swap": [
+        0.2178,
+        0.2404
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "pdb_id": "9QDV",
+    "predicted_sites": 442,
+    "scored_sites": 442,
+    "realised_edit_mismatch": 0,
+    "changed_ideals": 1659,
+    "R_work_R_free": {
+      "stock": [
+        0.114,
+        0.127
+      ],
+      "swap": [
+        0.114,
+        0.127
+      ]
+    },
+    "status": "PASS"
+  }
+]

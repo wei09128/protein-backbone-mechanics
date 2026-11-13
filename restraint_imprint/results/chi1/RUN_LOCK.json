@@ -1,0 +1,56 @@
+{
+  "spec": "CHI1_FAIR_COMPARISON_SPEC_20261111.md v1.1",
+  "hashes": {
+    "spec": "bd10bab8000f9c790083ee2b233488003cd627a5381c5f2793fceb7135fbc607",
+    "train_geometry": "a2929836e8f23fc6d5109b1423baea24952ae9cb98e492bc64a8c25c3765300f",
+    "targets": "ef7b86b359c84492a0be791de52a1e64112a0153142b9f9f5a0417448d2731b1",
+    "junctions": "8b3ccb9ee7481288c336bae9aafff8411f207a87c6cb3ecba45bcad30f110cf6",
+    "metadata": "2e1a820d7e6165d4c838e77d5a999b7205bf71814115065a04e61df055cbfa92",
+    "strata": "34525a769eb6b273f3bb1a0efcf964b9ceaaba61fa372dee29d08fc6b1c6bd18",
+    "training_chains": "35f69bd270b9f6ca274af6c1dfedcc83adc97aa38f82e6104140d99ee535e494",
+    "cdl": "79c197e5692986cde26db9aa492cecfb5b8b7d5b1f3cba4dc222bb2e04d23c68",
+    "code": "14c5ff1e55ef0d58e48fa4a0baf0ead2e90f71c5e44209767b22e22a1c63edf4"
+  },
+  "chi1_model_sha": "6210897c9c29ed2896a9ddbf60c32f5c8b541794833759027ae357fb5e50160c",
+  "seed": 20261111,
+  "draws": 10000,
+  "coverage": {
+    "training_chi1_bearing_rows": 886277,
+    "training_gated": 840982,
+    "training_coverage": 0.9488929533317462,
+    "heldout_B30_rows": 386705,
+    "heldout_gated": 372301,
+    "heldout_coverage": 0.9627519685548416,
+    "heldout_chi1_class_counts": {
+      "g-": 151423,
+      "t": 94185,
+      "none/eclipsed": 82363,
+      "g+": 44330
+    },
+    "threshold": 0.75
+  },
+  "rebuild_gate": {
+    "eligible_junctions": 1119095,
+    "tau_deg": {
+      "rows": 1119095,
+      "pooled_rule_reproducing": "clean",
+      "max_abs_difference": 0.0
+    },
+    "angle_N_CA_CB": {
+      "rows": 1032744,
+      "pooled_rule_reproducing": "clean",
+      "max_abs_difference": 0.0
+    },
+    "angle_C_CA_CB": {
+      "rows": 1032744,
+      "pooled_rule_reproducing": "clean",
+      "max_abs_difference": 0.0
+    }
+  },
+  "reported_mechlib_per_term": {
+    "tau_deg": "v2",
+    "angle_N_CA_CB": "v2 + chi1",
+    "angle_C_CA_CB": "v2 + chi1"
+  },
+  "runtime_s": 132
+}

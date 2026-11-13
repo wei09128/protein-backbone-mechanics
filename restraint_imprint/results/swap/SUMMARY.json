@@ -1,0 +1,46 @@
+{
+  "structures_scored": 19,
+  "structures_failed": [],
+  "sites": 5939,
+  "primary": {
+    "mean_D_copy_minus_site_matrix": 0.040532357307274086,
+    "ci95": [
+      0.028273584027571998,
+      0.05270490052931623
+    ],
+    "structures_matrix_better": 16,
+    "reading": "The measured response predicted the library swap"
+  },
+  "mean_mae": {
+    "site_matrix": 0.0641572417291387,
+    "mean_matrix": 0.0651483142911575,
+    "copy": 0.10468959903641277,
+    "zero": 0.2916590803765772
+  },
+  "mean_target_sum_change": 0.016090920805698152,
+  "mean_observed_sum_change": -7.659720440127474e-05,
+  "by_band": {
+    "gt1.0_le1.5": {
+      "n": 7,
+      "mean_D": 0.00888465969160194
+    },
+    "gt1.5_le2.0": {
+      "n": 6,
+      "mean_D": 0.002525276801060424
+    },
+    "le1.0": {
+      "n": 6,
+      "mean_D": 0.11546175169843859
+    }
+  },
+  "edit_size": {
+    "large_e": {
+      "site_matrix": 0.16401533788181197,
+      "copy": 0.2312907470346189
+    },
+    "small_e": {
+      "site_matrix": 0.05992864195773603,
+      "copy": 0.09754078113973376
+    }
+  }
+}

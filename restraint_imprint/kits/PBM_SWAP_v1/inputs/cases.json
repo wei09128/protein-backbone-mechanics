@@ -1,0 +1,154 @@
+[
+ {
+  "pdb_id": "9QDV",
+  "band": "le1.0",
+  "coordinate_sha256": "9d85760e026c53ea89de307325958b348bff6a83bb7846a40ad9240e5d301a84",
+  "common_mtz_sha256": "1cb2320386bb488c260b526371e2d9accff713253513c8f6c6cdb1c8923db672",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/9qdv/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/9qdv/common.mtz"
+ },
+ {
+  "pdb_id": "9AYN",
+  "band": "le1.0",
+  "coordinate_sha256": "3548a12fdeccb54d95fdb55b27f20121bd1c8c9afef4ee06ff568f1a109c530f",
+  "common_mtz_sha256": "2884c060d508a4fef881fd335a45afde415b722465ca8b74e727777a603b377c",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/9ayn/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/9ayn/common.mtz"
+ },
+ {
+  "pdb_id": "9KWV",
+  "band": "le1.0",
+  "coordinate_sha256": "510ac05e3b96096f8ab9bb52fca12e6966875af52fd734975cb9d19950864ca1",
+  "common_mtz_sha256": "43693b75f1a06633dc64f9bd0216b62a08bea9d8c567168aec0c11431d8deb4c",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/9kwv/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/9kwv/common.mtz"
+ },
+ {
+  "pdb_id": "4JP6",
+  "band": "le1.0",
+  "coordinate_sha256": "80f57c1c2a170dc332392ba37cb6bb57dec87faf32bd3fad55ec2fffc7610eeb",
+  "common_mtz_sha256": "433cb6ca542280b08ab41a4db1b59e71a9b8ca7e40dd6ab90e3e3bf45d92e488",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/4jp6/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/4jp6/common.mtz"
+ },
+ {
+  "pdb_id": "2WFI",
+  "band": "le1.0",
+  "coordinate_sha256": "3535acba094b064954b905eec4300d5ef65c6f89546a1970878d25e947f66b47",
+  "common_mtz_sha256": "aa63080ac93f8c7422e4a106647f65ec3f4b73254d8eda7d1f549700c92157f9",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/2wfi/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/2wfi/common.mtz"
+ },
+ {
+  "pdb_id": "5AL6",
+  "band": "le1.0",
+  "coordinate_sha256": "0511198b0e71be3233ff84c6839cce11ed7c90f1e460dec3b5148f332c674e47",
+  "common_mtz_sha256": "4817c7ce878d430b0e5a2cfc323c1331b1abb7037482064e0c0e2c0ee2de920a",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/5al6/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/5al6/common.mtz"
+ },
+ {
+  "pdb_id": "4YSL",
+  "band": "gt1.0_le1.5",
+  "coordinate_sha256": "45a43d3836d87e5565591830c96a601df6d83ceada971234494cc71041ad1024",
+  "common_mtz_sha256": "e67cd2b02834c12afa8872088e98e485158b738faec5cf7df143d00f1b873e7d",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/4ysl/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/4ysl/common.mtz"
+ },
+ {
+  "pdb_id": "2XRH",
+  "band": "gt1.0_le1.5",
+  "coordinate_sha256": "305e5784375121d1c1811e45d75f88801f329f15bb78757cba3e2e6889632684",
+  "common_mtz_sha256": "c700275b1c5414babda4472ac92786ad861a3aab6c78fc02a29af2f0e29552b2",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/2xrh/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/2xrh/common.mtz"
+ },
+ {
+  "pdb_id": "5FAF",
+  "band": "gt1.0_le1.5",
+  "coordinate_sha256": "3c8212eb8f98859eabd42fecb7539ba07164ec6f4ba76fae488a7b6915fc0c1f",
+  "common_mtz_sha256": "9cad0f7ab4d80679a6a453bdefe06cbedd75f2ff32616c46d0154356b710bb04",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/5faf/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/5faf/common.mtz"
+ },
+ {
+  "pdb_id": "9LTB",
+  "band": "gt1.0_le1.5",
+  "coordinate_sha256": "6b83732d4545ef1d382a6c075c4512f18d4054f750c5026fcad7980a57255d43",
+  "common_mtz_sha256": "ecf0e4e9f9ea631282b32aae10f1e604f3db111f2df1c4068d2cf9a68d58159c",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/9ltb/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/9ltb/common.mtz"
+ },
+ {
+  "pdb_id": "3BMZ",
+  "band": "gt1.0_le1.5",
+  "coordinate_sha256": "68628cf00c9c3906765d1e7548ffbb51d30d46615c7bfcaf2f446034d003ced6",
+  "common_mtz_sha256": "63e839a5c8a0e287498d3c544c18151104910327150615c59e5c95052604640e",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/3bmz/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/3bmz/common.mtz"
+ },
+ {
+  "pdb_id": "2OPC",
+  "band": "gt1.0_le1.5",
+  "coordinate_sha256": "837ef8f2df2abb5f0016ad16f0a4cd303655066f6a51f96c28b1f418b6f3337d",
+  "common_mtz_sha256": "085182667a4ca5c3015658e3d0c6a7b59acc236ca433e4e008d01aa27bb19d3c",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/2opc/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/2opc/common.mtz"
+ },
+ {
+  "pdb_id": "1Y8A",
+  "band": "gt1.0_le1.5",
+  "coordinate_sha256": "8244474bd776240405ed9839e544362b9054e054303d5f801654e92ae71dd865",
+  "common_mtz_sha256": "3f6ff771971cdad8d754db4ccd4c9a4129915e2cf0f743bafbc48532a5bd17e6",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/1y8a/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/1y8a/common.mtz"
+ },
+ {
+  "pdb_id": "3LWA",
+  "band": "gt1.5_le2.0",
+  "coordinate_sha256": "e854a717d9b3ab6da67f873ceebbf0eae14d849182ae4d2a3d3a924c9066bb74",
+  "common_mtz_sha256": "d2c484f0d8358da27af1c4d51ba43ad86e3898eb4f43daf811b540607d0d643d",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/3lwa/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/3lwa/common.mtz"
+ },
+ {
+  "pdb_id": "3B4Q",
+  "band": "gt1.5_le2.0",
+  "coordinate_sha256": "e0f50eea254dac8397585a18fe46db1f7eb61a297e15d2313409797af91c3e24",
+  "common_mtz_sha256": "a78467f56300e682a28b29c59888c8fe1b04ef84b870895d6f73d9f1a247fae5",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/3b4q/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/3b4q/common.mtz"
+ },
+ {
+  "pdb_id": "8KIH",
+  "band": "gt1.5_le2.0",
+  "coordinate_sha256": "a766974ccb227967878b3e4b542a223cd9ec4dcf40fcbf18fbfca1be1ba53106",
+  "common_mtz_sha256": "441dec01522594aba8fb047a839d0098ac0dc7ad04ca71ae5db26e85ee3c95d0",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/8kih/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/8kih/common.mtz"
+ },
+ {
+  "pdb_id": "1MG7",
+  "band": "gt1.5_le2.0",
+  "coordinate_sha256": "0122007ca5458b3daa180418393e029c0cb32b4baca63361774ba98ea0de8d88",
+  "common_mtz_sha256": "679b5fd31d6ddf0e0afff8c76a9dff407e43e093afe97545a7b7c7c0d1b53157",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/1mg7/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/1mg7/common.mtz"
+ },
+ {
+  "pdb_id": "3UCE",
+  "band": "gt1.5_le2.0",
+  "coordinate_sha256": "494302d875705544a346e2194ecaa7ba06c776e5f558742bdec41d46788e1162",
+  "common_mtz_sha256": "274df09952fa5e553a73140f34e72e2fbe6e9c87511abbff7b7dda8ad34354ed",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/3uce/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/3uce/common.mtz"
+ },
+ {
+  "pdb_id": "8CIH",
+  "band": "gt1.5_le2.0",
+  "coordinate_sha256": "9e8362816a27905073f529cb9b5df2f288caef4cb85c360709ae24c88e93cf16",
+  "common_mtz_sha256": "c015708507ea508fea990435735d032fa8056874a38f06a84d40f4218def0f51",
+  "model": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/8cih/model.pdb",
+  "common": "/mnt/c/Wei/PBM/pbm_transmission_batch.j1pKgh/inputs/8cih/common.mtz"
+ }
+]

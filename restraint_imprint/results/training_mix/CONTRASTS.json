@@ -1,0 +1,238 @@
+{
+  "Delta_bal|REFMAC": {
+    "ACN": {
+      "estimate": -0.0030221273326526033,
+      "ci95": [
+        -0.003798614909730018,
+        -0.0021918220399308745
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "REFMAC": 140
+      },
+      "p_holm": 0.0
+    },
+    "OCN": {
+      "estimate": 0.004672227418484471,
+      "ci95": [
+        0.0032308937484042074,
+        0.0060563746979477705
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "REFMAC": 140
+      },
+      "p_holm": 0.0
+    }
+  },
+  "REFMAC_only_vs_natural|REFMAC": {
+    "ACN": {
+      "estimate": 0.015947355637743008,
+      "ci95": [
+        0.013630220913605414,
+        0.01817948337733545
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "REFMAC": 140
+      },
+      "p_holm": 0.0
+    },
+    "OCN": {
+      "estimate": -0.005296187653177528,
+      "ci95": [
+        -0.009060677744658583,
+        -0.0014084400979326507
+      ],
+      "p_boot": 0.006,
+      "components": {
+        "REFMAC": 140
+      },
+      "p_holm": 0.006
+    }
+  },
+  "PHENIX_only_vs_natural|REFMAC": {
+    "ACN": {
+      "estimate": 0.005422093407596191,
+      "ci95": [
+        0.0011932192185162762,
+        0.009793968686660605
+      ],
+      "p_boot": 0.0134,
+      "components": {
+        "REFMAC": 140
+      },
+      "p_holm": 0.0134
+    },
+    "OCN": {
+      "estimate": 0.03650007657237445,
+      "ci95": [
+        0.03025049946485991,
+        0.042633423989350515
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "REFMAC": 140
+      },
+      "p_holm": 0.0
+    }
+  },
+  "natural_PR_vs_v2|REFMAC": {
+    "ACN": {
+      "estimate": 0.0017894290100617398,
+      "ci95": [
+        0.0003212348688305361,
+        0.003319219025257344
+      ],
+      "p_boot": 0.0186,
+      "components": {
+        "REFMAC": 140
+      },
+      "p_holm": 0.0372
+    },
+    "OCN": {
+      "estimate": 0.0014402052082653,
+      "ci95": [
+        8.047419687174943e-05,
+        0.0030626761325890945
+      ],
+      "p_boot": 0.0394,
+      "components": {
+        "REFMAC": 140
+      },
+      "p_holm": 0.0394
+    }
+  },
+  "Delta_bal|PHENIX_post": {
+    "ACN": {
+      "estimate": -0.009813386753167319,
+      "ci95": [
+        -0.010318849297363805,
+        -0.009295723587354176
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "PHENIX_post_default": 306
+      },
+      "p_holm": 0.0
+    },
+    "OCN": {
+      "estimate": -0.015452169397675035,
+      "ci95": [
+        -0.01631724083659032,
+        -0.014582719692111074
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "PHENIX_post_default": 306
+      },
+      "p_holm": 0.0
+    }
+  },
+  "REFMAC_only_vs_natural|PHENIX_post": {
+    "ACN": {
+      "estimate": 0.032803887210101655,
+      "ci95": [
+        0.03108834537429139,
+        0.03447438420678652
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "PHENIX_post_default": 306
+      },
+      "p_holm": 0.0
+    },
+    "OCN": {
+      "estimate": 0.04764745285749999,
+      "ci95": [
+        0.04537228432481686,
+        0.04986359684274542
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "PHENIX_post_default": 306
+      },
+      "p_holm": 0.0
+    }
+  },
+  "PHENIX_only_vs_natural|PHENIX_post": {
+    "ACN": {
+      "estimate": -0.024068383185081102,
+      "ci95": [
+        -0.027487907934222157,
+        -0.020580016809717484
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "PHENIX_post_default": 306
+      },
+      "p_holm": 0.0
+    },
+    "OCN": {
+      "estimate": -0.05189239881280021,
+      "ci95": [
+        -0.05610544761273964,
+        -0.047798645571983364
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "PHENIX_post_default": 306
+      },
+      "p_holm": 0.0
+    }
+  },
+  "natural_PR_vs_v2|PHENIX_post": {
+    "ACN": {
+      "estimate": -0.004860198565967214,
+      "ci95": [
+        -0.006733234960904072,
+        -0.003016926547721995
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "PHENIX_post_default": 306
+      },
+      "p_holm": 0.0
+    },
+    "OCN": {
+      "estimate": 0.005406789269484644,
+      "ci95": [
+        0.004163970523702539,
+        0.006596500252588222
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "PHENIX_post_default": 306
+      },
+      "p_holm": 0.0
+    }
+  },
+  "Gap_change_G": {
+    "ACN": {
+      "estimate": 0.006791259420514716,
+      "ci95": [
+        0.005840081803727908,
+        0.007756275414874897
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "REFMAC": 140,
+        "PHENIX_post_default": 306
+      },
+      "p_holm": 0.0
+    },
+    "OCN": {
+      "estimate": 0.020124396816159507,
+      "ci95": [
+        0.01842626757417385,
+        0.021843474276122984
+      ],
+      "p_boot": 0.0,
+      "components": {
+        "REFMAC": 140,
+        "PHENIX_post_default": 306
+      },
+      "p_holm": 0.0
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "registered_predictions_sha256": "8b3f6277e3428154236769bb4621c8481c53665e3fdfb6acf70b3692db01f8d3",
+  "code_sha256": {
+    "run_swap.py": "fda2bddbe64fa724b7464cc130b9808862224e3106d371993f11a506f99b887b",
+    "stage1_predict.py": "8d7a316f89c283cbb060ccf5799044044510ddbc9e0dc98e6ee1ebf062cfec4b",
+    "stage2_score.py": "1a37a9c5a32850c153aedaac1f7b36f9c2f328601f0de7beb9a957e4a5ec4162",
+    "swapcore.py": "8d868d33ba5b9e1951efea87d74216bb78e1e10be8e788fad08a2dd8a77e05f1"
+  }
+}

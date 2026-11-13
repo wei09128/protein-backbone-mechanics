@@ -1,0 +1,15 @@
+{
+  "training_chi1_bearing_rows": 886277,
+  "training_gated": 840982,
+  "training_coverage": 0.9488929533317462,
+  "heldout_B30_rows": 386705,
+  "heldout_gated": 372301,
+  "heldout_coverage": 0.9627519685548416,
+  "heldout_chi1_class_counts": {
+    "g-": 151423,
+    "t": 94185,
+    "none/eclipsed": 82363,
+    "g+": 44330
+  },
+  "threshold": 0.75
+}

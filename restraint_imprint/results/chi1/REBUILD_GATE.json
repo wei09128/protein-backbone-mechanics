@@ -1,0 +1,18 @@
+{
+  "eligible_junctions": 1119095,
+  "tau_deg": {
+    "rows": 1119095,
+    "pooled_rule_reproducing": "clean",
+    "max_abs_difference": 0.0
+  },
+  "angle_N_CA_CB": {
+    "rows": 1032744,
+    "pooled_rule_reproducing": "clean",
+    "max_abs_difference": 0.0
+  },
+  "angle_C_CA_CB": {
+    "rows": 1032744,
+    "pooled_rule_reproducing": "clean",
+    "max_abs_difference": 0.0
+  }
+}

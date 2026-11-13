@@ -1,0 +1,909 @@
+{
+  "C1|primary": {
+    "P": "CDL",
+    "Q": "CCP4new",
+    "home": "PHENIX_post",
+    "away": "REFMAC_new",
+    "terms": {
+      "ACN": {
+        "status": "ok",
+        "estimate": -0.237258548791912,
+        "ci95": [
+          -0.26078818523463343,
+          -0.21354403929269508
+        ],
+        "ci975": [
+          -0.264529066845308,
+          -0.21029535092752868
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 549
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 558
+        },
+        "p_holm": 0.0,
+        "role": "primary",
+        "verdict": "home advantage"
+      },
+      "OCN": {
+        "status": "ok",
+        "estimate": -0.6937765698627133,
+        "ci95": [
+          -0.7230704215761161,
+          -0.6648684462834257
+        ],
+        "ci975": [
+          -0.7276733405293012,
+          -0.6608929278343136
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 549
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 558
+        },
+        "p_holm": 0.0,
+        "role": "primary",
+        "verdict": "home advantage"
+      },
+      "ACO": {
+        "status": "ok",
+        "estimate": -0.23595136340533368,
+        "ci95": [
+          -0.24463335575530165,
+          -0.2268643702452301
+        ],
+        "ci975": [
+          -0.24590946713021566,
+          -0.22556477531635047
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 549
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 558
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      },
+      "TAU": {
+        "status": "ok",
+        "estimate": -0.9791918097405723,
+        "ci95": [
+          -1.023850879945247,
+          -0.9348782870306834
+        ],
+        "ci975": [
+          -1.030175029755159,
+          -0.9285646501480115
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 549
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 558
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      }
+    }
+  },
+  "C1|centred": {
+    "P": "CDL",
+    "Q": "CCP4new",
+    "home": "PHENIX_post",
+    "away": "REFMAC_new",
+    "terms": {
+      "ACN": {
+        "status": "ok",
+        "estimate": -0.1936820838604864,
+        "ci95": [
+          -0.2059988317312858,
+          -0.18117066474999985
+        ],
+        "ci975": [
+          -0.20758253934530824,
+          -0.17946370112835439
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 549
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 558
+        },
+        "p_holm": 0.0,
+        "role": "primary",
+        "verdict": "home advantage"
+      },
+      "OCN": {
+        "status": "ok",
+        "estimate": -0.15606757663055532,
+        "ci95": [
+          -0.16172402050664503,
+          -0.150172876830737
+        ],
+        "ci975": [
+          -0.1625637862633868,
+          -0.14935127614055943
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 549
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 558
+        },
+        "p_holm": 0.0,
+        "role": "primary",
+        "verdict": "home advantage"
+      },
+      "ACO": {
+        "status": "ok",
+        "estimate": -0.2298995638560694,
+        "ci95": [
+          -0.23907081202252062,
+          -0.22065781502360535
+        ],
+        "ci975": [
+          -0.24024251056742438,
+          -0.21950004472184934
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 549
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 558
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      },
+      "TAU": {
+        "status": "ok",
+        "estimate": -0.41402524389203765,
+        "ci95": [
+          -0.43228472737163437,
+          -0.39549956011088694
+        ],
+        "ci975": [
+          -0.43462243467730977,
+          -0.39263653439545
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 549
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 558
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      }
+    }
+  },
+  "C1|resolution_reweighted": {
+    "P": "CDL",
+    "Q": "CCP4new",
+    "home": "PHENIX_post",
+    "away": "REFMAC_new",
+    "terms": {
+      "ACN": {
+        "status": "ok",
+        "estimate": -0.23785728249628907,
+        "ci95": [
+          -0.26124250669255616,
+          -0.21428886119480767
+        ],
+        "ci975": [
+          -0.2655559613175736,
+          -0.21102239530966235
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 549
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 558
+        },
+        "p_holm": 0.0,
+        "role": "primary",
+        "verdict": "home advantage"
+      },
+      "OCN": {
+        "status": "ok",
+        "estimate": -0.7011281787900991,
+        "ci95": [
+          -0.7300269744781622,
+          -0.6727298249998042
+        ],
+        "ci975": [
+          -0.734574358143636,
+          -0.668664960687005
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 549
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 558
+        },
+        "p_holm": 0.0,
+        "role": "primary",
+        "verdict": "home advantage"
+      },
+      "ACO": {
+        "status": "ok",
+        "estimate": -0.2385478413015082,
+        "ci95": [
+          -0.24685421481418365,
+          -0.22979806399067637
+        ],
+        "ci975": [
+          -0.2481599120304261,
+          -0.22852785195435987
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 549
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 558
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      },
+      "TAU": {
+        "status": "ok",
+        "estimate": -0.9866630800440825,
+        "ci95": [
+          -1.0305963193830538,
+          -0.9428415798963584
+        ],
+        "ci975": [
+          -1.0375010873870674,
+          -0.936086026959952
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 549
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 558
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      }
+    }
+  },
+  "C2|primary": {
+    "P": "CCP4new",
+    "Q": "CCP4old",
+    "home": "REFMAC_new",
+    "away": "REFMAC_old",
+    "terms": {
+      "ACN": {
+        "status": "ok",
+        "estimate": -0.002859343337028794,
+        "ci95": [
+          -0.009221055516198225,
+          0.0036071756629888884
+        ],
+        "ci975": [
+          -0.010123265322123463,
+          0.004598234371860412
+        ],
+        "p_boot": 0.3832,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 549,
+          "REFMAC_old": 1033
+        },
+        "structures": {
+          "REFMAC_new": 558,
+          "REFMAC_old": 1050
+        },
+        "p_holm": 0.3832,
+        "role": "primary",
+        "verdict": "not resolved"
+      },
+      "OCN": {
+        "status": "ok",
+        "estimate": -0.20740070186451584,
+        "ci95": [
+          -0.22273992908362772,
+          -0.19164713670919767
+        ],
+        "ci975": [
+          -0.2250766216538903,
+          -0.189317456383587
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 549,
+          "REFMAC_old": 1033
+        },
+        "structures": {
+          "REFMAC_new": 558,
+          "REFMAC_old": 1050
+        },
+        "p_holm": 0.0,
+        "role": "primary",
+        "verdict": "home advantage"
+      },
+      "ACO": {
+        "status": "ok",
+        "estimate": 1.2392363571300216,
+        "ci95": [
+          1.1477072237846881,
+          1.3310643759411012
+        ],
+        "ci975": [
+          1.1348725831531001,
+          1.344907449146742
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 549,
+          "REFMAC_old": 1033
+        },
+        "structures": {
+          "REFMAC_new": 558,
+          "REFMAC_old": 1050
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      },
+      "TAU": {
+        "status": "ok",
+        "estimate": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "ci975": [
+          0.0,
+          0.0
+        ],
+        "p_boot": 1.0,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 549,
+          "REFMAC_old": 1033
+        },
+        "structures": {
+          "REFMAC_new": 558,
+          "REFMAC_old": 1050
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      }
+    }
+  },
+  "C2|centred": {
+    "P": "CCP4new",
+    "Q": "CCP4old",
+    "home": "REFMAC_new",
+    "away": "REFMAC_old",
+    "terms": {
+      "ACN": {
+        "status": "ok",
+        "estimate": -0.03262336732606257,
+        "ci95": [
+          -0.0359617801664313,
+          -0.029318794628943202
+        ],
+        "ci975": [
+          -0.03642038275826839,
+          -0.028810128337588198
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 549,
+          "REFMAC_old": 1033
+        },
+        "structures": {
+          "REFMAC_new": 558,
+          "REFMAC_old": 1050
+        },
+        "p_holm": 0.0,
+        "role": "primary",
+        "verdict": "home advantage"
+      },
+      "OCN": {
+        "status": "ok",
+        "estimate": -0.10692102464180549,
+        "ci95": [
+          -0.11147974555437315,
+          -0.10232471476095598
+        ],
+        "ci975": [
+          -0.11213306355715971,
+          -0.10174205248333341
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 549,
+          "REFMAC_old": 1033
+        },
+        "structures": {
+          "REFMAC_new": 558,
+          "REFMAC_old": 1050
+        },
+        "p_holm": 0.0,
+        "role": "primary",
+        "verdict": "home advantage"
+      },
+      "ACO": {
+        "status": "ok",
+        "estimate": 0.00020732695842524203,
+        "ci95": [
+          -0.00026984317133814926,
+          0.0006648397637771239
+        ],
+        "ci975": [
+          -0.0003475725490428366,
+          0.0007434962070520657
+        ],
+        "p_boot": 0.3918,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 549,
+          "REFMAC_old": 1033
+        },
+        "structures": {
+          "REFMAC_new": 558,
+          "REFMAC_old": 1050
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      },
+      "TAU": {
+        "status": "ok",
+        "estimate": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "ci975": [
+          0.0,
+          0.0
+        ],
+        "p_boot": 1.0,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 549,
+          "REFMAC_old": 1033
+        },
+        "structures": {
+          "REFMAC_new": 558,
+          "REFMAC_old": 1050
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      }
+    }
+  },
+  "C2|resolution_reweighted": {
+    "P": "CCP4new",
+    "Q": "CCP4old",
+    "home": "REFMAC_new",
+    "away": "REFMAC_old",
+    "terms": {
+      "ACN": {
+        "status": "ok",
+        "estimate": -0.002649015686374075,
+        "ci95": [
+          -0.008891375111297728,
+          0.0037580326944883836
+        ],
+        "ci975": [
+          -0.009898237106292243,
+          0.0046929552839789735
+        ],
+        "p_boot": 0.4168,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 549,
+          "REFMAC_old": 1033
+        },
+        "structures": {
+          "REFMAC_new": 558,
+          "REFMAC_old": 1050
+        },
+        "p_holm": 0.4168,
+        "role": "primary",
+        "verdict": "not resolved"
+      },
+      "OCN": {
+        "status": "ok",
+        "estimate": -0.21194323386004316,
+        "ci95": [
+          -0.22744207496703406,
+          -0.19614013403884384
+        ],
+        "ci975": [
+          -0.22969255265305433,
+          -0.19411897444359277
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 549,
+          "REFMAC_old": 1033
+        },
+        "structures": {
+          "REFMAC_new": 558,
+          "REFMAC_old": 1050
+        },
+        "p_holm": 0.0,
+        "role": "primary",
+        "verdict": "home advantage"
+      },
+      "ACO": {
+        "status": "ok",
+        "estimate": 1.2603336616067018,
+        "ci95": [
+          1.1677135842769342,
+          1.3513501528387526
+        ],
+        "ci975": [
+          1.1535380642858548,
+          1.3650533721114335
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 549,
+          "REFMAC_old": 1033
+        },
+        "structures": {
+          "REFMAC_new": 558,
+          "REFMAC_old": 1050
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      },
+      "TAU": {
+        "status": "ok",
+        "estimate": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "ci975": [
+          0.0,
+          0.0
+        ],
+        "p_boot": 1.0,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 549,
+          "REFMAC_old": 1033
+        },
+        "structures": {
+          "REFMAC_new": 558,
+          "REFMAC_old": 1050
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      }
+    }
+  },
+  "C1_awayPHENIXpre|primary": {
+    "P": "CDL",
+    "Q": "CCP4new",
+    "home": "PHENIX_post",
+    "away": "PHENIX_pre",
+    "terms": {
+      "ACN": {
+        "status": "ok",
+        "estimate": -0.7431762120629576,
+        "ci95": [
+          -0.7613455221007356,
+          -0.724731610058022
+        ],
+        "ci975": [
+          -0.7639990308911567,
+          -0.7220822721796137
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "PHENIX_pre": 857
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "PHENIX_pre": 872
+        },
+        "p_holm": 0.0,
+        "role": "primary",
+        "verdict": "home advantage"
+      },
+      "OCN": {
+        "status": "ok",
+        "estimate": -0.421308601573525,
+        "ci95": [
+          -0.4357189225478144,
+          -0.406492140962695
+        ],
+        "ci975": [
+          -0.4380671473665319,
+          -0.40430342264816205
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "PHENIX_pre": 857
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "PHENIX_pre": 872
+        },
+        "p_holm": 0.0,
+        "role": "primary",
+        "verdict": "home advantage"
+      },
+      "ACO": {
+        "status": "ok",
+        "estimate": -0.44202014780346394,
+        "ci95": [
+          -0.45230636045309647,
+          -0.4316392050854824
+        ],
+        "ci975": [
+          -0.4537254881998836,
+          -0.430138451719246
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "PHENIX_pre": 857
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "PHENIX_pre": 872
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      },
+      "TAU": {
+        "status": "ok",
+        "estimate": -0.2835374251298023,
+        "ci95": [
+          -0.30554603306958894,
+          -0.2607791801224329
+        ],
+        "ci975": [
+          -0.3086746778902437,
+          -0.2580344637421206
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "PHENIX_pre": 857
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "PHENIX_pre": 872
+        },
+        "p_holm": null,
+        "role": "secondary (no Holm)",
+        "verdict": "descriptive"
+      }
+    }
+  },
+  "strict_version_parsing": {
+    "C1": {
+      "ACN": {
+        "status": "ok",
+        "estimate": -0.2373820450984152,
+        "ci95": [
+          -0.2610418019604562,
+          -0.21365928654147948
+        ],
+        "ci975": [
+          -0.26447321336727264,
+          -0.21046786240670814
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 548
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 557
+        }
+      },
+      "OCN": {
+        "status": "ok",
+        "estimate": -0.6944967036691286,
+        "ci95": [
+          -0.7232628557589412,
+          -0.6658457652709583
+        ],
+        "ci975": [
+          -0.7275256014372422,
+          -0.6612585607461389
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post": 1719,
+          "REFMAC_new": 548
+        },
+        "structures": {
+          "PHENIX_post": 1778,
+          "REFMAC_new": 557
+        }
+      }
+    },
+    "C2": {
+      "ACN": {
+        "status": "ok",
+        "estimate": -0.0028663389457221633,
+        "ci95": [
+          -0.009187615970186136,
+          0.003623552921273372
+        ],
+        "ci975": [
+          -0.010057327737958099,
+          0.004566133714622625
+        ],
+        "p_boot": 0.3784,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 548,
+          "REFMAC_old": 1026
+        },
+        "structures": {
+          "REFMAC_new": 557,
+          "REFMAC_old": 1042
+        }
+      },
+      "OCN": {
+        "status": "ok",
+        "estimate": -0.208020219255733,
+        "ci95": [
+          -0.22397492617432901,
+          -0.19234753553126935
+        ],
+        "ci975": [
+          -0.2261319000455945,
+          -0.19025422611599002
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "REFMAC_new": 548,
+          "REFMAC_old": 1026
+        },
+        "structures": {
+          "REFMAC_new": 557,
+          "REFMAC_old": 1042
+        }
+      }
+    }
+  },
+  "C3|primary": {
+    "P": "CDL",
+    "Q": "MechLibV2",
+    "home": "PHENIX_post (held-out)",
+    "away": "REFMAC (held-out)",
+    "terms": {
+      "ACN": {
+        "status": "ok",
+        "estimate": -0.13419840737316477,
+        "ci95": [
+          -0.1568307845464701,
+          -0.11012956326572992
+        ],
+        "ci975": [
+          -0.16015650492724,
+          -0.1065188698251879
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post_default": 322,
+          "REFMAC": 140
+        },
+        "structures": {
+          "PHENIX_post_default": 769,
+          "REFMAC": 393
+        },
+        "p_holm": 0.0,
+        "verdict": "home advantage"
+      },
+      "OCN": {
+        "status": "ok",
+        "estimate": -0.19238149926292814,
+        "ci95": [
+          -0.21273844874743267,
+          -0.171991121877474
+        ],
+        "ci975": [
+          -0.21562709490527016,
+          -0.16941038756287755
+        ],
+        "p_boot": 0.0,
+        "valid_draws": 10000,
+        "groups": {
+          "PHENIX_post_default": 322,
+          "REFMAC": 140
+        },
+        "structures": {
+          "PHENIX_post_default": 769,
+          "REFMAC": 393
+        },
+        "p_holm": 0.0,
+        "verdict": "home advantage"
+      }
+    },
+    "gate": "reproduced existing program-difference estimates within 0.001"
+  }
+}

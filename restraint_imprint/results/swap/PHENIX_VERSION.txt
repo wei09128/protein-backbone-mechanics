@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+  Phenix: Python-based Hierarchical ENvironment for Integrated Xtallography
+  Version: 2.2.1
+  Release tag: 6174
+  User: wei
+-------------------------------------------------------------------------------
+
