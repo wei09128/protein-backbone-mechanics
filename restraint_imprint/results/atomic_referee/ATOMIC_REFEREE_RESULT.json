@@ -1,0 +1,264 @@
+{
+  "spec_sha": "82f68380",
+  "hashes": {
+    "features": "e905f8b8202903978fc8d284e50511ab7aa6a9f22b29e86caffd5bce426bd52b",
+    "headers": "25f466e255d6742ff9cfd83eecd92d5769f7bce0ce7e254c02025cb8f71f40d4",
+    "groups": "33299405ec11d22d0366d58c88324a7f2124313a6b6cfe8700c0896a9efc4348",
+    "chains": "35f69bd270b9f6ca274af6c1dfedcc83adc97aa38f82e6104140d99ee535e494",
+    "cdl": "79c197e5692986cde26db9aa492cecfb5b8b7d5b1f3cba4dc222bb2e04d23c68",
+    "v2": "ef7b86b359c84492a0be791de52a1e64112a0153142b9f9f5a0417448d2731b1",
+    "v3": "8404d010e9117b078524a781c9b73073b7116200b980b237dc7b0570831cd7f3"
+  },
+  "primary_structures": 224,
+  "primary_groups": 223,
+  "training_overlap_structures": 203,
+  "by_stratum": {
+    "other": 27,
+    "SHELX": 91,
+    "REFMAC": 101,
+    "PHENIX_pre": 32,
+    "PHENIX_post": 60
+  },
+  "primary_flat": {
+    "ACN": {
+      "A_flat_on_CDL": {
+        "slope": 0.9493177098097715,
+        "ci95": [
+          0.9242000685727149,
+          0.9748515242759688
+        ],
+        "r": 0.6346468342991515,
+        "groups": 223,
+        "junctions": 36602
+      },
+      "library_amplitude_on_CDL": {
+        "v2": 0.5763240774130143,
+        "v3": 0.9371432123993808
+      },
+      "r_deposit_vs_library": {
+        "v2": 0.6449792243025428,
+        "v3": 0.6389965474422428
+      },
+      "v2_too_weak": {
+        "p_one_sided": 0.0,
+        "p_holm": 0.0,
+        "verdict": true
+      },
+      "consistent_with_v3": true
+    },
+    "OCN": {
+      "A_flat_on_CDL": {
+        "slope": 0.8799957008742526,
+        "ci95": [
+          0.8422105687712756,
+          0.9196865274987884
+        ],
+        "r": 0.35661012231980105,
+        "groups": 223,
+        "junctions": 36555
+      },
+      "library_amplitude_on_CDL": {
+        "v2": 0.6019080070698114,
+        "v3": 0.8987493585674037
+      },
+      "r_deposit_vs_library": {
+        "v2": 0.3604665165793004,
+        "v3": 0.3484562736627627
+      },
+      "v2_too_weak": {
+        "p_one_sided": 0.0,
+        "p_holm": 0.0,
+        "verdict": true
+      },
+      "consistent_with_v3": true
+    },
+    "ACO": {
+      "A_flat_on_CDL": {
+        "slope": 0.9744728198884182,
+        "ci95": [
+          0.9473979513799318,
+          1.0010089522637822
+        ],
+        "r": 0.5806845040670329,
+        "groups": 223,
+        "junctions": 36571
+      },
+      "library_amplitude_on_CDL": {
+        "v2": 0.5283958486128827,
+        "v3": 0.9040466206218314
+      },
+      "r_deposit_vs_library": {
+        "v2": 0.5966243282035736,
+        "v3": 0.5900079469549623
+      },
+      "v2_too_weak": {
+        "p_one_sided": 0.0,
+        "p_holm": 0.0,
+        "verdict": true
+      },
+      "consistent_with_v3": true
+    }
+  },
+  "secondary": {
+    "PHENIX_post": {
+      "ACN": {
+        "A_flat_on_CDL": {
+          "slope": 1.033953263824311,
+          "ci95": [
+            1.017953224709773,
+            1.050066625527269
+          ],
+          "r": 0.8151514561608049,
+          "groups": 60,
+          "junctions": 9383
+        },
+        "library_amplitude_on_CDL": {
+          "v2": 0.5790287560587246,
+          "v3": 0.9442425339289094
+        },
+        "r_deposit_vs_library": {
+          "v2": 0.8070211851255551,
+          "v3": 0.8090845574124378
+        },
+        "v2_too_weak": {
+          "p_one_sided": 0.0,
+          "p_holm": 0.0,
+          "verdict": true
+        },
+        "consistent_with_v3": true
+      },
+      "OCN": {
+        "A_flat_on_CDL": {
+          "slope": 0.9553196601678513,
+          "ci95": [
+            0.9263754191198704,
+            0.9847415660818061
+          ],
+          "r": 0.6246162294288758,
+          "groups": 60,
+          "junctions": 9383
+        },
+        "library_amplitude_on_CDL": {
+          "v2": 0.6000375955640074,
+          "v3": 0.896530433954765
+        },
+        "r_deposit_vs_library": {
+          "v2": 0.5962276718694626,
+          "v3": 0.5959949341356451
+        },
+        "v2_too_weak": {
+          "p_one_sided": 0.0,
+          "p_holm": 0.0,
+          "verdict": true
+        },
+        "consistent_with_v3": true
+      },
+      "ACO": {
+        "A_flat_on_CDL": {
+          "slope": 1.056034109855735,
+          "ci95": [
+            1.0399263671923968,
+            1.0704249513116777
+          ],
+          "r": 0.8069927534081642,
+          "groups": 60,
+          "junctions": 9383
+        },
+        "library_amplitude_on_CDL": {
+          "v2": 0.5275606325549289,
+          "v3": 0.9042742369588148
+        },
+        "r_deposit_vs_library": {
+          "v2": 0.8050489836780795,
+          "v3": 0.804212996405591
+        },
+        "v2_too_weak": {
+          "p_one_sided": 0.0,
+          "p_holm": 0.0,
+          "verdict": true
+        },
+        "consistent_with_v3": true
+      }
+    }
+  },
+  "sensitivity_held_out_only": {
+    "ACN": {
+      "A_flat_on_CDL": {
+        "slope": 1.0110938723699465,
+        "ci95": [
+          0.9352581276644765,
+          1.0843634369873776
+        ],
+        "r": 0.6815090571132179,
+        "groups": 21,
+        "junctions": 3708
+      },
+      "library_amplitude_on_CDL": {
+        "v2": 0.573887669525471,
+        "v3": 0.9373022711414185
+      },
+      "r_deposit_vs_library": {
+        "v2": 0.6839705706248099,
+        "v3": 0.6812892491783878
+      },
+      "v2_too_weak": {
+        "p_one_sided": 0.0,
+        "p_holm": 0.0,
+        "verdict": true
+      },
+      "consistent_with_v3": true
+    },
+    "OCN": {
+      "A_flat_on_CDL": {
+        "slope": 0.834279051475252,
+        "ci95": [
+          0.7116351385581087,
+          0.9544255079558512
+        ],
+        "r": 0.358214565802167,
+        "groups": 21,
+        "junctions": 3706
+      },
+      "library_amplitude_on_CDL": {
+        "v2": 0.6069652106846982,
+        "v3": 0.9016314597833865
+      },
+      "r_deposit_vs_library": {
+        "v2": 0.3488411457969979,
+        "v3": 0.33840383963134407
+      },
+      "v2_too_weak": {
+        "p_one_sided": 0.0,
+        "p_holm": 0.0,
+        "verdict": true
+      },
+      "consistent_with_v3": true
+    },
+    "ACO": {
+      "A_flat_on_CDL": {
+        "slope": 1.0449760140634319,
+        "ci95": [
+          0.9575768797882636,
+          1.1263067096352342
+        ],
+        "r": 0.6210360076233925,
+        "groups": 21,
+        "junctions": 3706
+      },
+      "library_amplitude_on_CDL": {
+        "v2": 0.5249587922956237,
+        "v3": 0.9064648649535444
+      },
+      "r_deposit_vs_library": {
+        "v2": 0.6231321251041904,
+        "v3": 0.6234700901275962
+      },
+      "v2_too_weak": {
+        "p_one_sided": 0.0,
+        "p_holm": 0.0,
+        "verdict": true
+      },
+      "consistent_with_v3": true
+    }
+  }
+}

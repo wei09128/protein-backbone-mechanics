@@ -1,0 +1,3 @@
+CCP4 software suite: library version 9.0.017
+CCP4 software suite: patch level     9.0.017
+Program:             refmac5; version 5.8.0431

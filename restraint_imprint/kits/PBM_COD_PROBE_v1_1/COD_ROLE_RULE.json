@@ -1,0 +1,16 @@
+{
+ "version": "1.1",
+ "fixed": "2026-11-13 (v1.0); amended 2026-11-16 ~12:30 CST, before the probe ran and before any COD carbonyl angle was computed",
+ "amendment": "v1.0 let COD train MechLib v4 if counts were sufficient. v1.1: COD is never used to train, select or calibrate any library; it is an independent referee only. The count thresholds now decide only whether the referee is adequately powered. Reason: keep an independent judge (decision of 16 Nov; v4-lite is calibrated on pilot water QM only).",
+ "class": "general (L or mirrored D; one heavy-atom side chain; secondary amide N)",
+ "regions": [
+  "alphaR",
+  "beta",
+  "ppII"
+ ],
+ "min_junctions": 150,
+ "min_entries": 75,
+ "quality": "R1 (refine_ls_R_factor_gt) <= 0.05; all seven junction atoms full occupancy and no disorder group; both amides trans (|omega| >= 150)",
+ "if_met": "COD = experimental referee for v2, v3 and v4-lite; its referee specification is frozen before any COD carbonyl angle is computed",
+ "if_not_met": "COD = referee reported as underpowered (descriptive only; decides nothing)"
+}

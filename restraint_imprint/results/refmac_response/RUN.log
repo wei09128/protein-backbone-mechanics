@@ -1,0 +1,85 @@
+Link targets found and edited: {"TRANS": [{"term": "ACN", "old": 115.917, "new": 116.917}, {"term": "OCN", "old": 123.469, "new": 122.469}], "PTRANS": [{"term": "ACN", "old": 118.415, "new": 119.415}, {"term": "OCN", "old": 121.016, "new": 120.016}]}
+Gate (amendment 1): isolated edit response in 2WFI ACN +0.0229, ACO -0.0119, OCN -0.0109 per degree; sum +0.0001
+1Y8A (gt1.0_le1.5): stock gate failed
+2OPC (gt1.0_le1.5): stock gate failed
+2XRH: stock ok, weight 0.425885201, R-free [0.2134, 0.2142]
+2WFI: stock ok, weight 9.97465038, R-free [0.1627, 0.1644]
+2XRH (gt1.0_le1.5): complete
+3BMZ: stock ok, weight 1.1311748, R-free [0.2039, 0.1897]
+2WFI (le1.0): complete
+3BMZ (gt1.0_le1.5): complete
+4JP6: stock ok, weight 3.17932534, R-free [0.208, 0.2046]
+1MG7: stock ok, weight 0.516152799, R-free [0.2113, 0.1929]
+4JP6 (le1.0): complete
+1MG7 (gt1.5_le2.0): complete
+3B4Q: stock ok, weight 0.370167792, R-free [0.2101, 0.2189]
+3B4Q (gt1.5_le2.0): complete
+{
+ "E1_comp_minus_iso": {
+  "mean": 0.04954907341487211,
+  "ci95": [
+   0.03180918466967129,
+   0.0665385070022308
+  ],
+  "positive": "6/6"
+ },
+ "E2_sum_ACN": {
+  "mean": 0.00025005936470675174,
+  "max_abs": 0.00035636318945947367,
+  "conserved": true
+ },
+ "E2_sum_OCN": {
+  "mean": 0.00016382127936893288,
+  "max_abs": 0.00031263531677586836,
+  "conserved": true
+ },
+ "E2_sum_COMP": {
+  "mean": 1.7691152026781928e-05,
+  "max_abs": 0.00014550655054825038,
+  "conserved": true
+ },
+ "E3_iso_ACN_refmac_minus_phenix": {
+  "mean": -0.3667693773499658,
+  "ci95": [
+   -0.4024814775233372,
+   -0.32406533119175757
+  ],
+  "negative": "6/6",
+  "refmac_mean": 0.10261334847909413,
+  "phenix_mean": 0.4693827258290599
+ },
+ "E3_comp_ACN_refmac_minus_phenix": {
+  "mean": -0.6086983542995008,
+  "ci95": [
+   -0.6631369063641759,
+   -0.5354220939861923
+  ],
+  "negative": "6/6",
+  "refmac_mean": 0.15216242189396623,
+  "phenix_mean": 0.760860776193467
+ },
+ "E4_mean_columns": {
+  "ACN_edit": [
+   0.10261334847909413,
+   -0.05444303400496681,
+   -0.047920255109420544
+  ],
+  "OCN_edit": [
+   -0.046043031317552524,
+   -0.0662104247214276,
+   0.11241727731834905
+  ],
+  "phenix_mean_matrix_columns": {
+   "ACN_edit": [
+    0.48,
+    -0.24,
+    -0.23
+   ],
+   "OCN_edit": [
+    -0.28,
+    -0.28,
+    0.56
+   ]
+  }
+ }
+}

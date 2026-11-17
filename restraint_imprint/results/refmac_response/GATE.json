@@ -1,0 +1,13 @@
+{
+  "pdb_id": "2WFI",
+  "response_ACN_ACO_OCN": [
+    0.022939509105092837,
+    -0.01188908291115256,
+    -0.010945622352283736
+  ],
+  "angle_sum": 0.00010480384165654187,
+  "n": 160,
+  "weight": 9.97465038,
+  "criterion": "amendment 1: ACN > 0.005 and ACO, OCN < 0",
+  "passed": true
+}

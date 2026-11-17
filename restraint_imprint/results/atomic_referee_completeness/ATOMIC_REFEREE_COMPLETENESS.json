@@ -1,0 +1,162 @@
+{
+  "referee_result_sha": "487dab0e084605aa3c3634818fb45406f174d87bf9645caa046633d3fa8f1ae9",
+  "hashes": {
+    "features": "e905f8b8202903978fc8d284e50511ab7aa6a9f22b29e86caffd5bce426bd52b",
+    "headers": "25f466e255d6742ff9cfd83eecd92d5769f7bce0ce7e254c02025cb8f71f40d4",
+    "groups": "33299405ec11d22d0366d58c88324a7f2124313a6b6cfe8700c0896a9efc4348",
+    "chains": "35f69bd270b9f6ca274af6c1dfedcc83adc97aa38f82e6104140d99ee535e494",
+    "cdl": "79c197e5692986cde26db9aa492cecfb5b8b7d5b1f3cba4dc222bb2e04d23c68",
+    "v2": "ef7b86b359c84492a0be791de52a1e64112a0153142b9f9f5a0417448d2731b1",
+    "v3": "8404d010e9117b078524a781c9b73073b7116200b980b237dc7b0570831cd7f3"
+  },
+  "gate_max_abs_diff": 0.0,
+  "shape": {
+    "ACN": {
+      "r_a": 0.6449792243025428,
+      "r_b": 0.6389965474422427,
+      "diff": 0.0059826768603001845,
+      "ci95": [
+        0.0040555186951473365,
+        0.007926236193799906
+      ],
+      "worse_shape_b": false,
+      "worse_shape_a": false
+    },
+    "OCN": {
+      "r_a": 0.3604665165793005,
+      "r_b": 0.34845627366276266,
+      "diff": 0.01201024291653785,
+      "ci95": [
+        0.008733922444891492,
+        0.015303799653160673
+      ],
+      "worse_shape_b": false,
+      "worse_shape_a": false
+    },
+    "ACO": {
+      "r_a": 0.5966243282035735,
+      "r_b": 0.5900079469549624,
+      "diff": 0.006616381248611081,
+      "ci95": [
+        0.004813023238924502,
+        0.008563436533262166
+      ],
+      "worse_shape_b": false,
+      "worse_shape_a": false
+    }
+  },
+  "corrected": {
+    "ACN": {
+      "T": 0.31,
+      "point": 1.3758227678402486,
+      "ci95": [
+        1.3394203892358187,
+        1.4128282960521288
+      ],
+      "note": "model-dependent; the <= 1.5 A T likely overstates transmission at <= 1.0 A; never decisive"
+    },
+    "OCN": {
+      "T": 0.3,
+      "point": 1.2571367155346467,
+      "ci95": [
+        1.2031579553875367,
+        1.3138378964268407
+      ],
+      "note": "model-dependent; the <= 1.5 A T likely overstates transmission at <= 1.0 A; never decisive"
+    },
+    "ACO": {
+      "T": 0.34,
+      "point": 1.4764739695279065,
+      "ci95": [
+        1.4354514414847452,
+        1.5166802307027003
+      ],
+      "note": "model-dependent; the <= 1.5 A T likely overstates transmission at <= 1.0 A; never decisive"
+    }
+  },
+  "other": {
+    "structures": 27,
+    "groups": 27,
+    "junctions": 3542,
+    "result": {
+      "ACN": {
+        "A_flat_on_CDL": {
+          "slope": 0.874527859289754,
+          "ci95": [
+            0.8022823376003142,
+            0.9432995765550509
+          ],
+          "r": 0.6309023174374578,
+          "groups": 27,
+          "junctions": 3541
+        },
+        "library_amplitude_on_CDL": {
+          "v2": 0.5715328533577435,
+          "v3": 0.9309463494735354
+        },
+        "r_deposit_vs_library": {
+          "v2": 0.6428393305588649,
+          "v3": 0.6337245586907657
+        },
+        "v2_too_weak": {
+          "p_one_sided": 0.0,
+          "p_holm": 0.0,
+          "verdict": true
+        },
+        "consistent_with_v3": true
+      },
+      "OCN": {
+        "A_flat_on_CDL": {
+          "slope": 0.8453909227214389,
+          "ci95": [
+            0.7485456015799464,
+            0.9493147017088338
+          ],
+          "r": 0.380587260549293,
+          "groups": 27,
+          "junctions": 3534
+        },
+        "library_amplitude_on_CDL": {
+          "v2": 0.6010625592042022,
+          "v3": 0.9007947409266645
+        },
+        "r_deposit_vs_library": {
+          "v2": 0.38843290746395326,
+          "v3": 0.37268571800152545
+        },
+        "v2_too_weak": {
+          "p_one_sided": 0.0,
+          "p_holm": 0.0,
+          "verdict": true
+        },
+        "consistent_with_v3": true
+      },
+      "ACO": {
+        "A_flat_on_CDL": {
+          "slope": 0.8898869877552136,
+          "ci95": [
+            0.7990381364795834,
+            0.9777073097427135
+          ],
+          "r": 0.5886057407526382,
+          "groups": 27,
+          "junctions": 3534
+        },
+        "library_amplitude_on_CDL": {
+          "v2": 0.5246037863161157,
+          "v3": 0.8986161579366652
+        },
+        "r_deposit_vs_library": {
+          "v2": 0.6042878615733371,
+          "v3": 0.5920986952781472
+        },
+        "v2_too_weak": {
+          "p_one_sided": 0.0,
+          "p_holm": 0.0,
+          "verdict": true
+        },
+        "consistent_with_v3": true
+      }
+    }
+  }
+}

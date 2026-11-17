@@ -1,0 +1,19 @@
+{
+  "spec_sha256": "9b5a9682dd29d9575b84255ef0eea7a8f08fff8ca152de1b93b57d1e9b537e49",
+  "hashes": {
+    "spec": "9b5a9682dd29d9575b84255ef0eea7a8f08fff8ca152de1b93b57d1e9b537e49",
+    "code": "a793cadcdcd61bb16a317d3304dc425c3514466f281c94e3cd5a507392244672",
+    "features": "e905f8b8202903978fc8d284e50511ab7aa6a9f22b29e86caffd5bce426bd52b",
+    "cdl": "79c197e5692986cde26db9aa492cecfb5b8b7d5b1f3cba4dc222bb2e04d23c68",
+    "headers": "25f466e255d6742ff9cfd83eecd92d5769f7bce0ce7e254c02025cb8f71f40d4",
+    "groups": "33299405ec11d22d0366d58c88324a7f2124313a6b6cfe8700c0896a9efc4348"
+  },
+  "split_seed": 20261115,
+  "boot_seed": 20261116,
+  "draws": 1000,
+  "junctions": {
+    "REFMAC": 718354,
+    "PHENIX_post": 339231,
+    "PHENIX_pre": 159820
+  }
+}

@@ -1,0 +1,32 @@
+{
+ "angle_CA_C_O": {
+  "cells": 4854,
+  "sd_pattern_diff": 0.429,
+  "median_se_diff": 0.166,
+  "tau": 0.355,
+  "median_B": 0.82,
+  "cells_B_below_0_5_pct": 11.0,
+  "junction_weighted_mean_B": 0.94,
+  "junctions_in_cells_B_above_0_8_pct": 93.0
+ },
+ "angle_CaCN": {
+  "cells": 4856,
+  "sd_pattern_diff": 0.487,
+  "median_se_diff": 0.174,
+  "tau": 0.372,
+  "median_B": 0.82,
+  "cells_B_below_0_5_pct": 15.0,
+  "junction_weighted_mean_B": 0.94,
+  "junctions_in_cells_B_above_0_8_pct": 93.0
+ },
+ "angle_O_C_N_next": {
+  "cells": 4853,
+  "sd_pattern_diff": 0.227,
+  "median_se_diff": 0.138,
+  "tau": 0.075,
+  "median_B": 0.23,
+  "cells_B_below_0_5_pct": 81.0,
+  "junction_weighted_mean_B": 0.67,
+  "junctions_in_cells_B_above_0_8_pct": 42.0
+ }
+}

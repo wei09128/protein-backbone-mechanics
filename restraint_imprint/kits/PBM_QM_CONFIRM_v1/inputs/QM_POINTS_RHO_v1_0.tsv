@@ -1,0 +1,16 @@
+k	term	rho	sd_v3_centred	residues	points
+4	angle_CaCN	0.6	1.208	20	80
+4	angle_O_C_N_next	0.634	0.57	20	80
+4	angle_CA_C_O	0.566	0.895	20	80
+5	angle_CaCN	0.598	1.166	20	100
+5	angle_O_C_N_next	0.634	0.557	20	100
+5	angle_CA_C_O	0.564	0.863	20	100
+6	angle_CaCN	0.599	1.161	20	120
+6	angle_O_C_N_next	0.633	0.544	20	120
+6	angle_CA_C_O	0.563	0.856	20	120
+7	angle_CaCN	0.599	1.145	20	140
+7	angle_O_C_N_next	0.63	0.533	20	140
+7	angle_CA_C_O	0.562	0.853	20	140
+8	angle_CaCN	0.601	1.157	20	160
+8	angle_O_C_N_next	0.632	0.523	20	160
+8	angle_CA_C_O	0.564	0.855	20	160

@@ -1,0 +1,7 @@
+{"version": "1.0", "fixed": "2026-11-13, before any COD carbonyl angle was computed",
+ "class": "general (L or mirrored D; one heavy-atom side chain; secondary amide N)",
+ "regions": ["alphaR", "beta", "ppII"],
+ "min_junctions": 150, "min_entries": 75,
+ "quality": "R1 (refine_ls_R_factor_gt) <= 0.05; all seven junction atoms full occupancy and no disorder group; both amides trans (|omega| >= 150)",
+ "if_met": "COD = training source for MechLib v4 (split weights), frozen before the QM referee; COD is then not a referee",
+ "if_not_met": "COD = experimental referee (specified before its angles are computed); no v4"}
